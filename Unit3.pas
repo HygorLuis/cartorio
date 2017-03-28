@@ -1,0 +1,329 @@
+unit Unit3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.DBCtrls, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls,
+  Vcl.Menus;
+
+type
+  TfrmUsuario = class(TForm)
+    DBGrid1: TDBGrid;
+    DataSource1: TDataSource;
+    ADOQuery1: TADOQuery;
+    ADOQuery1idusuario: TAutoIncField;
+    ADOQuery1Nome: TStringField;
+    ADOQuery1Senha: TStringField;
+    ADOQuery1Login: TStringField;
+    ADOQuery1Adm: TStringField;
+    ADOQuery1Endereco: TStringField;
+    ADOQuery1Complemento: TStringField;
+    ADOQuery1Numero: TStringField;
+    ADOQuery1CEP: TStringField;
+    ADOQuery1Cidade: TStringField;
+    ADOQuery1Estado: TStringField;
+    Label1: TLabel;
+    txtID: TDBEdit;
+    lblNome: TLabel;
+    txtNome: TDBEdit;
+    lblSenha: TLabel;
+    txtSenha: TDBEdit;
+    lblUsuario: TLabel;
+    txtUsuario: TDBEdit;
+    lblPermissao: TLabel;
+    txtPermissao: TDBEdit;
+    lblRua: TLabel;
+    txtRua: TDBEdit;
+    Label7: TLabel;
+    txtComp: TDBEdit;
+    lblNumero: TLabel;
+    txtNumero: TDBEdit;
+    lblCEP: TLabel;
+    txtCEP: TDBEdit;
+    lblCidade: TLabel;
+    txtCidade: TDBEdit;
+    lblUf: TLabel;
+    txtUF: TDBEdit;
+    GroupBox1: TGroupBox;
+    ADOQuery1Bairro: TStringField;
+    Label6: TLabel;
+    txtBairro: TDBEdit;
+    GroupBox2: TGroupBox;
+    btnIncluir: TBitBtn;
+    btnAlterar: TBitBtn;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    ADOQuery1DD1: TStringField;
+    ADOQuery1Telefone1: TStringField;
+    ADOQuery1DD2: TStringField;
+    ADOQuery1Telefone2: TStringField;
+    lblDD1: TLabel;
+    txtDD1: TDBEdit;
+    lblTelefone1: TLabel;
+    txtTel1: TDBEdit;
+    lblDD2: TLabel;
+    txtDD2: TDBEdit;
+    lblTel2: TLabel;
+    txtTel2: TDBEdit;
+    GroupBox3: TGroupBox;
+    cboPermissao: TComboBox;
+    btnExcluir: TBitBtn;
+    chkSenha: TCheckBox;
+    MainMenu1: TMainMenu;
+    Voltar1: TMenuItem;
+    ADOQuery1excluido: TStringField;
+    ADOQuery1Cpf: TStringField;
+    lblCPF: TLabel;
+    txtCPF: TDBEdit;
+    GroupBox4: TGroupBox;
+    ADOQuery1UsuarioCriacao: TStringField;
+    Label2: TLabel;
+    txtUsuarioCriacao: TDBEdit;
+    procedure ADOQuery1AdmGetText(Sender: TField; var Text: string;
+    DisplayText: Boolean);
+    procedure txtPermissaoChange(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnIncluirClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure cboPermissaoChange(Sender: TObject);
+    procedure chkSenhaClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure Voltar1Click(Sender: TObject);
+    procedure Fechar1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    bUpdate: Boolean;
+    iID, iIndex: integer;
+  end;
+
+var
+  frmUsuario: TfrmUsuario;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit1, Unit2;
+
+procedure LoadUser();
+begin
+  frmUsuario.ADOQuery1.SQL.Clear;
+  frmUsuario.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE (excluido IS NULL OR excluido != 1);');
+  frmUsuario.ADOQuery1.open;
+  frmUsuario.ADOQuery1.Active:= true;
+end;
+
+procedure EnabledFields(bEnabled: Boolean);
+begin
+  frmUsuario.cboPermissao.Enabled:= bEnabled;
+  frmUsuario.DBGrid1.Enabled:= not bEnabled;
+  frmUsuario.chkSenha.Enabled:= bEnabled;
+  frmUsuario.txtNome.Enabled:= bEnabled;
+  frmUsuario.txtCPF.Enabled:= bEnabled;
+  frmUsuario.txtUsuario.Enabled:= bEnabled;
+  frmUsuario.txtSenha.Enabled:= bEnabled;
+  frmUsuario.txtRua.Enabled:= bEnabled;
+  frmUsuario.txtComp.Enabled:= bEnabled;
+  frmUsuario.txtNumero.Enabled:= bEnabled;
+  frmUsuario.txtCEP.Enabled:= bEnabled;
+  frmUsuario.txtCidade.Enabled:= bEnabled;
+  frmUsuario.txtUF.Enabled:= bEnabled;
+  frmUsuario.txtBairro.Enabled:= bEnabled;
+  frmUsuario.txtDD1.Enabled:= bEnabled;
+  frmUsuario.txtTel1.Enabled:= bEnabled;
+  frmUsuario.txtDD2.Enabled:= bEnabled;
+  frmUsuario.txtTel2.Enabled:= bEnabled;
+
+  frmUsuario.btnGravar.Enabled:= bEnabled;
+  frmUsuario.btnCancelar.Enabled:= bEnabled;
+  frmUsuario.btnAlterar.Enabled:= not bEnabled;
+  frmUsuario.btnIncluir.Enabled:= not bEnabled;
+  frmUsuario.btnExcluir.Enabled:= not bEnabled;
+end;
+
+function VerifyUser(Usuario:String): Boolean;
+begin
+    frmLogin.ADOQuery1.SQL.Clear;
+    frmLogin.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE Login = "' + Usuario + '" AND (excluido IS NULL OR excluido != 1);');
+    frmLogin.ADOQuery1.open;
+    frmLogin.ADOQuery1.Active:= true;
+
+    if (frmLogin.ADOQuery1.FieldByName('Login').IsNull) then
+      result:= true
+    else
+      result:= false;
+end;
+
+procedure TfrmUsuario.ADOQuery1AdmGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+if (Sender.value = '1') then
+Text:= 'Sim'
+else
+Text := 'Não';
+end;
+
+procedure TfrmUsuario.btnAlterarClick(Sender: TObject);
+begin
+  bUpdate:= true;
+  EnabledFields(true);
+end;
+
+procedure TfrmUsuario.btnCancelarClick(Sender: TObject);
+begin
+  ADOQuery1.Cancel;
+  cboPermissao.ItemIndex:= StrToInt(ADOQuery1.FieldByName('Adm').Value);
+  EnabledFields(false);
+  DBGrid1.SetFocus;
+end;
+
+procedure TfrmUsuario.btnExcluirClick(Sender: TObject);
+begin
+  if (Application.MessageBox('Deseja excluir o usuário?', 'Confirmção!', + MB_YESNO + MB_ICONQUESTION) = IDYES) then
+  begin
+    iID:= DBGrid1.SelectedField.Value;
+    ADOQuery1.SQL.Clear;
+    ADOQuery1.SQL.Add('UPDATE usuario SET excluido = 1 WHERE idusuario = "' + IntToStr(iID) + '";');
+    ADOQuery1.ExecSQL;
+    LoadUser();
+    DBGrid1.SetFocus;
+  end;
+end;
+
+procedure TfrmUsuario.btnGravarClick(Sender: TObject);
+var icboIndex: integer;
+    sNome, sCPF, sLogin, sSenha, sEndereco, sComplemento, sNumero, sCEP, sCidade, sUF,
+    sBairro, sDD1, sTel1, sDD2, sTel2: String;
+begin
+  if (txtNome.Text = '') or (txtUsuario.Text = '') or (txtSenha.Text = '') then
+  begin
+    Application.MessageBox('Nome, Usuário ou Senha estão em brancos!', 'Atenção!', + MB_OK + MB_ICONEXCLAMATION);
+    txtUsuario.SetFocus;
+  end
+  else
+  begin
+    if (bUpdate) then
+    begin
+      icboIndex:= cboPermissao.ItemIndex;
+      iID:= DBGrid1.SelectedField.Value;
+      sNome:= txtNome.Text;
+      sCPF:= txtCPF.Text;
+      sLogin:= txtUsuario.Text;
+      sSenha:= txtSenha.Text;
+      sEndereco:= txtRua.Text;
+      sComplemento:= txtComp.Text;
+      sNumero:= txtNumero.Text;
+      sCEP:= txtCEP.Text;
+      sCidade:= txtCidade.Text;
+      sUF:= txtUF.Text;
+      sBairro:= txtBairro.Text;
+      sDD1:= txtDD1.Text;
+      sTel1:= txtTel1.Text;
+      sDD2:= txtDD2.Text;
+      sTel2:= txtTel2.Text;
+
+      //ADOQuery1.Close;
+      //ADOQuery1.Open;
+      ADOQuery1.SQL.Clear;
+      ADOQuery1.SQL.Add('UPDATE usuario SET Nome = "' + sNome +
+                                        '", Cpf = "' + sCPF +
+                                        '", Login = "' + sLogin +
+                                        '", Senha = "' + sSenha +
+                                        '", Adm = "' + IntToStr(icboIndex) +
+                                        '", Endereco = "' + sEndereco +
+                                        '", Complemento = "' + sComplemento +
+                                        '", Numero = "' + sNumero +
+                                        '", CEP = "' + sCEP +
+                                        '", Cidade = "' + sCidade +
+                                        '", Estado = "' + sUF +
+                                        '", Bairro = "' + sBairro +
+                                        '", DD1 = "' + sDD1 +
+                                        '", Telefone1 = "' + sTel1 +
+                                        '", DD2 = "' + sDD2 +
+                                        '", Telefone2 = "' + sTel2 +
+                        '" WHERE idusuario = "' + IntToStr(iID) + '";');
+      ADOQuery1.ExecSQL;
+      LoadUser();
+      EnabledFields(false);
+      DBGrid1.DataSource.DataSet.MoveBy(iIndex-1);
+      DBGrid1.SetFocus;
+    end
+    else
+    begin
+      if (VerifyUser(txtUsuario.Text)) then
+      begin
+        if (cboPermissao.ItemIndex = 1) then
+          txtPermissao.Text:= '1'
+        else
+          if (cboPermissao.ItemIndex = 0) then
+            txtPermissao.Text:= '0';
+
+        txtUsuarioCriacao.Text:= frmLogin.idUsuario;
+        ADOQuery1.Post;
+        EnabledFields(false);
+        DBGrid1.SetFocus;
+      end
+      else
+      begin
+        Application.MessageBox('Login já casdatrado!' + chr(13) + 'Favor inserir um novo nome de usuário.', 'Erro!', + MB_OK + MB_ICONERROR);
+        txtUsuario.SetFocus;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmUsuario.btnIncluirClick(Sender: TObject);
+begin
+  bUpdate:= false;
+  EnabledFields(true);
+  ADOQuery1.Insert;
+end;
+
+procedure TfrmUsuario.cboPermissaoChange(Sender: TObject);
+begin
+  {if (cboPermissao.ItemIndex = 1) then
+    txtPermissao.Text:= '1'
+  else
+    if (cboPermissao.ItemIndex = 0) then
+      txtPermissao.Text:= '0';}
+end;
+
+procedure TfrmUsuario.chkSenhaClick(Sender: TObject);
+begin
+  if (chkSenha.Checked) then
+    txtSenha.PasswordChar:= #0
+  else
+    txtSenha.PasswordChar:= '*';
+end;
+
+procedure TfrmUsuario.DBGrid1CellClick(Column: TColumn);
+begin
+  iIndex:= DBGrid1.DataSource.DataSet.RecNo;
+end;
+
+procedure TfrmUsuario.Fechar1Click(Sender: TObject);
+begin
+  frmLogin.Close;
+end;
+
+procedure TfrmUsuario.txtPermissaoChange(Sender: TObject);
+begin
+  if (txtPermissao.Text = 'Sim') then
+    cboPermissao.ItemIndex:= 1
+  else
+    if (txtPermissao.Text = 'Não') then
+      cboPermissao.ItemIndex:= 0;
+end;
+
+procedure TfrmUsuario.Voltar1Click(Sender: TObject);
+begin
+  frmSubRamo.Show;
+  frmUsuario.Close;
+end;
+
+end.
