@@ -193,7 +193,9 @@ begin
   begin
     iID:= DBGrid1.SelectedField.Value;
     ADOQuery1.SQL.Clear;
-    ADOQuery1.SQL.Add('UPDATE usuario SET excluido = 1 WHERE idusuario = "' + IntToStr(iID) + '";');
+    ADOQuery1.SQL.Add('UPDATE usuario SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                                    '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
+                      '" WHERE idusuario = "' + IntToStr(iID) + '";');
     ADOQuery1.ExecSQL;
     LoadUser();
     DBGrid1.SetFocus;
