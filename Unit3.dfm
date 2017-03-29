@@ -17,7 +17,7 @@ object frmUsuario: TfrmUsuario
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 517
+    Left = 423
     Top = 229
     Width = 43
     Height = 13
@@ -186,12 +186,21 @@ object frmUsuario: TfrmUsuario
     FocusControl = txtCPF
   end
   object Label2: TLabel
-    Left = 572
+    Left = 489
     Top = 232
     Width = 72
     Height = 13
     Caption = 'UsuarioCriacao'
     FocusControl = txtUsuarioCriacao
+    Visible = False
+  end
+  object Label3: TLabel
+    Left = 571
+    Top = 232
+    Width = 59
+    Height = 13
+    Caption = 'DataCriacao'
+    FocusControl = txtDataCriacao
     Visible = False
   end
   object GroupBox4: TGroupBox
@@ -282,7 +291,7 @@ object frmUsuario: TfrmUsuario
       end>
   end
   object txtID: TDBEdit
-    Left = 517
+    Left = 423
     Top = 248
     Width = 43
     Height = 21
@@ -554,13 +563,23 @@ object frmUsuario: TfrmUsuario
     TabOrder = 7
   end
   object txtUsuarioCriacao: TDBEdit
-    Left = 572
+    Left = 489
     Top = 248
     Width = 72
     Height = 21
     DataField = 'UsuarioCriacao'
     DataSource = DataSource1
     TabOrder = 28
+    Visible = False
+  end
+  object txtDataCriacao: TDBEdit
+    Left = 571
+    Top = 248
+    Width = 72
+    Height = 21
+    DataField = 'DataCriacao'
+    DataSource = DataSource1
+    TabOrder = 29
     Visible = False
   end
   object DataSource1: TDataSource
@@ -655,6 +674,16 @@ object frmUsuario: TfrmUsuario
     object ADOQuery1UsuarioCriacao: TStringField
       FieldName = 'UsuarioCriacao'
       Size = 10
+    end
+    object ADOQuery1DataCriacao: TDateTimeField
+      FieldName = 'DataCriacao'
+    end
+    object ADOQuery1UsuarioAlteracao: TStringField
+      FieldName = 'UsuarioAlteracao'
+      Size = 10
+    end
+    object ADOQuery1DataAlteracao: TDateTimeField
+      FieldName = 'DataAlteracao'
     end
   end
   object MainMenu1: TMainMenu

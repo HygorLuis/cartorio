@@ -81,6 +81,11 @@ type
     ADOQuery1UsuarioCriacao: TStringField;
     Label2: TLabel;
     txtUsuarioCriacao: TDBEdit;
+    ADOQuery1DataCriacao: TDateTimeField;
+    ADOQuery1UsuarioAlteracao: TStringField;
+    ADOQuery1DataAlteracao: TDateTimeField;
+    Label3: TLabel;
+    txtDataCriacao: TDBEdit;
     procedure ADOQuery1AdmGetText(Sender: TField; var Text: string;
     DisplayText: Boolean);
     procedure txtPermissaoChange(Sender: TObject);
@@ -246,6 +251,8 @@ begin
                                         '", Telefone1 = "' + sTel1 +
                                         '", DD2 = "' + sDD2 +
                                         '", Telefone2 = "' + sTel2 +
+                                        '", UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                        '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
                         '" WHERE idusuario = "' + IntToStr(iID) + '";');
       ADOQuery1.ExecSQL;
       LoadUser();
@@ -264,6 +271,7 @@ begin
             txtPermissao.Text:= '0';
 
         txtUsuarioCriacao.Text:= frmLogin.idUsuario;
+        txtDataCriacao.Text:= DateTimeToStr(Now);
         ADOQuery1.Post;
         EnabledFields(false);
         DBGrid1.SetFocus;
