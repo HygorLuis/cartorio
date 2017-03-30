@@ -3,7 +3,7 @@ object frmLogin: TfrmLogin
   Top = 295
   BorderIcons = [biMinimize, biMaximize]
   Caption = 'Login'
-  ClientHeight = 148
+  ClientHeight = 147
   ClientWidth = 193
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -48,23 +48,7 @@ object frmLogin: TfrmLogin
     PasswordChar = '*'
     TabOrder = 1
   end
-  object Button1: TButton
-    Left = 8
-    Top = 112
-    Width = 75
-    Height = 25
-    Cursor = crHandPoint
-    Caption = 'Fechar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clRed
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 3
-    OnClick = Button1Click
-  end
-  object btnEntrar: TButton
+  object btnEntrar: TBitBtn
     Left = 112
     Top = 112
     Width = 75
@@ -75,10 +59,26 @@ object frmLogin: TfrmLogin
     Font.Color = clGreen
     Font.Height = -11
     Font.Name = 'Tahoma'
-    Font.Style = []
+    Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 2
     OnClick = btnEntrarClick
+  end
+  object btnFechar: TBitBtn
+    Left = 8
+    Top = 112
+    Width = 75
+    Height = 25
+    Cursor = crHandPoint
+    Caption = 'Fechar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+    OnClick = btnFecharClick
   end
   object ADOConnection1: TADOConnection
     Connected = True

@@ -113,7 +113,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, Unit2;
+uses Unit1, Unit2, Unit4;
 
 procedure LoadUser();
 begin

@@ -397,6 +397,7 @@ object frmSubRamo: TfrmSubRamo
           FFFFFFFFFFFFFFFBFCFDF0F5F7E1EBF0D0E0E8BBD4DFA6C8D78DBACD7FB2C7C0
           E4ECFDFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
         Caption = 'Lan'#231'amentos'
+        OnClick = Lanamentos1Click
       end
     end
     object Fechar1: TMenuItem

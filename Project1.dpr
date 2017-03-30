@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   Unit1 in 'Unit1.pas' {frmLogin},
   Unit2 in 'Unit2.pas' {frmSubRamo},
-  Unit3 in 'Unit3.pas' {frmUsuario};
+  Unit3 in 'Unit3.pas' {frmUsuario},
+  Unit4 in 'Unit4.pas' {frmLancamento};
 
 {$R *.res}
 
@@ -14,5 +15,6 @@ begin
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TfrmSubRamo, frmSubRamo);
   Application.CreateForm(TfrmUsuario, frmUsuario);
+  Application.CreateForm(TfrmLancamento, frmLancamento);
   Application.Run;
 end.

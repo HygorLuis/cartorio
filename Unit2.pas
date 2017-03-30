@@ -24,6 +24,7 @@ type
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure cboSubRamoChange(Sender: TObject);
+    procedure Lanamentos1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +38,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, Unit3;
+uses Unit1, Unit3, Unit4;
 
 
 procedure TfrmSubRamo.CadUsurio2Click(Sender: TObject);
@@ -72,6 +73,12 @@ end;
 procedure TfrmSubRamo.Fechar1Click(Sender: TObject);
 begin
   frmLogin.Close;
+end;
+
+procedure TfrmSubRamo.Lanamentos1Click(Sender: TObject);
+begin
+  frmLancamento.Show();
+  frmSubRamo.Close;
 end;
 
 end.

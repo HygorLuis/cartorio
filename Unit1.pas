@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.StdCtrls,
+  Vcl.Buttons;
 
 type
   TfrmLogin = class(TForm)
@@ -12,11 +13,11 @@ type
     Label2: TLabel;
     txtUsuario: TEdit;
     txtSenha: TEdit;
-    Button1: TButton;
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
-    btnEntrar: TButton;
-    procedure Button1Click(Sender: TObject);
+    btnEntrar: TBitBtn;
+    btnFechar: TBitBtn;
+    procedure btnFecharClick(Sender: TObject);
     procedure btnEntrarClick(Sender: TObject);
   private
     { Private declarations }
@@ -32,7 +33,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit2, Unit3;
+uses Unit2, Unit3, Unit4;
 function SearchUser(Usuario:String; Senha:String): Boolean;
 begin
     frmLogin.ADOQuery1.SQL.Clear;
@@ -61,13 +62,13 @@ begin
   end
   else
   begin
-    Application.MessageBox('Usuário ou Senha Inválidos!', 'Erro', + MB_OK + MB_ICONERROR);
+    Application.MessageBox('Usuário ou Senha Inválidos!', 'Error!', + MB_OK + MB_ICONERROR);
   end;
 end;
 
-procedure TfrmLogin.Button1Click(Sender: TObject);
+procedure TfrmLogin.btnFecharClick(Sender: TObject);
 begin
-Close;
+  Close;
 end;
 
 end.
