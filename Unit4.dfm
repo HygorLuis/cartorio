@@ -49,15 +49,15 @@ object frmLancamento: TfrmLancamento
     Width = 43
     Height = 13
     Caption = 'Esp'#233'cie: '
-    FocusControl = DBEdit4
+    FocusControl = txtEspecie
   end
   object lblComarca: TLabel
-    Left = 274
+    Left = 266
     Top = 288
     Width = 49
     Height = 13
     Caption = 'Comarca: '
-    FocusControl = DBEdit5
+    FocusControl = txtComarca
   end
   object lblFonte: TLabel
     Left = 496
@@ -65,7 +65,7 @@ object frmLancamento: TfrmLancamento
     Width = 35
     Height = 13
     Caption = 'Fonte: '
-    FocusControl = DBEdit6
+    FocusControl = txtFonte
   end
   object lblNumero: TLabel
     Left = 488
@@ -73,7 +73,7 @@ object frmLancamento: TfrmLancamento
     Width = 44
     Height = 13
     Caption = 'N'#250'mero: '
-    FocusControl = DBEdit7
+    FocusControl = txtNumero
   end
   object lblRamo: TLabel
     Left = 43
@@ -103,6 +103,7 @@ object frmLancamento: TfrmLancamento
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 0
+    OnClick = btnIncluirClick
   end
   object btnAlterar: TBitBtn
     Left = 238
@@ -118,6 +119,7 @@ object frmLancamento: TfrmLancamento
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
+    OnClick = btnAlterarClick
   end
   object btnGravar: TBitBtn
     Left = 350
@@ -150,6 +152,7 @@ object frmLancamento: TfrmLancamento
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 3
+    OnClick = btnCancelarClick
   end
   object btnExcluir: TBitBtn
     Left = 561
@@ -165,24 +168,7 @@ object frmLancamento: TfrmLancamento
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 4
-  end
-  object DBComboBox1: TDBComboBox
-    Left = 80
-    Top = 240
-    Width = 121
-    Height = 21
-    DataField = 'Nome'
-    DataSource = DataSource2
-    TabOrder = 5
-  end
-  object DBComboBox2: TDBComboBox
-    Left = 274
-    Top = 240
-    Width = 199
-    Height = 21
-    DataField = 'Nome'
-    DataSource = DataSource3
-    TabOrder = 6
+    OnClick = btnExcluirClick
   end
   object DBGrid1: TDBGrid
     Left = 8
@@ -191,7 +177,7 @@ object frmLancamento: TfrmLancamento
     Height = 133
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
-    TabOrder = 7
+    TabOrder = 5
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -252,7 +238,7 @@ object frmLancamento: TfrmLancamento
     Height = 21
     DataField = 'idlancamento'
     DataSource = DataSource1
-    TabOrder = 8
+    TabOrder = 6
     Visible = False
   end
   object DBEdit2: TDBEdit
@@ -262,7 +248,7 @@ object frmLancamento: TfrmLancamento
     Height = 21
     DataField = 'idRamo'
     DataSource = DataSource1
-    TabOrder = 9
+    TabOrder = 7
     Visible = False
   end
   object DBEdit3: TDBEdit
@@ -272,57 +258,88 @@ object frmLancamento: TfrmLancamento
     Height = 21
     DataField = 'idSubRamo'
     DataSource = DataSource1
-    TabOrder = 10
+    TabOrder = 8
     Visible = False
   end
-  object DBEdit4: TDBEdit
+  object txtEspecie: TDBEdit
     Left = 80
     Top = 285
     Width = 129
     Height = 21
     DataField = 'Especie'
     DataSource = DataSource1
-    TabOrder = 11
+    Enabled = False
+    TabOrder = 9
   end
-  object DBEdit5: TDBEdit
-    Left = 326
+  object txtComarca: TDBEdit
+    Left = 318
     Top = 285
     Width = 129
     Height = 21
     DataField = 'Comarca'
     DataSource = DataSource1
-    TabOrder = 12
+    Enabled = False
+    TabOrder = 10
   end
-  object DBEdit6: TDBEdit
+  object txtFonte: TDBEdit
     Left = 534
     Top = 240
     Width = 129
     Height = 21
     DataField = 'Fonte'
     DataSource = DataSource1
-    TabOrder = 13
+    Enabled = False
+    TabOrder = 11
   end
-  object DBEdit7: TDBEdit
+  object txtNumero: TDBEdit
     Left = 534
     Top = 285
     Width = 129
     Height = 21
     DataField = 'Numero'
     DataSource = DataSource1
-    TabOrder = 14
+    Enabled = False
+    TabOrder = 12
   end
-  object DBRichEdit1: TDBRichEdit
+  object reEmenta: TDBRichEdit
     Left = 8
     Top = 328
     Width = 754
     Height = 185
     DataField = 'Ementa'
     DataSource = DataSource1
+    Enabled = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
+    TabOrder = 13
+  end
+  object cboRamo: TDBLookupComboBox
+    Left = 80
+    Top = 240
+    Width = 130
+    Height = 21
+    DataField = 'idRamo'
+    DataSource = DataSource1
+    Enabled = False
+    KeyField = 'idramo'
+    ListField = 'Nome'
+    ListSource = DataSource2
+    TabOrder = 14
+  end
+  object cboSubRamo: TDBLookupComboBox
+    Left = 274
+    Top = 240
+    Width = 199
+    Height = 21
+    DataField = 'idSubRamo'
+    DataSource = DataSource1
+    Enabled = False
+    KeyField = 'idSubRamo'
+    ListField = 'Nome'
+    ListSource = DataSource3
     TabOrder = 15
   end
   object ADOQuery1: TADOQuery
@@ -330,7 +347,9 @@ object frmLancamento: TfrmLancamento
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'SELECT * FROM lancamento;')
+      
+        'SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != ' +
+        '1);')
     Left = 8
     Top = 152
     object ADOQuery1idlancamento: TAutoIncField
@@ -616,6 +635,7 @@ object frmLancamento: TfrmLancamento
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       Caption = 'Voltar'
       Hint = 'Voltar para a tela inicial'
+      OnClick = Voltar1Click
     end
   end
   object ADOQuery2: TADOQuery
