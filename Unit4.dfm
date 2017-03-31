@@ -4,7 +4,7 @@ object frmLancamento: TfrmLancamento
   BorderIcons = [biMinimize, biMaximize]
   Caption = 'Lan'#231'amentos'
   ClientHeight = 522
-  ClientWidth = 770
+  ClientWidth = 777
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,43 +16,16 @@ object frmLancamento: TfrmLancamento
   Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 699
-    Top = 152
-    Width = 63
-    Height = 13
-    Caption = 'idlancamento'
-    FocusControl = DBEdit1
-    Visible = False
-  end
-  object Label2: TLabel
-    Left = 699
-    Top = 208
-    Width = 35
-    Height = 13
-    Caption = 'idRamo'
-    FocusControl = DBEdit2
-    Visible = False
-  end
-  object Label3: TLabel
-    Left = 699
-    Top = 232
-    Width = 53
-    Height = 13
-    Caption = 'idSubRamo'
-    FocusControl = DBEdit3
-    Visible = False
-  end
   object lblEspecie: TLabel
-    Left = 34
-    Top = 288
+    Left = 514
+    Top = 243
     Width = 43
     Height = 13
     Caption = 'Esp'#233'cie: '
     FocusControl = txtEspecie
   end
   object lblComarca: TLabel
-    Left = 266
+    Left = 37
     Top = 288
     Width = 49
     Height = 13
@@ -60,15 +33,15 @@ object frmLancamento: TfrmLancamento
     FocusControl = txtComarca
   end
   object lblFonte: TLabel
-    Left = 496
-    Top = 243
+    Left = 280
+    Top = 288
     Width = 35
     Height = 13
     Caption = 'Fonte: '
     FocusControl = txtFonte
   end
   object lblNumero: TLabel
-    Left = 488
+    Left = 496
     Top = 288
     Width = 44
     Height = 13
@@ -76,22 +49,40 @@ object frmLancamento: TfrmLancamento
     FocusControl = txtNumero
   end
   object lblRamo: TLabel
-    Left = 43
+    Left = 51
     Top = 243
     Width = 34
     Height = 13
     Caption = 'Ramo: '
   end
   object lblSubRamo: TLabel
-    Left = 216
+    Left = 235
     Top = 243
     Width = 55
     Height = 13
     Caption = 'Sub Ramo: '
   end
+  object Label1: TLabel
+    Left = 693
+    Top = 202
+    Width = 72
+    Height = 13
+    Caption = 'UsuarioCriacao'
+    FocusControl = txtUsuarioCriacao
+    Visible = False
+  end
+  object Label2: TLabel
+    Left = 693
+    Top = 248
+    Width = 59
+    Height = 13
+    Caption = 'DataCriacao'
+    FocusControl = txtDataCriacao
+    Visible = False
+  end
   object btnIncluir: TBitBtn
-    Left = 126
-    Top = 176
+    Left = 117
+    Top = 181
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -106,8 +97,8 @@ object frmLancamento: TfrmLancamento
     OnClick = btnIncluirClick
   end
   object btnAlterar: TBitBtn
-    Left = 238
-    Top = 176
+    Left = 229
+    Top = 181
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -122,8 +113,8 @@ object frmLancamento: TfrmLancamento
     OnClick = btnAlterarClick
   end
   object btnGravar: TBitBtn
-    Left = 350
-    Top = 176
+    Left = 341
+    Top = 181
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -136,10 +127,11 @@ object frmLancamento: TfrmLancamento
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 2
+    OnClick = btnGravarClick
   end
   object btnCancelar: TBitBtn
-    Left = 457
-    Top = 176
+    Left = 448
+    Top = 181
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -155,8 +147,8 @@ object frmLancamento: TfrmLancamento
     OnClick = btnCancelarClick
   end
   object btnExcluir: TBitBtn
-    Left = 561
-    Top = 176
+    Left = 552
+    Top = 181
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -173,7 +165,7 @@ object frmLancamento: TfrmLancamento
   object DBGrid1: TDBGrid
     Left = 8
     Top = 8
-    Width = 753
+    Width = 762
     Height = 133
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
@@ -183,7 +175,13 @@ object frmLancamento: TfrmLancamento
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
     Columns = <
+      item
+        Expanded = False
+        FieldName = 'idlancamento'
+        Visible = False
+      end
       item
         Expanded = False
         FieldName = 'idRamo'
@@ -197,7 +195,7 @@ object frmLancamento: TfrmLancamento
         FieldName = 'idSubRamo'
         Title.Alignment = taCenter
         Title.Caption = 'Sub - Ramo'
-        Width = 100
+        Width = 200
         Visible = True
       end
       item
@@ -219,7 +217,7 @@ object frmLancamento: TfrmLancamento
         Expanded = False
         FieldName = 'Fonte'
         Title.Alignment = taCenter
-        Width = 100
+        Width = 110
         Visible = True
       end
       item
@@ -227,84 +225,54 @@ object frmLancamento: TfrmLancamento
         FieldName = 'Numero'
         Title.Alignment = taCenter
         Title.Caption = 'N'#250'mero'
-        Width = 150
+        Width = 112
         Visible = True
       end>
   end
-  object DBEdit1: TDBEdit
-    Left = 699
-    Top = 168
-    Width = 63
-    Height = 21
-    DataField = 'idlancamento'
-    DataSource = DataSource1
-    TabOrder = 6
-    Visible = False
-  end
-  object DBEdit2: TDBEdit
-    Left = 699
-    Top = 208
-    Width = 63
-    Height = 21
-    DataField = 'idRamo'
-    DataSource = DataSource1
-    TabOrder = 7
-    Visible = False
-  end
-  object DBEdit3: TDBEdit
-    Left = 699
-    Top = 248
-    Width = 63
-    Height = 21
-    DataField = 'idSubRamo'
-    DataSource = DataSource1
-    TabOrder = 8
-    Visible = False
-  end
   object txtEspecie: TDBEdit
-    Left = 80
-    Top = 285
+    Left = 560
+    Top = 240
     Width = 129
     Height = 21
     DataField = 'Especie'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 9
+    TabOrder = 6
   end
   object txtComarca: TDBEdit
-    Left = 318
+    Left = 89
     Top = 285
     Width = 129
     Height = 21
     DataField = 'Comarca'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 10
+    TabOrder = 7
   end
   object txtFonte: TDBEdit
-    Left = 534
-    Top = 240
+    Left = 318
+    Top = 285
     Width = 129
     Height = 21
     DataField = 'Fonte'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 11
+    TabOrder = 8
   end
   object txtNumero: TDBEdit
-    Left = 534
+    Left = 542
     Top = 285
     Width = 129
     Height = 21
     DataField = 'Numero'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 12
+    TabOrder = 9
   end
   object reEmenta: TDBRichEdit
     Left = 8
     Top = 328
-    Width = 754
+    Width = 762
     Height = 185
     DataField = 'Ementa'
     DataSource = DataSource1
@@ -314,10 +282,10 @@ object frmLancamento: TfrmLancamento
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
-    TabOrder = 13
+    TabOrder = 10
   end
   object cboRamo: TDBLookupComboBox
-    Left = 80
+    Left = 88
     Top = 240
     Width = 130
     Height = 21
@@ -327,12 +295,12 @@ object frmLancamento: TfrmLancamento
     KeyField = 'idramo'
     ListField = 'Nome'
     ListSource = DataSource2
-    TabOrder = 14
+    TabOrder = 11
   end
   object cboSubRamo: TDBLookupComboBox
-    Left = 274
+    Left = 293
     Top = 240
-    Width = 199
+    Width = 204
     Height = 21
     DataField = 'idSubRamo'
     DataSource = DataSource1
@@ -340,9 +308,30 @@ object frmLancamento: TfrmLancamento
     KeyField = 'idSubRamo'
     ListField = 'Nome'
     ListSource = DataSource3
-    TabOrder = 15
+    TabOrder = 12
+  end
+  object txtUsuarioCriacao: TDBEdit
+    Left = 693
+    Top = 221
+    Width = 62
+    Height = 21
+    DataField = 'UsuarioCriacao'
+    DataSource = DataSource1
+    TabOrder = 13
+    Visible = False
+  end
+  object txtDataCriacao: TDBEdit
+    Left = 693
+    Top = 267
+    Width = 62
+    Height = 21
+    DataField = 'DataCriacao'
+    DataSource = DataSource1
+    TabOrder = 14
+    Visible = False
   end
   object ADOQuery1: TADOQuery
+    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -358,10 +347,12 @@ object frmLancamento: TfrmLancamento
     end
     object ADOQuery1idRamo: TStringField
       FieldName = 'idRamo'
+      OnGetText = ADOQuery1idRamoGetText
       Size = 10
     end
     object ADOQuery1idSubRamo: TStringField
       FieldName = 'idSubRamo'
+      OnGetText = ADOQuery1idSubRamoGetText
       Size = 10
     end
     object ADOQuery1Especie: TStringField

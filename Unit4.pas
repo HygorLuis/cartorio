@@ -18,25 +18,6 @@ type
     DBGrid1: TDBGrid;
     ADOQuery1: TADOQuery;
     DataSource1: TDataSource;
-    ADOQuery1idlancamento: TAutoIncField;
-    ADOQuery1idRamo: TStringField;
-    ADOQuery1idSubRamo: TStringField;
-    ADOQuery1Especie: TStringField;
-    ADOQuery1Comarca: TStringField;
-    ADOQuery1Fonte: TStringField;
-    ADOQuery1Numero: TStringField;
-    ADOQuery1Ementa: TStringField;
-    ADOQuery1UsuarioCriacao: TStringField;
-    ADOQuery1DataCriacao: TDateTimeField;
-    ADOQuery1UsuarioAlteracao: TStringField;
-    ADOQuery1DataAlteracao: TDateTimeField;
-    ADOQuery1Excluido: TStringField;
-    Label1: TLabel;
-    DBEdit1: TDBEdit;
-    Label2: TLabel;
-    DBEdit2: TDBEdit;
-    Label3: TLabel;
-    DBEdit3: TDBEdit;
     lblEspecie: TLabel;
     txtEspecie: TDBEdit;
     lblComarca: TLabel;
@@ -56,16 +37,39 @@ type
     DataSource3: TDataSource;
     cboRamo: TDBLookupComboBox;
     cboSubRamo: TDBLookupComboBox;
+    Label1: TLabel;
+    txtUsuarioCriacao: TDBEdit;
+    Label2: TLabel;
+    txtDataCriacao: TDBEdit;
+    ADOQuery1idlancamento: TAutoIncField;
+    ADOQuery1idRamo: TStringField;
+    ADOQuery1idSubRamo: TStringField;
+    ADOQuery1Especie: TStringField;
+    ADOQuery1Comarca: TStringField;
+    ADOQuery1Fonte: TStringField;
+    ADOQuery1Numero: TStringField;
+    ADOQuery1Ementa: TStringField;
+    ADOQuery1UsuarioCriacao: TStringField;
+    ADOQuery1DataCriacao: TDateTimeField;
+    ADOQuery1UsuarioAlteracao: TStringField;
+    ADOQuery1DataAlteracao: TDateTimeField;
+    ADOQuery1Excluido: TStringField;
     procedure btnIncluirClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure Voltar1Click(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure ADOQuery1idRamoGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure ADOQuery1idSubRamoGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
     bUpdate: Boolean;
-    iID: integer;
+    iID, iIndex: integer;
   end;
 
 var
@@ -76,6 +80,35 @@ implementation
 {$R *.dfm}
 
 uses Unit1, Unit2, Unit3;
+
+procedure LoadRamo();
+begin
+  frmLancamento.ADOQuery2.SQL.Clear;
+  frmLancamento.ADOQuery2.SQL.Add('SELECT * FROM ramo;');
+  frmLancamento.ADOQuery2.open;
+  frmLancamento.ADOQuery2.Active:= true;
+end;
+
+Procedure LoadSubRamo();
+begin
+  frmLancamento.ADOQuery3.SQL.Clear;
+  frmLancamento.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo;');
+  frmLancamento.ADOQuery3.open;
+  frmLancamento.ADOQuery3.Active:= true;
+end;
+
+function VerifyComponents(): Boolean;
+begin
+   if (frmLancamento.cboRamo.Text = '') or
+      (frmLancamento.cboSubRamo.Text = '') or
+      (frmLancamento.txtEspecie.Text = '') or
+      (frmLancamento.txtComarca.Text = '') or
+      (frmLancamento.txtFonte.Text = '') or
+      (frmLancamento.txtNumero.Text = '') then
+    Result:= true
+   else
+    Result:= false;
+end;
 
 procedure LoadLancamento();
 begin
@@ -104,6 +137,36 @@ begin
   frmLancamento.btnExcluir.Enabled:= not bEnabled;
 end;
 
+procedure TfrmLancamento.ADOQuery1idRamoGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  if (Sender.value <> null) then
+  begin
+    ADOQuery2.SQL.Clear;
+    ADOQuery2.SQL.Add('SELECT * FROM ramo WHERE idRamo = ' + Sender.value + ';');
+    ADOQuery2.open;
+    ADOQuery2.Active:= true;
+    Text:=  ADOQuery2.FieldByName('Nome').Value;
+
+    LoadRamo();
+  end;
+end;
+
+procedure TfrmLancamento.ADOQuery1idSubRamoGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  if (Sender.value <> null) then
+  begin
+    ADOQuery3.SQL.Clear;
+    ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idSubRamo = ' + Sender.value + ';');
+    ADOQuery3.open;
+    ADOQuery3.Active:= true;
+    Text:=  ADOQuery3.FieldByName('Nome').Value;
+
+    LoadSubRamo();
+  end;
+end;
+
 procedure TfrmLancamento.btnAlterarClick(Sender: TObject);
 begin
   bUpdate:= true;
@@ -113,7 +176,6 @@ end;
 procedure TfrmLancamento.btnCancelarClick(Sender: TObject);
 begin
   ADOQuery1.Cancel;
-  //cboPermissao.ItemIndex:= StrToInt(ADOQuery1.FieldByName('Adm').Value);
   EnabledFields(false);
   DBGrid1.SetFocus;
 end;
@@ -124,12 +186,64 @@ begin
   begin
     iID:= DBGrid1.SelectedField.Value;
     ADOQuery1.SQL.Clear;
-    {ADOQuery1.SQL.Add('UPDATE usuario SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
+    ADOQuery1.SQL.Add('UPDATE lancamento SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
                                                     '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
-                      '" WHERE idusuario = "' + IntToStr(iID) + '";');
-    ADOQuery1.ExecSQL; }
+                      '" WHERE idlancamento = "' + IntToStr(iID) + '";');
+    ADOQuery1.ExecSQL;
     LoadLancamento();
     DBGrid1.SetFocus;
+  end;
+end;
+
+procedure TfrmLancamento.btnGravarClick(Sender: TObject);
+var sEspecie, sComarca, sFonte, sNumero, sEmenta, sIndexRamo, sIndexSubRamo: String;
+begin
+  if (VerifyComponents()) then
+  begin
+    Application.MessageBox('Alguns campos estão em brancos!', 'Atenção!', + MB_OK + MB_ICONEXCLAMATION);
+    //txtUsuario.SetFocus;
+  end
+  else
+  begin
+    if (bUpdate) then
+    begin
+      iID:= DBGrid1.SelectedField.Value;
+      sIndexRamo:= IntToStr(cboRamo.KeyValue);
+      sIndexSubRamo:= IntToStr(cboSubRamo.KeyValue);
+      sEspecie:= txtEspecie.Text;
+      sComarca:= txtComarca.Text;
+      sFonte:= txtFonte.Text;
+      sNumero:= txtNumero.Text;
+      //sEmenta:= reEmenta.get
+
+      //ADOQuery1.Close;
+      //ADOQuery1.Open;
+      ADOQuery1.SQL.Clear;
+      ADOQuery1.SQL.Add('UPDATE lancamento SET idRamo = "' + sIndexRamo +
+                                           '", idSubRamo = "' + sIndexSubRamo +
+                                           '", Especie = "' + sEspecie +
+                                           '", Comarca = "' + sComarca +
+                                           '", Fonte = "' + sFonte +
+                                           '", Numero = "' + sNumero +
+                                           '", UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                           '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
+                        '" WHERE idlancamento = "' + IntToStr(iID) + '";');
+      ADOQuery1.ExecSQL;
+      LoadLancamento();
+      EnabledFields(false);
+      DBGrid1.DataSource.DataSet.MoveBy(iIndex-1);
+      DBGrid1.SetFocus;
+    end
+    else
+    begin
+      txtUsuarioCriacao.Text:= frmLogin.idUsuario;
+      txtDataCriacao.Text:= DateTimeToStr(Now);
+      ADOQuery1.Post;
+      //DBGrid1.DataSource.DataSet.MoveBy(ADOQuery1.IndexFieldCount-1);
+      //DBGrid1.SetFocus;
+      EnabledFields(false);
+      DBGrid1.SetFocus;
+    end;
   end;
 end;
 
@@ -138,6 +252,12 @@ begin
   bUpdate:= false;
   EnabledFields(true);
   ADOQuery1.Insert;
+  cboRamo.KeyValue:= 1;
+end;
+
+procedure TfrmLancamento.DBGrid1CellClick(Column: TColumn);
+begin
+  iIndex:= DBGrid1.DataSource.DataSet.RecNo;
 end;
 
 procedure TfrmLancamento.Voltar1Click(Sender: TObject);
