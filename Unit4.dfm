@@ -296,6 +296,7 @@ object frmLancamento: TfrmLancamento
     ListField = 'Nome'
     ListSource = DataSource2
     TabOrder = 11
+    OnClick = cboRamoClick
   end
   object cboSubRamo: TDBLookupComboBox
     Left = 293

@@ -65,6 +65,7 @@ type
       DisplayText: Boolean);
     procedure ADOQuery1idSubRamoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure cboRamoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,7 +93,7 @@ end;
 Procedure LoadSubRamo();
 begin
   frmLancamento.ADOQuery3.SQL.Clear;
-  frmLancamento.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo;');
+  frmLancamento.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(frmLancamento.cboRamo.KeyValue)+ ';');
   frmLancamento.ADOQuery3.open;
   frmLancamento.ADOQuery3.Active:= true;
 end;
@@ -253,6 +254,15 @@ begin
   EnabledFields(true);
   ADOQuery1.Insert;
   cboRamo.KeyValue:= 1;
+end;
+
+procedure TfrmLancamento.cboRamoClick(Sender: TObject);
+begin
+  ADOQuery3.SQL.Clear;
+  ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(cboRamo.KeyValue) + ';');
+  ADOQuery3.Open;
+  ADOQuery3.Active:= true;
+  //cboSubRamo.KeyValue:= 1;
 end;
 
 procedure TfrmLancamento.DBGrid1CellClick(Column: TColumn);
