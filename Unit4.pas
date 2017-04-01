@@ -85,17 +85,20 @@ uses Unit1, Unit2, Unit3;
 procedure LoadRamo();
 begin
   frmLancamento.ADOQuery2.SQL.Clear;
-  frmLancamento.ADOQuery2.SQL.Add('SELECT * FROM ramo;');
+  frmLancamento.ADOQuery2.SQL.Add('SELECT * FROM ramo ORDER BY Nome;');
   frmLancamento.ADOQuery2.open;
   frmLancamento.ADOQuery2.Active:= true;
 end;
 
 Procedure LoadSubRamo();
 begin
-  frmLancamento.ADOQuery3.SQL.Clear;
-  frmLancamento.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(frmLancamento.cboRamo.KeyValue)+ ';');
-  frmLancamento.ADOQuery3.open;
-  frmLancamento.ADOQuery3.Active:= true;
+  if (frmLancamento.cboRamo.KeyValue <> null) then
+  begin
+    frmLancamento.ADOQuery3.SQL.Clear;
+    frmLancamento.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(frmLancamento.cboRamo.KeyValue)+ ' ORDER BY Nome;');
+    frmLancamento.ADOQuery3.open;
+    frmLancamento.ADOQuery3.Active:= true;
+  end;
 end;
 
 function VerifyComponents(): Boolean;
@@ -105,7 +108,8 @@ begin
       (frmLancamento.txtEspecie.Text = '') or
       (frmLancamento.txtComarca.Text = '') or
       (frmLancamento.txtFonte.Text = '') or
-      (frmLancamento.txtNumero.Text = '') then
+      (frmLancamento.txtNumero.Text = '') or
+      (frmLancamento.reEmenta.Text = '') then
     Result:= true
    else
     Result:= false;
@@ -201,8 +205,7 @@ var sEspecie, sComarca, sFonte, sNumero, sEmenta, sIndexRamo, sIndexSubRamo: Str
 begin
   if (VerifyComponents()) then
   begin
-    Application.MessageBox('Alguns campos estão em brancos!', 'Atenção!', + MB_OK + MB_ICONEXCLAMATION);
-    //txtUsuario.SetFocus;
+    Application.MessageBox('Alguns campos estão em branco!', 'Atenção!', + MB_OK + MB_ICONEXCLAMATION);
   end
   else
   begin
@@ -215,10 +218,8 @@ begin
       sComarca:= txtComarca.Text;
       sFonte:= txtFonte.Text;
       sNumero:= txtNumero.Text;
-      //sEmenta:= reEmenta.get
+      sEmenta:= reEmenta.Text;
 
-      //ADOQuery1.Close;
-      //ADOQuery1.Open;
       ADOQuery1.SQL.Clear;
       ADOQuery1.SQL.Add('UPDATE lancamento SET idRamo = "' + sIndexRamo +
                                            '", idSubRamo = "' + sIndexSubRamo +
@@ -226,6 +227,7 @@ begin
                                            '", Comarca = "' + sComarca +
                                            '", Fonte = "' + sFonte +
                                            '", Numero = "' + sNumero +
+                                           '", Ementa = "' + sEmenta +
                                            '", UsuarioAlteracao = "' + frmLogin.idUsuario +
                                            '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
                         '" WHERE idlancamento = "' + IntToStr(iID) + '";');
@@ -240,8 +242,6 @@ begin
       txtUsuarioCriacao.Text:= frmLogin.idUsuario;
       txtDataCriacao.Text:= DateTimeToStr(Now);
       ADOQuery1.Post;
-      //DBGrid1.DataSource.DataSet.MoveBy(ADOQuery1.IndexFieldCount-1);
-      //DBGrid1.SetFocus;
       EnabledFields(false);
       DBGrid1.SetFocus;
     end;
@@ -253,16 +253,15 @@ begin
   bUpdate:= false;
   EnabledFields(true);
   ADOQuery1.Insert;
-  cboRamo.KeyValue:= 1;
+  //cboRamo.KeyValue:= 1;
 end;
 
 procedure TfrmLancamento.cboRamoClick(Sender: TObject);
 begin
   ADOQuery3.SQL.Clear;
-  ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(cboRamo.KeyValue) + ';');
+  ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(cboRamo.KeyValue) + ' ORDER BY Nome;');
   ADOQuery3.Open;
   ADOQuery3.Active:= true;
-  //cboSubRamo.KeyValue:= 1;
 end;
 
 procedure TfrmLancamento.DBGrid1CellClick(Column: TColumn);

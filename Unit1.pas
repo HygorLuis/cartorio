@@ -57,7 +57,8 @@ begin
       frmSubRamo.MainMenu1.Items[0].Enabled:= True;
 
     frmSubRamo.Show;
-    frmSubRamo.cboSubRamo.ItemIndex:= 0;
+    frmSubRamo.cboRamo.ItemIndex:= 0;
+    frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
     frmLogin.Visible:= False;
   end
   else

@@ -3,7 +3,7 @@ object frmSubRamo: TfrmSubRamo
   Top = 0
   Caption = 'Sub - Ramos'
   ClientHeight = 368
-  ClientWidth = 718
+  ClientWidth = 790
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,21 +13,107 @@ object frmSubRamo: TfrmSubRamo
   Menu = MainMenu1
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object cboSubRamo: TComboBox
-    Left = 296
-    Top = 9
+  object lblRamo: TLabel
+    Left = 243
+    Top = 24
+    Width = 34
+    Height = 13
+    Caption = 'Ramo: '
+  end
+  object lblSubRamo: TLabel
+    Left = 222
+    Top = 59
+    Width = 55
+    Height = 13
+    Caption = 'Sub Ramo: '
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 184
+    Width = 762
+    Height = 133
+    DataSource = DataSource1
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'idlancamento'
+        Visible = False
+      end
+      item
+        Expanded = False
+        FieldName = 'idRamo'
+        Title.Alignment = taCenter
+        Title.Caption = 'Ramo'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'idSubRamo'
+        Title.Alignment = taCenter
+        Title.Caption = 'Sub - Ramo'
+        Width = 200
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Especie'
+        Title.Alignment = taCenter
+        Title.Caption = 'Esp'#233'cie'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Comarca'
+        Title.Alignment = taCenter
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Fonte'
+        Title.Alignment = taCenter
+        Width = 110
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Numero'
+        Title.Alignment = taCenter
+        Title.Caption = 'N'#250'mero'
+        Width = 112
+        Visible = True
+      end>
+  end
+  object cboRamo: TComboBox
+    Left = 283
+    Top = 21
     Width = 145
     Height = 21
-    TabOrder = 0
-    Items.Strings = (
-      '1'
-      '2'
-      '3')
+    TabOrder = 1
+    OnChange = cboRamoChange
+  end
+  object cboSubRamo: TComboBox
+    Left = 283
+    Top = 56
+    Width = 145
+    Height = 21
+    TabOrder = 2
   end
   object MainMenu1: TMainMenu
-    Left = 688
+    Left = 552
+    Top = 312
     object CadUsurio1: TMenuItem
       Bitmap.Data = {
         360C0000424D360C000000000000360000002800000020000000200000000100
@@ -440,5 +526,94 @@ object frmSubRamo: TfrmSubRamo
       Caption = 'Fechar'
       OnClick = Fechar1Click
     end
+  end
+  object ADOQuery1: TADOQuery
+    Active = True
+    Connection = frmLogin.ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != ' +
+        '1);')
+    Left = 8
+    Top = 8
+    object ADOQuery1idlancamento: TAutoIncField
+      FieldName = 'idlancamento'
+      ReadOnly = True
+    end
+    object ADOQuery1idRamo: TStringField
+      FieldName = 'idRamo'
+      OnGetText = ADOQuery1idRamoGetText
+      Size = 10
+    end
+    object ADOQuery1idSubRamo: TStringField
+      FieldName = 'idSubRamo'
+      OnGetText = ADOQuery1idSubRamoGetText
+      Size = 10
+    end
+    object ADOQuery1Especie: TStringField
+      FieldName = 'Especie'
+      Size = 45
+    end
+    object ADOQuery1Comarca: TStringField
+      FieldName = 'Comarca'
+      Size = 45
+    end
+    object ADOQuery1Fonte: TStringField
+      FieldName = 'Fonte'
+      Size = 45
+    end
+    object ADOQuery1Numero: TStringField
+      FieldName = 'Numero'
+      Size = 45
+    end
+    object ADOQuery1Ementa: TStringField
+      FieldName = 'Ementa'
+      Size = 100
+    end
+    object ADOQuery1UsuarioCriacao: TStringField
+      FieldName = 'UsuarioCriacao'
+      Size = 10
+    end
+    object ADOQuery1DataCriacao: TDateTimeField
+      FieldName = 'DataCriacao'
+    end
+    object ADOQuery1UsuarioAlteracao: TStringField
+      FieldName = 'UsuarioAlteracao'
+      Size = 10
+    end
+    object ADOQuery1DataAlteracao: TDateTimeField
+      FieldName = 'DataAlteracao'
+    end
+    object ADOQuery1Excluido: TStringField
+      FieldName = 'Excluido'
+      Size = 10
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOQuery1
+    Left = 40
+    Top = 8
+  end
+  object ADOQuery2: TADOQuery
+    Active = True
+    Connection = frmLogin.ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT * FROM ramo ORDER BY Nome;')
+    Left = 8
+    Top = 56
+  end
+  object ADOQuery3: TADOQuery
+    Active = True
+    Connection = frmLogin.ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT * FROM sub_ramo ORDER BY Nome;')
+    Left = 8
+    Top = 112
   end
 end
