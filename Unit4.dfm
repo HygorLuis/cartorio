@@ -339,7 +339,7 @@ object frmLancamento: TfrmLancamento
     SQL.Strings = (
       
         'SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != ' +
-        '1);')
+        '1) ORDER BY DataCriacao DESC;')
     Left = 8
     Top = 152
     object ADOQuery1idlancamento: TAutoIncField

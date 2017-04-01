@@ -59,6 +59,7 @@ begin
     frmSubRamo.Show;
     frmSubRamo.cboRamo.ItemIndex:= 0;
     frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
+    frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
     frmLogin.Visible:= False;
   end
   else

@@ -333,6 +333,9 @@ end;
 procedure TfrmUsuario.Voltar1Click(Sender: TObject);
 begin
   frmSubRamo.Show;
+  frmSubRamo.cboRamo.ItemIndex:= 0;
+  frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
+  frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
   frmUsuario.Close;
 end;
 

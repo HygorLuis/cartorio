@@ -118,7 +118,7 @@ end;
 procedure LoadLancamento();
 begin
   frmLancamento.ADOQuery1.SQL.Clear;
-  frmLancamento.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1);');
+  frmLancamento.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1) ORDER BY DataCriacao DESC;');
   frmLancamento.ADOQuery1.open;
   frmLancamento.ADOQuery1.Active:= true;
 end;
@@ -272,6 +272,9 @@ end;
 procedure TfrmLancamento.Voltar1Click(Sender: TObject);
 begin
   frmSubRamo.Show;
+  frmSubRamo.cboRamo.ItemIndex:= 0;
+  frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
+  frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
   frmLancamento.Close;
 end;
 

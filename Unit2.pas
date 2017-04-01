@@ -55,6 +55,8 @@ type
     procedure cboSubRamoChange(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
+    procedure ADOQuery1DataCriacaoGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -84,7 +86,7 @@ end;
 procedure Search(Filter: String);
 begin
   frmSubRamo.ADOQuery1.SQL.Clear;
-  frmSubRamo.ADOQuery1.SQL.Add('SELECT * FROM lancamento ' + Filter + ' ORDER BY DataCriacao DESC;');
+  frmSubRamo.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1)' + Filter + ' ORDER BY DataCriacao DESC;');
   frmSubRamo.ADOQuery1.open;
   frmSubRamo.ADOQuery1.Active:= true;
 end;
@@ -106,6 +108,13 @@ begin
     frmSubRamo.ADOQuery3.open;
     frmSubRamo.ADOQuery3.Active:= true;
   end;
+end;
+
+procedure TfrmSubRamo.ADOQuery1DataCriacaoGetText(Sender: TField;
+  var Text: string; DisplayText: Boolean);
+begin
+  if (ADOQuery1.FieldByName('DataCriacao').Value <> NULL) then
+    Text:=  FormatDateTime('dd/mm/yyyy', ADOQuery1.FieldByName('DataCriacao').Value);
 end;
 
 procedure TfrmSubRamo.ADOQuery1idRamoGetText(Sender: TField; var Text: string;
@@ -157,7 +166,7 @@ end;
 
 procedure TfrmSubRamo.cboRamoChange(Sender: TObject);
 begin
-  sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
+  sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
   cboSubRamo.Clear;
   cboSubRamo.Items.Add('TODOS');
   LoadSubRamo();
@@ -168,10 +177,10 @@ end;
 procedure TfrmSubRamo.cboSubRamoChange(Sender: TObject);
 begin
   case cboSubRamo.ItemIndex of
-    0: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
-    1: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
-    2: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
-    3: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
+    0: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
+    1: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
+    2: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
+    3: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
   end;
   Search(sFilter);
 end;

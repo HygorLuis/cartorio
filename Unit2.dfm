@@ -34,7 +34,7 @@ object frmSubRamo: TfrmSubRamo
     Left = 8
     Top = 88
     Width = 833
-    Height = 217
+    Height = 161
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
     TabOrder = 0
@@ -47,42 +47,54 @@ object frmSubRamo: TfrmSubRamo
       item
         Expanded = False
         FieldName = 'idRamo'
+        Title.Alignment = taCenter
+        Title.Caption = 'Ramo'
         Width = 100
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'idSubRamo'
+        Title.Alignment = taCenter
+        Title.Caption = 'Sub - Ramo'
         Width = 200
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Especie'
+        Title.Alignment = taCenter
+        Title.Caption = 'Esp'#233'cie'
         Width = 100
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Comarca'
+        Title.Alignment = taCenter
         Width = 100
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Fonte'
+        Title.Alignment = taCenter
         Width = 110
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Numero'
+        Title.Alignment = taCenter
+        Title.Caption = 'N'#250'mero'
         Width = 112
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'DataCriacao'
+        Title.Alignment = taCenter
+        Title.Caption = 'Dt. Cria'#231#227'o'
         Width = 70
         Visible = True
       end>
@@ -620,6 +632,7 @@ object frmSubRamo: TfrmSubRamo
     end
     object ADOQuery1DataCriacao: TDateTimeField
       FieldName = 'DataCriacao'
+      OnGetText = ADOQuery1DataCriacaoGetText
     end
     object ADOQuery1UsuarioAlteracao: TStringField
       FieldName = 'UsuarioAlteracao'
