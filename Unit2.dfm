@@ -3,7 +3,7 @@ object frmSubRamo: TfrmSubRamo
   Top = 0
   Caption = 'Sub - Ramos'
   ClientHeight = 368
-  ClientWidth = 790
+  ClientWidth = 849
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,24 +17,24 @@ object frmSubRamo: TfrmSubRamo
   PixelsPerInch = 96
   TextHeight = 13
   object lblRamo: TLabel
-    Left = 243
-    Top = 24
+    Left = 281
+    Top = 15
     Width = 34
     Height = 13
     Caption = 'Ramo: '
   end
   object lblSubRamo: TLabel
-    Left = 222
-    Top = 59
+    Left = 212
+    Top = 45
     Width = 55
     Height = 13
     Caption = 'Sub Ramo: '
   end
   object DBGrid1: TDBGrid
-    Left = 0
-    Top = 184
-    Width = 762
-    Height = 133
+    Left = 8
+    Top = 88
+    Width = 833
+    Height = 217
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
     TabOrder = 0
@@ -46,74 +46,116 @@ object frmSubRamo: TfrmSubRamo
     Columns = <
       item
         Expanded = False
-        FieldName = 'idlancamento'
-        Visible = False
-      end
-      item
-        Expanded = False
         FieldName = 'idRamo'
-        Title.Alignment = taCenter
-        Title.Caption = 'Ramo'
         Width = 100
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'idSubRamo'
-        Title.Alignment = taCenter
-        Title.Caption = 'Sub - Ramo'
         Width = 200
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Especie'
-        Title.Alignment = taCenter
-        Title.Caption = 'Esp'#233'cie'
         Width = 100
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Comarca'
-        Title.Alignment = taCenter
         Width = 100
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Fonte'
-        Title.Alignment = taCenter
         Width = 110
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Numero'
-        Title.Alignment = taCenter
-        Title.Caption = 'N'#250'mero'
         Width = 112
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DataCriacao'
+        Width = 70
         Visible = True
       end>
   end
   object cboRamo: TComboBox
-    Left = 283
-    Top = 21
-    Width = 145
+    Left = 321
+    Top = 15
+    Width = 110
     Height = 21
     TabOrder = 1
     OnChange = cboRamoChange
   end
   object cboSubRamo: TComboBox
-    Left = 283
-    Top = 56
-    Width = 145
+    Left = 273
+    Top = 45
+    Width = 206
     Height = 21
     TabOrder = 2
+    OnChange = cboSubRamoChange
+  end
+  object BitBtn1: TBitBtn
+    Left = 560
+    Top = 11
+    Width = 137
+    Height = 40
+    Caption = 'Pesquisa Avan'#231'ada'
+    TabOrder = 4
+    OnClick = BitBtn1Click
+  end
+  object Panel1: TPanel
+    Left = 525
+    Top = 0
+    Width = 305
+    Height = 74
+    TabOrder = 3
+    Visible = False
+    object ComboBox1: TComboBox
+      Left = 17
+      Top = 8
+      Width = 145
+      Height = 21
+      TabOrder = 0
+      Text = 'ComboBox1'
+    end
+    object Edit1: TEdit
+      Left = 168
+      Top = 8
+      Width = 121
+      Height = 21
+      TabOrder = 1
+      Text = 'Edit1'
+    end
+    object BitBtn2: TBitBtn
+      Left = 128
+      Top = 35
+      Width = 75
+      Height = 25
+      Caption = 'Pesuisar'
+      TabOrder = 2
+    end
+    object BitBtn3: TBitBtn
+      Left = 1
+      Top = 48
+      Width = 75
+      Height = 25
+      Caption = 'Fechar'
+      TabOrder = 3
+      OnClick = BitBtn3Click
+    end
   end
   object MainMenu1: TMainMenu
-    Left = 552
-    Top = 312
+    Left = 88
+    Top = 8
     object CadUsurio1: TMenuItem
       Bitmap.Data = {
         360C0000424D360C000000000000360000002800000020000000200000000100
@@ -613,7 +655,7 @@ object frmSubRamo: TfrmSubRamo
     Parameters = <>
     SQL.Strings = (
       'SELECT * FROM sub_ramo ORDER BY Nome;')
-    Left = 8
-    Top = 112
+    Left = 40
+    Top = 48
   end
 end

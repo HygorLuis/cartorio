@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Data.DB, Data.Win.ADODB,
-  Vcl.DBLookup;
+  Vcl.DBLookup, Vcl.Buttons;
 
 type
   TfrmSubRamo = class(TForm)
@@ -37,6 +37,12 @@ type
     ADOQuery3: TADOQuery;
     cboRamo: TComboBox;
     cboSubRamo: TComboBox;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    ComboBox1: TComboBox;
+    Edit1: TEdit;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -46,10 +52,13 @@ type
       DisplayText: Boolean);
     procedure ADOQuery1idSubRamoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure cboSubRamoChange(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
   private
     { Private declarations }
   public
-    { Public declarations }
+    sFilter: String
   end;
 
 var
@@ -60,6 +69,25 @@ implementation
 {$R *.dfm}
 
 uses Unit1, Unit3, Unit4;
+
+procedure LoadcboSubRamo();
+begin
+  frmSubRamo.ADOQuery3.First;
+  while not frmSubRamo.ADOQuery3.Eof do
+  begin
+    frmSubRamo.cboSubRamo.Items.Add(frmSubRamo.ADOQuery3.FieldByName('Nome').Value);
+    frmSubRamo.ADOQuery3.Next;
+  end;
+  frmSubRamo.cboSubRamo.ItemIndex:= 0;
+end;
+
+procedure Search(Filter: String);
+begin
+  frmSubRamo.ADOQuery1.SQL.Clear;
+  frmSubRamo.ADOQuery1.SQL.Add('SELECT * FROM lancamento ' + Filter + ' ORDER BY DataCriacao DESC;');
+  frmSubRamo.ADOQuery1.open;
+  frmSubRamo.ADOQuery1.Active:= true;
+end;
 
 procedure LoadRamo();
 begin
@@ -110,6 +138,16 @@ begin
   end;
 end;
 
+procedure TfrmSubRamo.BitBtn1Click(Sender: TObject);
+begin
+  Panel1.Visible:= True;
+end;
+
+procedure TfrmSubRamo.BitBtn3Click(Sender: TObject);
+begin
+  Panel1.Visible:= False;
+end;
+
 procedure TfrmSubRamo.CadUsurio2Click(Sender: TObject);
 begin
   frmUsuario.show();
@@ -119,16 +157,23 @@ end;
 
 procedure TfrmSubRamo.cboRamoChange(Sender: TObject);
 begin
+  sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
   cboSubRamo.Clear;
   cboSubRamo.Items.Add('TODOS');
   LoadSubRamo();
-  ADOQuery3.First;
-  while not ADOQuery3.Eof do
-  begin
-    cboSubRamo.Items.Add(ADOQuery3.FieldByName('Nome').Value);
-    ADOQuery3.Next;
+  LoadcboSubRamo();
+  Search(sFilter);
+end;
+
+procedure TfrmSubRamo.cboSubRamoChange(Sender: TObject);
+begin
+  case cboSubRamo.ItemIndex of
+    0: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
+    1: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
+    2: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
+    3: sFilter:= 'WHERE idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
   end;
-  cboSubRamo.ItemIndex:= 0;
+  Search(sFilter);
 end;
 
 procedure TfrmSubRamo.Fechar1Click(Sender: TObject);
