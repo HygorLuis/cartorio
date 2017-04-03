@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Data.DB, Data.Win.ADODB,
-  Vcl.DBLookup, Vcl.Buttons;
+  Vcl.DBLookup, Vcl.Buttons, Vcl.Mask;
 
 type
   TfrmSubRamo = class(TForm)
@@ -38,11 +38,11 @@ type
     cboRamo: TComboBox;
     cboSubRamo: TComboBox;
     Panel1: TPanel;
-    BitBtn1: TBitBtn;
-    ComboBox1: TComboBox;
-    Edit1: TEdit;
-    BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
+    btnAvançada: TBitBtn;
+    cboFiltro: TComboBox;
+    btnPesquisar: TBitBtn;
+    btnSair: TBitBtn;
+    txtAvançada: TMaskEdit;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -53,14 +53,16 @@ type
     procedure ADOQuery1idSubRamoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
     procedure cboSubRamoChange(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
+    procedure btnAvançadaClick(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
     procedure ADOQuery1DataCriacaoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure cboFiltroChange(Sender: TObject);
   private
     { Private declarations }
   public
-    sFilter: String
+    sFilter, sFilterAdvanced: String;
   end;
 
 var
@@ -147,14 +149,30 @@ begin
   end;
 end;
 
-procedure TfrmSubRamo.BitBtn1Click(Sender: TObject);
+procedure TfrmSubRamo.btnAvançadaClick(Sender: TObject);
 begin
   Panel1.Visible:= True;
 end;
 
-procedure TfrmSubRamo.BitBtn3Click(Sender: TObject);
+procedure TfrmSubRamo.btnPesquisarClick(Sender: TObject);
+begin
+  sFilterAdvanced:= '';
+  case cboFiltro.ItemIndex of
+    0: sFilterAdvanced:= ' AND Especie LIKE "%' + txtAvançada.Text + '%"';
+    1: sFilterAdvanced:= ' AND Comarca LIKE "%' + txtAvançada.Text + '%"';
+    2: sFilterAdvanced:= ' AND Fonte LIKE "%' + txtAvançada.Text + '%"';
+    3: sFilterAdvanced:= ' AND Numero LIKE "%' + txtAvançada.Text + '%"';
+    4: sFilterAdvanced:= ' AND DataCriacao LIKE "' + FormatDateTime('yyyy-MM-dd', StrToDate(txtAvançada.Text)) + '%"';
+  end;
+  Search(sFilter + sFilterAdvanced);
+  DBGrid1.SetFocus;
+end;
+
+procedure TfrmSubRamo.btnSairClick(Sender: TObject);
 begin
   Panel1.Visible:= False;
+  cboRamo.OnChange(frmSubRamo.cboRamo);
+  cboRamo.OnChange(frmSubRamo.cboSubRamo);
 end;
 
 procedure TfrmSubRamo.CadUsurio2Click(Sender: TObject);
@@ -162,6 +180,17 @@ begin
   frmUsuario.show();
   frmUsuario.DBGrid1.SetFocus;
   frmSubRamo.Close;
+end;
+
+procedure TfrmSubRamo.cboFiltroChange(Sender: TObject);
+begin
+  case cboFiltro.ItemIndex of
+    0: txtAvançada.EditMask:= '';
+    1: txtAvançada.EditMask:= '';
+    2: txtAvançada.EditMask:= '';
+    3: txtAvançada.EditMask:= '';
+    4: txtAvançada.EditMask:= '!99/99/0000;1;_';
+  end;
 end;
 
 procedure TfrmSubRamo.cboRamoChange(Sender: TObject);
@@ -183,6 +212,7 @@ begin
     3: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
   end;
   Search(sFilter);
+  DBGrid1.SetFocus;
 end;
 
 procedure TfrmSubRamo.Fechar1Click(Sender: TObject);

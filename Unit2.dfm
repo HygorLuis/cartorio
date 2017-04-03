@@ -1,4 +1,4 @@
-object frmSubRamo: TfrmSubRamo
+﻿object frmSubRamo: TfrmSubRamo
   Left = 0
   Top = 0
   Caption = 'Sub - Ramos'
@@ -115,14 +115,20 @@ object frmSubRamo: TfrmSubRamo
     TabOrder = 2
     OnChange = cboSubRamoChange
   end
-  object BitBtn1: TBitBtn
+  object btnAvançada: TBitBtn
     Left = 560
     Top = 11
     Width = 137
     Height = 40
-    Caption = 'Pesquisa Avan'#231'ada'
+    Caption = 'Avan'#231'ada'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 4
-    OnClick = BitBtn1Click
+    OnClick = btnAvançadaClick
   end
   object Panel1: TPanel
     Left = 525
@@ -131,38 +137,57 @@ object frmSubRamo: TfrmSubRamo
     Height = 74
     TabOrder = 3
     Visible = False
-    object ComboBox1: TComboBox
+    object cboFiltro: TComboBox
       Left = 17
       Top = 8
       Width = 145
       Height = 21
       TabOrder = 0
-      Text = 'ComboBox1'
+      OnChange = cboFiltroChange
+      Items.Strings = (
+        'Esp'#233'cie'
+        'Comarca'
+        'Fonte'
+        'N'#250'mero'
+        'Dt. Cria'#231#227'o')
     end
-    object Edit1: TEdit
-      Left = 168
-      Top = 8
-      Width = 121
-      Height = 21
-      TabOrder = 1
-      Text = 'Edit1'
-    end
-    object BitBtn2: TBitBtn
+    object btnPesquisar: TBitBtn
       Left = 128
       Top = 35
       Width = 75
       Height = 25
       Caption = 'Pesuisar'
-      TabOrder = 2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clTeal
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      OnClick = btnPesquisarClick
     end
-    object BitBtn3: TBitBtn
+    object btnSair: TBitBtn
       Left = 1
       Top = 48
       Width = 75
       Height = 25
-      Caption = 'Fechar'
+      Caption = 'Sair'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+      OnClick = btnSairClick
+    end
+    object txtAvançada: TMaskEdit
+      Left = 168
+      Top = 8
+      Width = 120
+      Height = 21
       TabOrder = 3
-      OnClick = BitBtn3Click
+      Text = ''
     end
   end
   object MainMenu1: TMainMenu

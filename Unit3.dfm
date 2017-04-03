@@ -505,7 +505,7 @@ object frmUsuario: TfrmUsuario
   end
   object txtDD2: TDBEdit
     Left = 489
-    Top = 392
+    Top = 395
     Width = 33
     Height = 21
     DataField = 'DD2'
