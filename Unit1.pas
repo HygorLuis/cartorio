@@ -19,6 +19,7 @@ type
     btnFechar: TBitBtn;
     procedure btnFecharClick(Sender: TObject);
     procedure btnEntrarClick(Sender: TObject);
+    procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -71,6 +72,14 @@ end;
 procedure TfrmLogin.btnFecharClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmLogin.txtSenhaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key = #13) then
+  begin
+    btnEntrar.OnClick(BtnEntrar);
+  end;
 end;
 
 end.

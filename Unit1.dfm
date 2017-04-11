@@ -47,6 +47,7 @@ object frmLogin: TfrmLogin
     Height = 21
     PasswordChar = '*'
     TabOrder = 1
+    OnKeyPress = txtSenhaKeyPress
   end
   object btnEntrar: TBitBtn
     Left = 112
