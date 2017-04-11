@@ -1,6 +1,7 @@
 ﻿object frmSubRamo: TfrmSubRamo
   Left = 0
   Top = 0
+  BorderIcons = []
   Caption = 'Sub - Ramos'
   ClientHeight = 368
   ClientWidth = 849
@@ -149,22 +150,7 @@
         'Comarca'
         'Fonte'
         'N'#250'mero'
-        'Dt. Cria'#231#227'o')
-    end
-    object btnPesquisar: TBitBtn
-      Left = 128
-      Top = 35
-      Width = 75
-      Height = 25
-      Caption = 'Pesuisar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clTeal
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 1
-      OnClick = btnPesquisarClick
+        'Ementa')
     end
     object btnSair: TBitBtn
       Left = 1
@@ -178,7 +164,7 @@
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnSairClick
     end
     object txtAvançada: TMaskEdit
@@ -186,8 +172,9 @@
       Top = 8
       Width = 120
       Height = 21
-      TabOrder = 3
+      TabOrder = 2
       Text = ''
+      OnChange = txtAvançadaChange
     end
   end
   object MainMenu1: TMainMenu

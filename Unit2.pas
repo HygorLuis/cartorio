@@ -40,7 +40,6 @@ type
     Panel1: TPanel;
     btnAvançada: TBitBtn;
     cboFiltro: TComboBox;
-    btnPesquisar: TBitBtn;
     btnSair: TBitBtn;
     txtAvançada: TMaskEdit;
     procedure CadUsurio2Click(Sender: TObject);
@@ -57,8 +56,8 @@ type
     procedure btnSairClick(Sender: TObject);
     procedure ADOQuery1DataCriacaoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
-    procedure btnPesquisarClick(Sender: TObject);
     procedure cboFiltroChange(Sender: TObject);
+    procedure txtAvançadaChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -154,22 +153,10 @@ begin
   Panel1.Visible:= True;
 end;
 
-procedure TfrmSubRamo.btnPesquisarClick(Sender: TObject);
-begin
-  sFilterAdvanced:= '';
-  case cboFiltro.ItemIndex of
-    0: sFilterAdvanced:= ' AND Especie LIKE "%' + txtAvançada.Text + '%"';
-    1: sFilterAdvanced:= ' AND Comarca LIKE "%' + txtAvançada.Text + '%"';
-    2: sFilterAdvanced:= ' AND Fonte LIKE "%' + txtAvançada.Text + '%"';
-    3: sFilterAdvanced:= ' AND Numero LIKE "%' + txtAvançada.Text + '%"';
-    4: sFilterAdvanced:= ' AND DataCriacao LIKE "' + FormatDateTime('yyyy-MM-dd', StrToDate(txtAvançada.Text)) + '%"';
-  end;
-  Search(sFilter + sFilterAdvanced);
-  DBGrid1.SetFocus;
-end;
-
 procedure TfrmSubRamo.btnSairClick(Sender: TObject);
 begin
+  txtAvançada.Clear;
+  cboFiltro.ItemIndex:= -1;
   Panel1.Visible:= False;
   cboRamo.OnChange(frmSubRamo.cboRamo);
   cboRamo.OnChange(frmSubRamo.cboSubRamo);
@@ -184,13 +171,15 @@ end;
 
 procedure TfrmSubRamo.cboFiltroChange(Sender: TObject);
 begin
+  txtAvançada.Text:= '';
   case cboFiltro.ItemIndex of
     0: txtAvançada.EditMask:= '';
     1: txtAvançada.EditMask:= '';
     2: txtAvançada.EditMask:= '';
     3: txtAvançada.EditMask:= '';
-    4: txtAvançada.EditMask:= '!99/99/0000;1;_';
+    4: txtAvançada.EditMask:= '';
   end;
+  txtAvançada.SetFocus;
 end;
 
 procedure TfrmSubRamo.cboRamoChange(Sender: TObject);
@@ -236,6 +225,33 @@ begin
   frmLancamento.Show();
   frmLancamento.DBGrid1.SetFocus;
   frmSubRamo.Close;
+end;
+
+procedure TfrmSubRamo.txtAvançadaChange(Sender: TObject);
+begin
+  if (cboFiltro.ItemIndex < 0) then
+  begin
+    Application.MessageBox('Favor selecionar um filtro!', 'Atenção!', + MB_OK + MB_ICONWARNING);
+  end
+  else
+  begin
+    if (Length(txtAvançada.Text) <> 0) then
+    begin
+      sFilterAdvanced:= '';
+      case cboFiltro.ItemIndex of
+        0: sFilterAdvanced:= ' AND Especie LIKE "%' + txtAvançada.Text + '%"';
+        1: sFilterAdvanced:= ' AND Comarca LIKE "%' + txtAvançada.Text + '%"';
+        2: sFilterAdvanced:= ' AND Fonte LIKE "%' + txtAvançada.Text + '%"';
+        3: sFilterAdvanced:= ' AND Numero LIKE "%' + txtAvançada.Text + '%"';
+        4: sFilterAdvanced:= ' AND Ementa LIKE "%' + txtAvançada.Text + '%"';
+      end;
+      Search(sFilter + sFilterAdvanced);
+    end
+    else
+      begin
+        Search(sFilter);
+      end;
+  end;
 end;
 
 end.
