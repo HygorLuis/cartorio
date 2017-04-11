@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Data.Win.ADODB, Vcl.StdCtrls,
-  Vcl.Buttons;
+  Vcl.Buttons, Vcl.Imaging.pngimage, Vcl.ExtCtrls;
 
 type
   TfrmLogin = class(TForm)
@@ -17,6 +17,7 @@ type
     ADOQuery1: TADOQuery;
     btnEntrar: TBitBtn;
     btnFechar: TBitBtn;
+    Image1: TImage;
     procedure btnFecharClick(Sender: TObject);
     procedure btnEntrarClick(Sender: TObject);
     procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
