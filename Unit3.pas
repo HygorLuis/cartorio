@@ -149,6 +149,8 @@ begin
   frmUsuario.btnAlterar.Enabled:= not bEnabled;
   frmUsuario.btnIncluir.Enabled:= not bEnabled;
   frmUsuario.btnExcluir.Enabled:= not bEnabled;
+
+  frmUsuario.MainMenu1.Items[0].Enabled:= not bEnabled;
 end;
 
 function VerifyUser(Usuario:String): Boolean;

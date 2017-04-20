@@ -140,6 +140,8 @@ begin
   frmLancamento.btnGravar.Enabled:= bEnabled;
   frmLancamento.btnCancelar.Enabled:= bEnabled;
   frmLancamento.btnExcluir.Enabled:= not bEnabled;
+
+  frmLancamento.MainMenu1.Items[0].Enabled:= not bEnabled;
 end;
 
 procedure TfrmLancamento.ADOQuery1idRamoGetText(Sender: TField;
