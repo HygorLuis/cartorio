@@ -13,7 +13,7 @@ object frmLancamento: TfrmLancamento
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object lblEspecie: TLabel
@@ -625,7 +625,7 @@ object frmLancamento: TfrmLancamento
         F5F5F5EBEBEBE6E6E6E0E0E1E0E0E0DFDFDFDFDFDFDFDFE0DFDFDFE4E4E5EAEA
         EAF4F4F4FDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      Caption = 'Voltar'
+      Caption = '&Voltar'
       Hint = 'Voltar para a tela inicial'
       OnClick = Voltar1Click
     end
