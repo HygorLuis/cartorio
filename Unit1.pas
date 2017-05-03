@@ -22,7 +22,7 @@ type
     procedure btnEntrarClick(Sender: TObject);
     procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
   private
-    { Private declarations }
+    OldCursor: TCursor;
   public
     idUsuario:String;
     bPermissao: Boolean;
@@ -55,6 +55,8 @@ procedure TfrmLogin.btnEntrarClick(Sender: TObject);
 begin
   if (SearchUser(txtUsuario.Text, txtSenha.Text)) then
   begin
+    OldCursor:= Screen.Cursor;
+    Screen.Cursor:= crHourGlass;
     if (bPermissao) then
       frmSubRamo.MainMenu1.Items[0].Enabled:= True;
 
@@ -62,6 +64,7 @@ begin
     frmSubRamo.cboRamo.ItemIndex:= 0;
     frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
     frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
+    Screen.Cursor:= OldCursor;
     frmLogin.Visible:= False;
   end
   else

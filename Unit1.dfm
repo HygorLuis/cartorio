@@ -542,7 +542,7 @@ object frmLogin: TfrmLogin
     OnKeyPress = txtSenhaKeyPress
   end
   object btnEntrar: TBitBtn
-    Left = 256
+    Left = 255
     Top = 114
     Width = 75
     Height = 25

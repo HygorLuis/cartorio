@@ -96,11 +96,11 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure cboPermissaoChange(Sender: TObject);
     procedure chkSenhaClick(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
     procedure Voltar1Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
+    procedure LoadUser();
   private
-    { Private declarations }
+    OldCursor: TCursor;
   public
     bUpdate: Boolean;
     iID, iIndex: integer;
@@ -115,7 +115,7 @@ implementation
 
 uses Unit1, Unit2, Unit4;
 
-procedure LoadUser();
+procedure TfrmUsuario.LoadUser();
 begin
   frmUsuario.ADOQuery1.SQL.Clear;
   frmUsuario.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE (excluido IS NULL OR excluido != 1);');
@@ -177,6 +177,7 @@ end;
 
 procedure TfrmUsuario.btnAlterarClick(Sender: TObject);
 begin
+  iIndex:= DBGrid1.DataSource.DataSet.RecNo;
   bUpdate:= true;
   EnabledFields(true);
 end;
@@ -193,6 +194,9 @@ procedure TfrmUsuario.btnExcluirClick(Sender: TObject);
 begin
   if (Application.MessageBox('Deseja excluir o usuário?', 'Confirmção!', + MB_YESNO + MB_ICONQUESTION) = IDYES) then
   begin
+    OldCursor:= Screen.Cursor;
+    Screen.Cursor:= crHourglass;
+
     iID:= DBGrid1.SelectedField.Value;
     ADOQuery1.SQL.Clear;
     ADOQuery1.SQL.Add('UPDATE usuario SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
@@ -201,6 +205,8 @@ begin
     ADOQuery1.ExecSQL;
     LoadUser();
     DBGrid1.SetFocus;
+    DBGrid1.DataSource.DataSet.MoveBy(iIndex-1);
+    Screen.Cursor:= OldCursor;
   end;
 end;
 
@@ -216,6 +222,9 @@ begin
   end
   else
   begin
+    OldCursor:= Screen.Cursor;
+    Screen.Cursor:= crHourglass;
+
     if (bUpdate) then
     begin
       icboIndex:= cboPermissao.ItemIndex;
@@ -282,11 +291,13 @@ begin
       end
       else
       begin
+        Screen.Cursor:= OldCursor;
         Application.MessageBox('Login já casdatrado!' + chr(13) + 'Favor inserir um novo nome de usuário.', 'Erro!', + MB_OK + MB_ICONERROR);
         txtUsuario.SetFocus;
       end;
     end;
   end;
+  Screen.Cursor:= OldCursor;
 end;
 
 procedure TfrmUsuario.btnIncluirClick(Sender: TObject);
@@ -311,11 +322,6 @@ begin
     txtSenha.PasswordChar:= #0
   else
     txtSenha.PasswordChar:= '*';
-end;
-
-procedure TfrmUsuario.DBGrid1CellClick(Column: TColumn);
-begin
-  iIndex:= DBGrid1.DataSource.DataSet.RecNo;
 end;
 
 procedure TfrmUsuario.Fechar1Click(Sender: TObject);

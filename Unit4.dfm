@@ -175,7 +175,6 @@ object frmLancamento: TfrmLancamento
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnCellClick = DBGrid1CellClick
     Columns = <
       item
         Expanded = False

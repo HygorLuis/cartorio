@@ -60,14 +60,14 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure Voltar1Click(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
     procedure ADOQuery1idRamoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
     procedure ADOQuery1idSubRamoGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
     procedure cboRamoClick(Sender: TObject);
+    procedure LoadLancamento();
   private
-    { Private declarations }
+    OldCursor: TCursor;
   public
     bUpdate: Boolean;
     iID, iIndex: integer;
@@ -115,7 +115,7 @@ begin
     Result:= false;
 end;
 
-procedure LoadLancamento();
+procedure TfrmLancamento.LoadLancamento();
 begin
   frmLancamento.ADOQuery1.SQL.Clear;
   frmLancamento.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1) ORDER BY DataCriacao DESC;');
@@ -176,6 +176,7 @@ end;
 
 procedure TfrmLancamento.btnAlterarClick(Sender: TObject);
 begin
+  iIndex:= DBGrid1.DataSource.DataSet.RecNo;
   bUpdate:= true;
   EnabledFields(true);
 end;
@@ -191,6 +192,8 @@ procedure TfrmLancamento.btnExcluirClick(Sender: TObject);
 begin
   if (Application.MessageBox('Deseja excluir o lançameto?', 'Confirmção!', + MB_YESNO + MB_ICONQUESTION) = IDYES) then
   begin
+    OldCursor:= Screen.Cursor;
+    Screen.Cursor:= crHourglass;
     iID:= DBGrid1.SelectedField.Value;
     ADOQuery1.SQL.Clear;
     ADOQuery1.SQL.Add('UPDATE lancamento SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
@@ -199,6 +202,7 @@ begin
     ADOQuery1.ExecSQL;
     LoadLancamento();
     DBGrid1.SetFocus;
+    Screen.Cursor:= OldCursor;
   end;
 end;
 
@@ -211,6 +215,9 @@ begin
   end
   else
   begin
+    OldCursor:= Screen.Cursor;
+    Screen.Cursor:= crHourglass;
+
     if (bUpdate) then
     begin
       iID:= DBGrid1.SelectedField.Value;
@@ -247,6 +254,7 @@ begin
       EnabledFields(false);
       DBGrid1.SetFocus;
     end;
+    Screen.Cursor:= OldCursor;
   end;
 end;
 
@@ -266,17 +274,16 @@ begin
   ADOQuery3.Active:= true;
 end;
 
-procedure TfrmLancamento.DBGrid1CellClick(Column: TColumn);
-begin
-  iIndex:= DBGrid1.DataSource.DataSet.RecNo;
-end;
-
 procedure TfrmLancamento.Voltar1Click(Sender: TObject);
 begin
+   OldCursor:= Screen.Cursor;
+   Screen.Cursor:= crHourglass;
+
   frmSubRamo.Show;
   frmSubRamo.cboRamo.ItemIndex:= 0;
   frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
   frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
+  Screen.Cursor:= OldCursor;
   frmLancamento.Close;
 end;
 

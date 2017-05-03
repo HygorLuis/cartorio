@@ -258,7 +258,6 @@ object frmUsuario: TfrmUsuario
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnCellClick = DBGrid1CellClick
     Columns = <
       item
         Expanded = False
@@ -449,7 +448,7 @@ object frmUsuario: TfrmUsuario
     OnClick = btnAlterarClick
   end
   object btnGravar: TBitBtn
-    Left = 302
+    Left = 310
     Top = 168
     Width = 75
     Height = 25

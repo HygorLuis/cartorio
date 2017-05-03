@@ -59,7 +59,7 @@ type
     procedure cboFiltroChange(Sender: TObject);
     procedure txtAvançadaChange(Sender: TObject);
   private
-    { Private declarations }
+    OldCursor: TCursor;
   public
     sFilter, sFilterAdvanced: String;
   end;
@@ -164,8 +164,13 @@ end;
 
 procedure TfrmSubRamo.CadUsurio2Click(Sender: TObject);
 begin
+  OldCursor:= Screen.Cursor;
+  Screen.Cursor:= crHourGlass;
+
   frmUsuario.show();
+  frmUsuario.LoadUser();
   frmUsuario.DBGrid1.SetFocus;
+  Screen.Cursor:= OldCursor;
   frmSubRamo.Close;
 end;
 
@@ -184,16 +189,21 @@ end;
 
 procedure TfrmSubRamo.cboRamoChange(Sender: TObject);
 begin
+  OldCursor:= Screen.Cursor;
+  Screen.Cursor:= crHourGlass;
   sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
   cboSubRamo.Clear;
   cboSubRamo.Items.Add('TODOS');
   LoadSubRamo();
   LoadcboSubRamo();
   Search(sFilter);
+  Screen.Cursor:= OldCursor;
 end;
 
 procedure TfrmSubRamo.cboSubRamoChange(Sender: TObject);
 begin
+  OldCursor:= Screen.Cursor;
+  Screen.Cursor:= crHourGlass;
   case cboSubRamo.ItemIndex of
     0: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1);
     1: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
@@ -202,6 +212,7 @@ begin
   end;
   Search(sFilter);
   DBGrid1.SetFocus;
+  Screen.Cursor:= OldCursor;
 end;
 
 procedure TfrmSubRamo.Fechar1Click(Sender: TObject);
@@ -222,8 +233,13 @@ end;
 
 procedure TfrmSubRamo.Lanamentos1Click(Sender: TObject);
 begin
+  OldCursor:= Screen.Cursor;
+  Screen.Cursor:= crHourGlass;
+
   frmLancamento.Show();
+  frmLancamento.LoadLancamento();
   frmLancamento.DBGrid1.SetFocus;
+  Screen.Cursor:= OldCursor;
   frmSubRamo.Close;
 end;
 
