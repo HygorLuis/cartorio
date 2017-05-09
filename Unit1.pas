@@ -22,7 +22,7 @@ type
     procedure btnEntrarClick(Sender: TObject);
     procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
   private
-    OldCursor: TCursor;
+
   public
     idUsuario:String;
     bPermissao: Boolean;
@@ -55,8 +55,6 @@ procedure TfrmLogin.btnEntrarClick(Sender: TObject);
 begin
   if (SearchUser(txtUsuario.Text, txtSenha.Text)) then
   begin
-    OldCursor:= Screen.Cursor;
-    Screen.Cursor:= crHourGlass;
     if (bPermissao) then
       frmConsulta.MainMenu1.Items[0].Enabled:= True;
 
@@ -64,7 +62,7 @@ begin
     frmConsulta.cboRamo.ItemIndex:= 0;
     frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
     frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
-    Screen.Cursor:= OldCursor;
+    frmConsulta.DBGrid1.OnCellClick(frmConsulta.DBGrid1.Columns[0]);
     frmLogin.Visible:= False;
   end
   else

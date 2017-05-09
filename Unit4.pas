@@ -277,14 +277,11 @@ end;
 
 procedure TfrmLancamento.Voltar1Click(Sender: TObject);
 begin
-   OldCursor:= Screen.Cursor;
-   Screen.Cursor:= crHourglass;
-
   frmConsulta.Show;
   frmConsulta.cboRamo.ItemIndex:= 0;
   frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
   frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
-  Screen.Cursor:= OldCursor;
+  frmConsulta.DBGrid1.OnCellClick(frmConsulta.DBGrid1.Columns[0]);
   frmLancamento.Close;
 end;
 

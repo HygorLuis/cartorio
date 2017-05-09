@@ -344,6 +344,7 @@ begin
   frmConsulta.cboRamo.ItemIndex:= 0;
   frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
   frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
+  frmConsulta.DBGrid1.OnCellClick(frmConsulta.DBGrid1.Columns[0]);
   frmUsuario.Close;
 end;
 
