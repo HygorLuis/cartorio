@@ -250,6 +250,7 @@ begin
     begin
       txtUsuarioCriacao.Text:= frmLogin.idUsuario;
       txtDataCriacao.Text:= DateTimeToStr(Now);
+      sEmenta:= reEmenta.Text;
       ADOQuery1.Post;
       EnabledFields(false);
       DBGrid1.SetFocus;
@@ -279,10 +280,10 @@ begin
    OldCursor:= Screen.Cursor;
    Screen.Cursor:= crHourglass;
 
-  frmSubRamo.Show;
-  frmSubRamo.cboRamo.ItemIndex:= 0;
-  frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
-  frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
+  frmConsulta.Show;
+  frmConsulta.cboRamo.ItemIndex:= 0;
+  frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
+  frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
   Screen.Cursor:= OldCursor;
   frmLancamento.Close;
 end;

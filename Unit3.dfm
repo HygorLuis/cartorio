@@ -246,8 +246,8 @@ object frmUsuario: TfrmUsuario
     end
   end
   object DBGrid1: TDBGrid
-    Left = 24
-    Top = 16
+    Left = 32
+    Top = 8
     Width = 361
     Height = 133
     DataSource = DataSource1

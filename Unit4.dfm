@@ -33,7 +33,7 @@ object frmLancamento: TfrmLancamento
     FocusControl = txtComarca
   end
   object lblFonte: TLabel
-    Left = 280
+    Left = 277
     Top = 288
     Width = 35
     Height = 13
@@ -41,7 +41,7 @@ object frmLancamento: TfrmLancamento
     FocusControl = txtFonte
   end
   object lblNumero: TLabel
-    Left = 496
+    Left = 474
     Top = 288
     Width = 44
     Height = 13
@@ -259,9 +259,9 @@ object frmLancamento: TfrmLancamento
     TabOrder = 8
   end
   object txtNumero: TDBEdit
-    Left = 542
+    Left = 520
     Top = 285
-    Width = 129
+    Width = 169
     Height = 21
     DataField = 'Numero'
     DataSource = DataSource1
@@ -270,18 +270,21 @@ object frmLancamento: TfrmLancamento
   end
   object reEmenta: TDBRichEdit
     Left = 8
-    Top = 328
+    Top = 320
     Width = 762
-    Height = 185
+    Height = 194
     DataField = 'Ementa'
     DataSource = DataSource1
     Enabled = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -16
+    Font.Name = 'Arial'
     Font.Style = []
     TabOrder = 10
+    Touch.InteractiveGestures = [igPan, igRotate, igPressAndTap]
+    Touch.ParentTabletOptions = False
+    Touch.TabletOptions = [toPressAndHold, toPenBarrelFeedback]
   end
   object cboRamo: TDBLookupComboBox
     Left = 88

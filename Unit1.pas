@@ -58,12 +58,12 @@ begin
     OldCursor:= Screen.Cursor;
     Screen.Cursor:= crHourGlass;
     if (bPermissao) then
-      frmSubRamo.MainMenu1.Items[0].Enabled:= True;
+      frmConsulta.MainMenu1.Items[0].Enabled:= True;
 
-    frmSubRamo.Show;
-    frmSubRamo.cboRamo.ItemIndex:= 0;
-    frmSubRamo.cboRamo.OnChange(frmSubRamo.cboRamo);
-    frmSubRamo.cboRamo.OnChange(frmSubRamo.cboSubRamo);
+    frmConsulta.Show;
+    frmConsulta.cboRamo.ItemIndex:= 0;
+    frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
+    frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
     Screen.Cursor:= OldCursor;
     frmLogin.Visible:= False;
   end

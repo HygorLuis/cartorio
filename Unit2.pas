@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Data.DB, Data.Win.ADODB,
-  Vcl.DBLookup, Vcl.Buttons, Vcl.Mask;
+  Vcl.DBLookup, Vcl.Buttons, Vcl.Mask, frxClass, frxDBSet, frxPreview;
 
 type
-  TfrmSubRamo = class(TForm)
+  TfrmConsulta = class(TForm)
     MainMenu1: TMainMenu;
     CadUsurio1: TMenuItem;
     Fechar1: TMenuItem;
@@ -42,6 +42,9 @@ type
     cboFiltro: TComboBox;
     btnSair: TBitBtn;
     txtAvançada: TMaskEdit;
+    frxReport1: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
+    frxPreview1: TfrxPreview;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -58,6 +61,9 @@ type
       DisplayText: Boolean);
     procedure cboFiltroChange(Sender: TObject);
     procedure txtAvançadaChange(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     OldCursor: TCursor;
   public
@@ -65,7 +71,7 @@ type
   end;
 
 var
-  frmSubRamo: TfrmSubRamo;
+  frmConsulta: TfrmConsulta;
 
 implementation
 
@@ -75,50 +81,50 @@ uses Unit1, Unit3, Unit4;
 
 procedure LoadcboSubRamo();
 begin
-  frmSubRamo.ADOQuery3.First;
-  while not frmSubRamo.ADOQuery3.Eof do
+  frmConsulta.ADOQuery3.First;
+  while not frmConsulta.ADOQuery3.Eof do
   begin
-    frmSubRamo.cboSubRamo.Items.Add(frmSubRamo.ADOQuery3.FieldByName('Nome').Value);
-    frmSubRamo.ADOQuery3.Next;
+    frmConsulta.cboSubRamo.Items.Add(frmConsulta.ADOQuery3.FieldByName('Nome').Value);
+    frmConsulta.ADOQuery3.Next;
   end;
-  frmSubRamo.cboSubRamo.ItemIndex:= 0;
+  frmConsulta.cboSubRamo.ItemIndex:= 0;
 end;
 
 procedure Search(Filter: String);
 begin
-  frmSubRamo.ADOQuery1.SQL.Clear;
-  frmSubRamo.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1)' + Filter + ' ORDER BY DataCriacao DESC;');
-  frmSubRamo.ADOQuery1.open;
-  frmSubRamo.ADOQuery1.Active:= true;
+  frmConsulta.ADOQuery1.SQL.Clear;
+  frmConsulta.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1)' + Filter + ' ORDER BY DataCriacao DESC;');
+  frmConsulta.ADOQuery1.open;
+  frmConsulta.ADOQuery1.Active:= true;
 end;
 
 procedure LoadRamo();
 begin
-  frmSubRamo.ADOQuery2.SQL.Clear;
-  frmSubRamo.ADOQuery2.SQL.Add('SELECT * FROM ramo ORDER BY Nome;');
-  frmSubRamo.ADOQuery2.open;
-  frmSubRamo.ADOQuery2.Active:= true;
+  frmConsulta.ADOQuery2.SQL.Clear;
+  frmConsulta.ADOQuery2.SQL.Add('SELECT * FROM ramo ORDER BY Nome;');
+  frmConsulta.ADOQuery2.open;
+  frmConsulta.ADOQuery2.Active:= true;
 end;
 
 Procedure LoadSubRamo();
 begin
-  if (frmSubRamo.cboRamo.ItemIndex > -1) then
+  if (frmConsulta.cboRamo.ItemIndex > -1) then
   begin
-    frmSubRamo.ADOQuery3.SQL.Clear;
-    frmSubRamo.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(frmSubRamo.cboRamo.ItemIndex + 1) + ' ORDER BY Nome;');
-    frmSubRamo.ADOQuery3.open;
-    frmSubRamo.ADOQuery3.Active:= true;
+    frmConsulta.ADOQuery3.SQL.Clear;
+    frmConsulta.ADOQuery3.SQL.Add('SELECT * FROM sub_ramo WHERE idRamo = ' + IntToStr(frmConsulta.cboRamo.ItemIndex + 1) + ' ORDER BY Nome;');
+    frmConsulta.ADOQuery3.open;
+    frmConsulta.ADOQuery3.Active:= true;
   end;
 end;
 
-procedure TfrmSubRamo.ADOQuery1DataCriacaoGetText(Sender: TField;
+procedure TfrmConsulta.ADOQuery1DataCriacaoGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
   if (ADOQuery1.FieldByName('DataCriacao').Value <> NULL) then
     Text:=  FormatDateTime('dd/mm/yyyy', ADOQuery1.FieldByName('DataCriacao').Value);
 end;
 
-procedure TfrmSubRamo.ADOQuery1idRamoGetText(Sender: TField; var Text: string;
+procedure TfrmConsulta.ADOQuery1idRamoGetText(Sender: TField; var Text: string;
   DisplayText: Boolean);
 begin
   if (Sender.value <> null) then
@@ -133,7 +139,7 @@ begin
   end;
 end;
 
-procedure TfrmSubRamo.ADOQuery1idSubRamoGetText(Sender: TField;
+procedure TfrmConsulta.ADOQuery1idSubRamoGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
   if (Sender.value <> null) then
@@ -148,21 +154,21 @@ begin
   end;
 end;
 
-procedure TfrmSubRamo.btnAvançadaClick(Sender: TObject);
+procedure TfrmConsulta.btnAvançadaClick(Sender: TObject);
 begin
   Panel1.Visible:= True;
 end;
 
-procedure TfrmSubRamo.btnSairClick(Sender: TObject);
+procedure TfrmConsulta.btnSairClick(Sender: TObject);
 begin
   txtAvançada.Clear;
   cboFiltro.ItemIndex:= -1;
   Panel1.Visible:= False;
-  cboRamo.OnChange(frmSubRamo.cboRamo);
-  cboRamo.OnChange(frmSubRamo.cboSubRamo);
+  cboRamo.OnChange(frmConsulta.cboRamo);
+  cboRamo.OnChange(frmConsulta.cboSubRamo);
 end;
 
-procedure TfrmSubRamo.CadUsurio2Click(Sender: TObject);
+procedure TfrmConsulta.CadUsurio2Click(Sender: TObject);
 begin
   OldCursor:= Screen.Cursor;
   Screen.Cursor:= crHourGlass;
@@ -171,10 +177,10 @@ begin
   frmUsuario.LoadUser();
   frmUsuario.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
-  frmSubRamo.Close;
+  frmConsulta.Close;
 end;
 
-procedure TfrmSubRamo.cboFiltroChange(Sender: TObject);
+procedure TfrmConsulta.cboFiltroChange(Sender: TObject);
 begin
   txtAvançada.Text:= '';
   case cboFiltro.ItemIndex of
@@ -187,7 +193,7 @@ begin
   txtAvançada.SetFocus;
 end;
 
-procedure TfrmSubRamo.cboRamoChange(Sender: TObject);
+procedure TfrmConsulta.cboRamoChange(Sender: TObject);
 begin
   OldCursor:= Screen.Cursor;
   Screen.Cursor:= crHourGlass;
@@ -200,7 +206,7 @@ begin
   Screen.Cursor:= OldCursor;
 end;
 
-procedure TfrmSubRamo.cboSubRamoChange(Sender: TObject);
+procedure TfrmConsulta.cboSubRamoChange(Sender: TObject);
 begin
   OldCursor:= Screen.Cursor;
   Screen.Cursor:= crHourGlass;
@@ -215,12 +221,33 @@ begin
   Screen.Cursor:= OldCursor;
 end;
 
-procedure TfrmSubRamo.Fechar1Click(Sender: TObject);
+procedure TfrmConsulta.DBGrid1CellClick(Column: TColumn);
+var sCaminho: string;
+begin
+  sCaminho:= ExtractFilePath(Application.ExeName);
+
+  frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
+  frxReport1.Preview:= frxPreview1;
+  frxReport1.ShowReport();
+end;
+
+procedure TfrmConsulta.DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+var sCaminho: string;
+begin
+  sCaminho:= ExtractFilePath(Application.ExeName);
+
+  frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
+  frxReport1.Preview:= frxPreview1;
+  frxReport1.ShowReport();
+end;
+
+procedure TfrmConsulta.Fechar1Click(Sender: TObject);
 begin
   frmLogin.Close;
 end;
 
-procedure TfrmSubRamo.FormShow(Sender: TObject);
+procedure TfrmConsulta.FormShow(Sender: TObject);
 begin
   cboRamo.Clear;
   ADOQuery2.First;
@@ -231,7 +258,7 @@ begin
   end;
 end;
 
-procedure TfrmSubRamo.Lanamentos1Click(Sender: TObject);
+procedure TfrmConsulta.Lanamentos1Click(Sender: TObject);
 begin
   OldCursor:= Screen.Cursor;
   Screen.Cursor:= crHourGlass;
@@ -240,10 +267,10 @@ begin
   frmLancamento.LoadLancamento();
   frmLancamento.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
-  frmSubRamo.Close;
+  frmConsulta.Close;
 end;
 
-procedure TfrmSubRamo.txtAvançadaChange(Sender: TObject);
+procedure TfrmConsulta.txtAvançadaChange(Sender: TObject);
 begin
   if (cboFiltro.ItemIndex < 0) then
   begin

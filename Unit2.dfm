@@ -1,10 +1,10 @@
-﻿object frmSubRamo: TfrmSubRamo
+﻿object frmConsulta: TfrmConsulta
   Left = 0
   Top = 0
   BorderIcons = []
   Caption = 'Sub - Ramos'
-  ClientHeight = 368
-  ClientWidth = 849
+  ClientHeight = 563
+  ClientWidth = 858
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -34,7 +34,7 @@
   object DBGrid1: TDBGrid
     Left = 8
     Top = 88
-    Width = 833
+    Width = 841
     Height = 161
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
@@ -44,6 +44,8 @@
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    OnMouseWheel = DBGrid1MouseWheel
     Columns = <
       item
         Expanded = False
@@ -117,8 +119,8 @@
     OnChange = cboSubRamoChange
   end
   object btnAvançada: TBitBtn
-    Left = 560
-    Top = 11
+    Left = 579
+    Top = 3
     Width = 137
     Height = 40
     Caption = 'Avan'#231'ada'
@@ -132,8 +134,8 @@
     OnClick = btnAvançadaClick
   end
   object Panel1: TPanel
-    Left = 525
-    Top = 0
+    Left = 544
+    Top = -8
     Width = 305
     Height = 74
     TabOrder = 3
@@ -176,6 +178,16 @@
       Text = ''
       OnChange = txtAvançadaChange
     end
+  end
+  object frxPreview1: TfrxPreview
+    Left = 8
+    Top = 264
+    Width = 841
+    Height = 289
+    OutlineVisible = True
+    OutlineWidth = 121
+    ThumbnailVisible = False
+    UseReportHints = True
   end
   object MainMenu1: TMainMenu
     Left = 88
@@ -682,5 +694,178 @@
       'SELECT * FROM sub_ramo ORDER BY Nome;')
     Left = 40
     Top = 48
+  end
+  object frxReport1: TfrxReport
+    Version = '4.12.13'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 42860.689307488400000000
+    ReportOptions.LastChange = 42864.530063761570000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 16
+    Top = 272
+    Datasets = <
+      item
+        DataSet = frxDBDataset1
+        DataSetName = 'Ementa'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object ReportTitle1: TfrxReportTitle
+        Height = 71.811070000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object EmentaNumero: TfrxMemoView
+          Align = baCenter
+          Left = 166.299320000000000000
+          Top = 3.779530000000001000
+          Width = 385.512060000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = frxDBDataset1
+          DataSetName = 'Ementa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'N'#186' [Ementa."Numero"]')
+          ParentFont = False
+        end
+        object EmentaEspecie: TfrxMemoView
+          Align = baLeft
+          Top = 3.779530000000001000
+          Width = 226.771800000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataField = 'Especie'
+          DataSet = frxDBDataset1
+          DataSetName = 'Ementa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            '[Ementa."Especie"]')
+          ParentFont = False
+        end
+        object EmentaComarca: TfrxMemoView
+          Align = baRight
+          Left = 495.118430000000000000
+          Top = 3.779530000000001000
+          Width = 222.992270000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataField = 'Comarca'
+          DataSet = frxDBDataset1
+          DataSetName = 'Ementa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Ementa."Comarca"]')
+          ParentFont = False
+        end
+        object EmentaFonte: TfrxMemoView
+          Align = baRight
+          Left = 582.047619999999900000
+          Top = 34.015770000000000000
+          Width = 136.063080000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataField = 'Fonte'
+          DataSet = frxDBDataset1
+          DataSetName = 'Ementa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Ementa."Fonte"]')
+          ParentFont = False
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        Height = 22.677180000000000000
+        Top = 291.023810000000000000
+        Width = 718.110700000000000000
+        object Page: TfrxMemoView
+          Align = baRight
+          Left = 687.874460000000000000
+          Width = 30.236240000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haBlock
+          Memo.UTF8W = (
+            '[Page#]')
+          ParentFont = False
+        end
+      end
+      object PageHeader1: TfrxPageHeader
+        Height = 117.165430000000000000
+        Top = 113.385900000000000000
+        Width = 718.110700000000000000
+        object EmentaEmenta: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 3.779529999999994000
+          Width = 710.551640000000000000
+          Height = 109.606370000000000000
+          ShowHint = False
+          DataField = 'Ementa'
+          DataSet = frxDBDataset1
+          DataSetName = 'Ementa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haBlock
+          Memo.UTF8W = (
+            '[Ementa."Ementa"]')
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object frxDBDataset1: TfrxDBDataset
+    UserName = 'Ementa'
+    CloseDataSource = False
+    DataSet = ADOQuery1
+    BCDToCurrency = False
+    Left = 64
+    Top = 272
   end
 end
