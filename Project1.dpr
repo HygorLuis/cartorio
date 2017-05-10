@@ -10,8 +10,6 @@ uses
 {$R *.res}
 
 begin
-  Application.Initialize;
-  Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TfrmConsulta, frmConsulta);
   Application.CreateForm(TfrmUsuario, frmUsuario);
