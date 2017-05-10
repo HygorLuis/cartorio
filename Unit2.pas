@@ -66,6 +66,7 @@ type
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     OldCursor: TCursor;
+    sCaminho: string;
   public
     sFilter, sFilterAdvanced: String;
   end;
@@ -222,7 +223,6 @@ begin
 end;
 
 procedure TfrmConsulta.DBGrid1CellClick(Column: TColumn);
-var sCaminho: string;
 begin
   sCaminho:= ExtractFilePath(Application.ExeName);
 
@@ -233,8 +233,8 @@ end;
 
 procedure TfrmConsulta.DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-var sCaminho: string;
 begin
+  sleep(30);
   sCaminho:= ExtractFilePath(Application.ExeName);
 
   frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
