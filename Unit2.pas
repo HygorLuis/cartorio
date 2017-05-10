@@ -97,6 +97,7 @@ begin
   frmConsulta.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1)' + Filter + ' ORDER BY DataCriacao DESC;');
   frmConsulta.ADOQuery1.open;
   frmConsulta.ADOQuery1.Active:= true;
+  frmConsulta.DBGrid1.OnCellClick(frmConsulta.DBGrid1.Columns[0]);
 end;
 
 procedure LoadRamo();
@@ -218,7 +219,7 @@ begin
     3: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
   end;
   Search(sFilter);
-  DBGrid1.SetFocus;
+  //DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
 end;
 

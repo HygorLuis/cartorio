@@ -104,7 +104,7 @@
   end
   object cboRamo: TComboBox
     Left = 321
-    Top = 15
+    Top = 18
     Width = 110
     Height = 21
     TabOrder = 1
@@ -119,8 +119,8 @@
     OnChange = cboSubRamoChange
   end
   object btnAvançada: TBitBtn
-    Left = 579
-    Top = 3
+    Left = 595
+    Top = 18
     Width = 137
     Height = 40
     Caption = 'Avan'#231'ada'
@@ -134,8 +134,8 @@
     OnClick = btnAvançadaClick
   end
   object Panel1: TPanel
-    Left = 544
-    Top = -8
+    Left = 545
+    Top = 4
     Width = 305
     Height = 74
     TabOrder = 3
