@@ -281,6 +281,7 @@ object frmLancamento: TfrmLancamento
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = []
+    ScrollBars = ssVertical
     TabOrder = 10
     Touch.InteractiveGestures = [igPan, igRotate, igPressAndTap]
     Touch.ParentTabletOptions = False
@@ -374,9 +375,9 @@ object frmLancamento: TfrmLancamento
       Size = 45
     end
     object ADOQuery1Ementa: TStringField
-      DisplayWidth = 10000
+      DisplayWidth = 50000
       FieldName = 'Ementa'
-      Size = 10000
+      Size = 50000
     end
     object ADOQuery1UsuarioCriacao: TStringField
       FieldName = 'UsuarioCriacao'

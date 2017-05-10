@@ -606,6 +606,7 @@
     end
   end
   object ADOQuery1: TADOQuery
+    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -647,9 +648,9 @@
       Size = 45
     end
     object ADOQuery1Ementa: TStringField
-      DisplayWidth = 10000
+      DisplayWidth = 50000
       FieldName = 'Ementa'
-      Size = 10000
+      Size = 50000
     end
     object ADOQuery1UsuarioCriacao: TStringField
       FieldName = 'UsuarioCriacao'
@@ -705,7 +706,7 @@
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 42860.689307488400000000
-    ReportOptions.LastChange = 42864.530063761570000000
+    ReportOptions.LastChange = 42865.063990324070000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -775,7 +776,7 @@
         end
         object EmentaComarca: TfrxMemoView
           Align = baRight
-          Left = 495.118430000000000000
+          Left = 495.118429999999900000
           Top = 3.779530000000001000
           Width = 222.992270000000000000
           Height = 18.897650000000000000
@@ -816,7 +817,7 @@
       end
       object PageFooter1: TfrxPageFooter
         Height = 22.677180000000000000
-        Top = 291.023810000000000000
+        Top = 1024.252630000000000000
         Width = 718.110700000000000000
         object Page: TfrxMemoView
           Align = baRight
@@ -836,14 +837,14 @@
         end
       end
       object PageHeader1: TfrxPageHeader
-        Height = 117.165430000000000000
+        Height = 850.394250000000000000
         Top = 113.385900000000000000
         Width = 718.110700000000000000
         object EmentaEmenta: TfrxMemoView
-          Left = 3.779530000000000000
-          Top = 3.779529999999994000
-          Width = 710.551640000000000000
-          Height = 109.606370000000000000
+          Align = baLeft
+          Top = 11.338590000000000000
+          Width = 714.331170000000000000
+          Height = 835.276130000000000000
           ShowHint = False
           DataField = 'Ementa'
           DataSet = frxDBDataset1
