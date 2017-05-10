@@ -90,7 +90,7 @@
         FieldName = 'Numero'
         Title.Alignment = taCenter
         Title.Caption = 'N'#250'mero'
-        Width = 112
+        Width = 120
         Visible = True
       end
       item
@@ -606,7 +606,6 @@
     end
   end
   object ADOQuery1: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -643,12 +642,14 @@
       Size = 45
     end
     object ADOQuery1Numero: TStringField
+      DisplayWidth = 45
       FieldName = 'Numero'
       Size = 45
     end
     object ADOQuery1Ementa: TStringField
+      DisplayWidth = 10000
       FieldName = 'Ementa'
-      Size = 100
+      Size = 10000
     end
     object ADOQuery1UsuarioCriacao: TStringField
       FieldName = 'UsuarioCriacao'
