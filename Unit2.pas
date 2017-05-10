@@ -45,6 +45,16 @@ type
     frxReport1: TfrxReport;
     frxDBDataset1: TfrxDBDataset;
     frxPreview1: TfrxPreview;
+    Backup1: TMenuItem;
+    pnlBackup: TPanel;
+    BitBtn1: TBitBtn;
+    ProgressBar1: TProgressBar;
+    Timer1: TTimer;
+    lblProgresso: TLabel;
+    Iniciar: TBitBtn;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -64,6 +74,9 @@ type
     procedure DBGrid1CellClick(Column: TColumn);
     procedure DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure Backup1Click(Sender: TObject);
+    procedure IniciarClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
@@ -78,7 +91,34 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, Unit3, Unit4;
+uses Unit1, Unit3, Unit4, ShellApi;
+
+function ExecutarEEsperar(sBackup: String): Boolean;
+var Sh: TShellExecuteInfo;
+    CodigoSaida: DWORD;
+begin
+  FillChar(Sh, SizeOf(Sh), 0) ;
+  Sh.cbSize:= SizeOf(TShellExecuteInfo) ;
+  with Sh do
+  begin
+    fMask:= SEE_MASK_NOCLOSEPROCESS;
+    Wnd:= Application.Handle;
+    lpVerb:= nil;
+    lpFile:= PChar(sBackup);
+    //nShow:= SW_SHOWNORMAL;
+    nShow:= SW_HIDE;
+  end;
+  if ShellExecuteEx(@Sh) then
+  begin
+    repeat
+    Application.ProcessMessages;
+    GetExitCodeProcess(Sh.hProcess, CodigoSaida) ;
+    until not(CodigoSaida = STILL_ACTIVE);
+    Result:= True;
+  end
+  else
+    Result:= False;
+end;
 
 procedure LoadcboSubRamo();
 begin
@@ -156,6 +196,11 @@ begin
   end;
 end;
 
+procedure TfrmConsulta.Backup1Click(Sender: TObject);
+begin
+  pnlBackup.Visible:= True;
+end;
+
 procedure TfrmConsulta.btnAvançadaClick(Sender: TObject);
 begin
   Panel1.Visible:= True;
@@ -205,6 +250,7 @@ begin
   LoadSubRamo();
   LoadcboSubRamo();
   Search(sFilter);
+  DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
 end;
 
@@ -219,7 +265,7 @@ begin
     3: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
   end;
   Search(sFilter);
-  //DBGrid1.SetFocus;
+  DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
 end;
 
@@ -259,6 +305,20 @@ begin
   end;
 end;
 
+procedure TfrmConsulta.IniciarClick(Sender: TObject);
+begin
+  sCaminho:= ExtractFilePath(Application.ExeName) + 'bkpmysql.bat';
+  Label1.Caption:= 'Aguarde enquanto o processo de backup é realizado...';
+  ProgressBar1.Position:= 0;
+  lblProgresso.Caption:=  IntToStr(ProgressBar1.Position) + '%';
+  Timer1.Enabled:= True;
+  //WinExec('C:\Projetos\cartorio\Win32\Debug\bkpmysql.bat', SW_NORMAL);
+  if (ExecutarEEsperar(sCaminho)) then
+    Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION)
+  else
+    Application.MessageBox('Falha no backup!', 'Error!', + MB_OK + MB_ICONERROR);
+end;
+
 procedure TfrmConsulta.Lanamentos1Click(Sender: TObject);
 begin
   OldCursor:= Screen.Cursor;
@@ -269,6 +329,20 @@ begin
   frmLancamento.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
   frmConsulta.Close;
+end;
+
+procedure TfrmConsulta.Timer1Timer(Sender: TObject);
+begin
+  if ProgressBar1.Position = 100 then
+  begin
+    Timer1.Enabled:= False;
+    Label1.Caption:= 'Backup bem sucedido!';
+  end
+  else
+  begin
+    ProgressBar1.Position:= ProgressBar1.Position + 1;
+    lblProgresso.Caption:=  IntToStr(ProgressBar1.Position) + '%';
+  end;
 end;
 
 procedure TfrmConsulta.txtAvançadaChange(Sender: TObject);
