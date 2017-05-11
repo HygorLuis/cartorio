@@ -233,7 +233,7 @@
       Height = 13
       Caption = 'Label3'
     end
-    object BitBtn1: TBitBtn
+    object btnSairBackup: TBitBtn
       Left = 8
       Top = 159
       Width = 75
@@ -246,7 +246,7 @@
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      OnClick = btnSairClick
+      OnClick = btnSairBackupClick
     end
     object ProgressBar1: TProgressBar
       Left = 24

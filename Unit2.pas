@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Data.DB, Data.Win.ADODB,
-  Vcl.DBLookup, Vcl.Buttons, Vcl.Mask, frxClass, frxDBSet, frxPreview;
+  Vcl.DBLookup, Vcl.Buttons, Vcl.Mask, frxClass, frxDBSet, frxPreview,
+  IBServices;
 
 type
   TfrmConsulta = class(TForm)
@@ -47,7 +48,7 @@ type
     frxPreview1: TfrxPreview;
     Backup1: TMenuItem;
     pnlBackup: TPanel;
-    BitBtn1: TBitBtn;
+    btnSairBackup: TBitBtn;
     ProgressBar1: TProgressBar;
     Timer1: TTimer;
     lblProgresso: TLabel;
@@ -77,6 +78,7 @@ type
     procedure Backup1Click(Sender: TObject);
     procedure IniciarClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure btnSairBackupClick(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
@@ -206,6 +208,11 @@ begin
   Panel1.Visible:= True;
 end;
 
+procedure TfrmConsulta.btnSairBackupClick(Sender: TObject);
+begin
+  pnlBackup.Visible:= False;
+end;
+
 procedure TfrmConsulta.btnSairClick(Sender: TObject);
 begin
   txtAvançada.Clear;
@@ -307,12 +314,15 @@ end;
 
 procedure TfrmConsulta.IniciarClick(Sender: TObject);
 begin
-  sCaminho:= ExtractFilePath(Application.ExeName) + 'bkpmysql.bat';
+  OldCursor:= Screen.Cursor;
+  Screen.Cursor:= crHourGlass;
+  sCaminho:= ExtractFilePath(Application.ExeName) + 'Backup.bat';
   Label1.Caption:= 'Aguarde enquanto o processo de backup é realizado...';
   ProgressBar1.Position:= 0;
   lblProgresso.Caption:=  IntToStr(ProgressBar1.Position) + '%';
   Timer1.Enabled:= True;
-  //WinExec('C:\Projetos\cartorio\Win32\Debug\bkpmysql.bat', SW_NORMAL);
+  Screen.Cursor:= OldCursor;
+  //WinExec('C:\Projetos\cartorio\Win32\Debug\Backup.bat', SW_NORMAL);
   if (ExecutarEEsperar(sCaminho)) then
     Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION)
   else
