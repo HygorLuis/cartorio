@@ -61,6 +61,10 @@ type
     lblDuracao: TLabel;
     Label6: TLabel;
     lblUsuarioCri: TLabel;
+    Gerar1: TMenuItem;
+    Excluir1: TMenuItem;
+    pnlExcluirBackup: TPanel;
+    btnExcluirBackup: TBitBtn;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -80,10 +84,12 @@ type
     procedure DBGrid1CellClick(Column: TColumn);
     procedure DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-    procedure Backup1Click(Sender: TObject);
     procedure btnIniciarBackupClick(Sender: TObject);
     procedure btnSairBackupClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure Gerar1Click(Sender: TObject);
+    procedure Excluir1Click(Sender: TObject);
+    procedure btnExcluirBackupClick(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
@@ -250,16 +256,16 @@ begin
   end;
 end;
 
-procedure TfrmConsulta.Backup1Click(Sender: TObject);
-begin
-  pnlBackup.Visible:= True;
-  LoadBackup();
-  EnabledFields(False);
-end;
-
 procedure TfrmConsulta.btnAvançadaClick(Sender: TObject);
 begin
   Panel1.Visible:= True;
+end;
+
+procedure TfrmConsulta.btnExcluirBackupClick(Sender: TObject);
+begin
+  EnabledFields(True);
+  DBGrid1.SetFocus;
+  pnlExcluirBackup.Visible:= False;
 end;
 
 procedure TfrmConsulta.btnSairBackupClick(Sender: TObject);
@@ -352,6 +358,12 @@ begin
   frxReport1.ShowReport();
 end;
 
+procedure TfrmConsulta.Excluir1Click(Sender: TObject);
+begin
+  pnlExcluirBackup.Visible:= True;
+  EnabledFields(False);
+end;
+
 procedure TfrmConsulta.Fechar1Click(Sender: TObject);
 begin
   frmLogin.Close;
@@ -366,6 +378,13 @@ begin
     cboRamo.Items.Add(ADOQuery2.FieldByName('Nome').Value);
     ADOQuery2.Next;
   end;
+end;
+
+procedure TfrmConsulta.Gerar1Click(Sender: TObject);
+begin
+  pnlBackup.Visible:= True;
+  LoadBackup();
+  EnabledFields(False);
 end;
 
 procedure TfrmConsulta.btnIniciarBackupClick(Sender: TObject);
