@@ -159,6 +159,7 @@
       Top = 48
       Width = 75
       Height = 25
+      Cursor = crHandPoint
       Caption = 'Sair'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clRed
@@ -196,13 +197,6 @@
     Height = 193
     TabOrder = 6
     Visible = False
-    object lblProgresso: TLabel
-      Left = 24
-      Top = 30
-      Width = 17
-      Height = 13
-      Caption = '0%'
-    end
     object Label1: TLabel
       Left = 1
       Top = 8
@@ -234,10 +228,11 @@
       Caption = 'Label3'
     end
     object btnSairBackup: TBitBtn
-      Left = 8
+      Left = 9
       Top = 159
       Width = 75
       Height = 25
+      Cursor = crHandPoint
       Caption = 'Sair'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clRed
@@ -253,13 +248,15 @@
       Top = 49
       Width = 441
       Height = 17
+      Smooth = True
       TabOrder = 1
     end
-    object Iniciar: TBitBtn
+    object btnIniciarBackup: TBitBtn
       Left = 201
       Top = 112
       Width = 75
       Height = 25
+      Cursor = crHandPoint
       Caption = 'Iniciar'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGreen
@@ -268,7 +265,7 @@
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 2
-      OnClick = IniciarClick
+      OnClick = btnIniciarBackupClick
     end
   end
   object MainMenu1: TMainMenu
@@ -828,14 +825,12 @@
       Size = 45
     end
     object ADOQuery1Numero: TStringField
-      DisplayWidth = 45
       FieldName = 'Numero'
       Size = 45
     end
-    object ADOQuery1Ementa: TStringField
-      DisplayWidth = 50000
+    object ADOQuery1Ementa: TMemoField
       FieldName = 'Ementa'
-      Size = 50000
+      BlobType = ftMemo
     end
     object ADOQuery1UsuarioCriacao: TStringField
       FieldName = 'UsuarioCriacao'
@@ -843,7 +838,6 @@
     end
     object ADOQuery1DataCriacao: TDateTimeField
       FieldName = 'DataCriacao'
-      OnGetText = ADOQuery1DataCriacaoGetText
     end
     object ADOQuery1UsuarioAlteracao: TStringField
       FieldName = 'UsuarioAlteracao'
@@ -1055,11 +1049,16 @@
     Left = 64
     Top = 272
   end
-  object Timer1: TTimer
-    Enabled = False
-    Interval = 1
-    OnTimer = Timer1Timer
-    Left = 648
+  object ADOQuery4: TADOQuery
+    Active = True
+    Connection = frmLogin.ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'SELECT * FROM backup WHERE (excluido IS NULL OR excluido != 1) O' +
+        'RDER BY DataCriacao DESC;')
+    Left = 656
     Top = 176
   end
 end

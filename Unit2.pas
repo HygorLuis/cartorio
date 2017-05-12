@@ -20,19 +20,6 @@ type
     lblSubRamo: TLabel;
     DBGrid1: TDBGrid;
     ADOQuery1: TADOQuery;
-    ADOQuery1idlancamento: TAutoIncField;
-    ADOQuery1idRamo: TStringField;
-    ADOQuery1idSubRamo: TStringField;
-    ADOQuery1Especie: TStringField;
-    ADOQuery1Comarca: TStringField;
-    ADOQuery1Fonte: TStringField;
-    ADOQuery1Numero: TStringField;
-    ADOQuery1Ementa: TStringField;
-    ADOQuery1UsuarioCriacao: TStringField;
-    ADOQuery1DataCriacao: TDateTimeField;
-    ADOQuery1UsuarioAlteracao: TStringField;
-    ADOQuery1DataAlteracao: TDateTimeField;
-    ADOQuery1Excluido: TStringField;
     DataSource1: TDataSource;
     ADOQuery2: TADOQuery;
     ADOQuery3: TADOQuery;
@@ -50,12 +37,24 @@ type
     pnlBackup: TPanel;
     btnSairBackup: TBitBtn;
     ProgressBar1: TProgressBar;
-    Timer1: TTimer;
-    lblProgresso: TLabel;
-    Iniciar: TBitBtn;
+    btnIniciarBackup: TBitBtn;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    ADOQuery1idlancamento: TAutoIncField;
+    ADOQuery1idRamo: TStringField;
+    ADOQuery1idSubRamo: TStringField;
+    ADOQuery1Especie: TStringField;
+    ADOQuery1Comarca: TStringField;
+    ADOQuery1Fonte: TStringField;
+    ADOQuery1Numero: TStringField;
+    ADOQuery1Ementa: TMemoField;
+    ADOQuery1UsuarioCriacao: TStringField;
+    ADOQuery1DataCriacao: TDateTimeField;
+    ADOQuery1UsuarioAlteracao: TStringField;
+    ADOQuery1DataAlteracao: TDateTimeField;
+    ADOQuery1Excluido: TStringField;
+    ADOQuery4: TADOQuery;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -76,8 +75,7 @@ type
     procedure DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure Backup1Click(Sender: TObject);
-    procedure IniciarClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure btnIniciarBackupClick(Sender: TObject);
     procedure btnSairBackupClick(Sender: TObject);
   private
     OldCursor: TCursor;
@@ -94,6 +92,34 @@ implementation
 {$R *.dfm}
 
 uses Unit1, Unit3, Unit4, ShellApi;
+
+procedure LoadBackup();
+begin
+  with frmConsulta.ADOQuery4 do
+  begin
+    SQL.Clear;
+    SQL.Add('SELECT * FROM backup WHERE (excluido IS NULL OR excluido != 1) ORDER BY DataCriacao DESC;');
+    open;
+    Active:= true;
+  end;
+end;
+
+procedure EnabledFields(bEnabled: Boolean);
+begin
+  frmConsulta.DBGrid1.Enabled:= bEnabled;
+  frmConsulta.MainMenu1.Items[0].Enabled:= bEnabled;
+  frmConsulta.MainMenu1.Items[1].Enabled:= bEnabled;
+  frmConsulta.cboRamo.Enabled:= bEnabled;
+  frmConsulta.cboSubRamo.Enabled:= bEnabled;
+  frmConsulta.btnAvançada.Enabled:= bEnabled;
+  frmConsulta.frxPreview1.Enabled:= bEnabled;
+end;
+
+procedure EnabledFieldsBackup(bEnabled: Boolean);
+begin
+  frmConsulta.btnIniciarBackup.Enabled:= bEnabled;
+  frmConsulta.btnSairBackup.Enabled:= bEnabled;
+end;
 
 function ExecutarEEsperar(sBackup: String): Boolean;
 var Sh: TShellExecuteInfo;
@@ -201,6 +227,7 @@ end;
 procedure TfrmConsulta.Backup1Click(Sender: TObject);
 begin
   pnlBackup.Visible:= True;
+  EnabledFields(False);
 end;
 
 procedure TfrmConsulta.btnAvançadaClick(Sender: TObject);
@@ -210,6 +237,8 @@ end;
 
 procedure TfrmConsulta.btnSairBackupClick(Sender: TObject);
 begin
+  EnabledFields(True);
+  DBGrid1.SetFocus;
   pnlBackup.Visible:= False;
 end;
 
@@ -312,21 +341,25 @@ begin
   end;
 end;
 
-procedure TfrmConsulta.IniciarClick(Sender: TObject);
+procedure TfrmConsulta.btnIniciarBackupClick(Sender: TObject);
 begin
-  OldCursor:= Screen.Cursor;
-  Screen.Cursor:= crHourGlass;
+  ProgressBar1.Style:= pbstMarquee;
+  EnabledFieldsBackup(False);
   sCaminho:= ExtractFilePath(Application.ExeName) + 'Backup.bat';
   Label1.Caption:= 'Aguarde enquanto o processo de backup é realizado...';
-  ProgressBar1.Position:= 0;
-  lblProgresso.Caption:=  IntToStr(ProgressBar1.Position) + '%';
-  Timer1.Enabled:= True;
-  Screen.Cursor:= OldCursor;
   //WinExec('C:\Projetos\cartorio\Win32\Debug\Backup.bat', SW_NORMAL);
   if (ExecutarEEsperar(sCaminho)) then
-    Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION)
+  begin
+    EnabledFieldsBackup(True);
+    ProgressBar1.Style:= pbstNormal;
+    Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION);
+  end
   else
+  begin
+    EnabledFieldsBackup(True);
+    ProgressBar1.Style:= pbstNormal;
     Application.MessageBox('Falha no backup!', 'Error!', + MB_OK + MB_ICONERROR);
+  end;
 end;
 
 procedure TfrmConsulta.Lanamentos1Click(Sender: TObject);
@@ -339,20 +372,6 @@ begin
   frmLancamento.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
   frmConsulta.Close;
-end;
-
-procedure TfrmConsulta.Timer1Timer(Sender: TObject);
-begin
-  if ProgressBar1.Position = 100 then
-  begin
-    Timer1.Enabled:= False;
-    Label1.Caption:= 'Backup bem sucedido!';
-  end
-  else
-  begin
-    ProgressBar1.Position:= ProgressBar1.Position + 1;
-    lblProgresso.Caption:=  IntToStr(ProgressBar1.Position) + '%';
-  end;
 end;
 
 procedure TfrmConsulta.txtAvançadaChange(Sender: TObject);
