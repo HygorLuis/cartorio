@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Data.DB, Data.Win.ADODB,
   Vcl.DBLookup, Vcl.Buttons, Vcl.Mask, frxClass, frxDBSet, frxPreview,
-  IBServices;
+  IBServices, Vcl.Imaging.pngimage;
 
 type
   TfrmConsulta = class(TForm)
@@ -55,6 +55,7 @@ type
     ADOQuery1DataAlteracao: TDateTimeField;
     ADOQuery1Excluido: TStringField;
     ADOQuery4: TADOQuery;
+    Image1: TImage;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
