@@ -48,7 +48,7 @@ type
     ADOQuery1Comarca: TStringField;
     ADOQuery1Fonte: TStringField;
     ADOQuery1Numero: TStringField;
-    ADOQuery1Ementa: TStringField;
+    ADOQuery1Ementa: TMemoField;
     ADOQuery1UsuarioCriacao: TStringField;
     ADOQuery1DataCriacao: TDateTimeField;
     ADOQuery1UsuarioAlteracao: TStringField;

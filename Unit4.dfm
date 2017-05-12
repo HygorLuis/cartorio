@@ -335,6 +335,7 @@ object frmLancamento: TfrmLancamento
     Visible = False
   end
   object ADOQuery1: TADOQuery
+    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -374,10 +375,9 @@ object frmLancamento: TfrmLancamento
       FieldName = 'Numero'
       Size = 45
     end
-    object ADOQuery1Ementa: TStringField
-      DisplayWidth = 50000
+    object ADOQuery1Ementa: TMemoField
       FieldName = 'Ementa'
-      Size = 50000
+      BlobType = ftMemo
     end
     object ADOQuery1UsuarioCriacao: TStringField
       FieldName = 'UsuarioCriacao'
