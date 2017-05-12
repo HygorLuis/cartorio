@@ -18,6 +18,7 @@ type
     btnEntrar: TBitBtn;
     btnFechar: TBitBtn;
     Image1: TImage;
+    Panel1: TPanel;
     procedure btnFecharClick(Sender: TObject);
     procedure btnEntrarClick(Sender: TObject);
     procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);

@@ -223,9 +223,9 @@
     object Label3: TLabel
       Left = 103
       Top = 87
-      Width = 31
+      Width = 35
       Height = 13
-      Caption = 'Label3'
+      Caption = 'NUNCA'
     end
     object Image1: TImage
       Left = 368
@@ -1523,6 +1523,34 @@
         454E44AE426082}
       Proportional = True
     end
+    object Label4: TLabel
+      Left = 24
+      Top = 30
+      Width = 39
+      Height = 13
+      Caption = 'Tempo: '
+    end
+    object lblDuracao: TLabel
+      Left = 69
+      Top = 30
+      Width = 44
+      Height = 13
+      Caption = '00:00:00'
+    end
+    object Label6: TLabel
+      Left = 24
+      Top = 106
+      Width = 69
+      Height = 13
+      Caption = 'Realizado por:'
+    end
+    object Label7: TLabel
+      Left = 103
+      Top = 106
+      Width = 18
+      Height = 13
+      Caption = 'N/A'
+    end
     object btnSairBackup: TBitBtn
       Left = 9
       Top = 159
@@ -2355,6 +2383,12 @@
         'SELECT * FROM backup WHERE (excluido IS NULL OR excluido != 1) O' +
         'RDER BY DataCriacao DESC;')
     Left = 656
+    Top = 176
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 624
     Top = 176
   end
 end

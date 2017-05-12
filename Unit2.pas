@@ -56,6 +56,11 @@ type
     ADOQuery1Excluido: TStringField;
     ADOQuery4: TADOQuery;
     Image1: TImage;
+    Timer1: TTimer;
+    Label4: TLabel;
+    lblDuracao: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -78,9 +83,11 @@ type
     procedure Backup1Click(Sender: TObject);
     procedure btnIniciarBackupClick(Sender: TObject);
     procedure btnSairBackupClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
+    TimeOld: TDateTime;
   public
     sFilter, sFilterAdvanced: String;
   end;
@@ -344,6 +351,8 @@ end;
 
 procedure TfrmConsulta.btnIniciarBackupClick(Sender: TObject);
 begin
+  TimeOld:= Now;
+  Timer1.Enabled:= True;
   ProgressBar1.Style:= pbstMarquee;
   EnabledFieldsBackup(False);
   sCaminho:= ExtractFilePath(Application.ExeName) + 'Backup.bat';
@@ -351,6 +360,16 @@ begin
   //WinExec('C:\Projetos\cartorio\Win32\Debug\Backup.bat', SW_NORMAL);
   if (ExecutarEEsperar(sCaminho)) then
   begin
+    Timer1.Enabled:= False;
+    with ADOQuery4 do
+    begin
+      SQL.Clear;
+      SQL.Add('INSERT INTO backup (Nome, Duracao, UsuarioCriacao, DataCriacao) VALUES (Nome = "cartorio_' + FormatDateTime('yyyymmddHHMMSS', + NOW) +
+                                                                              '", Duracao = "' + lblDuracao.Caption +
+                                                                              '", UsuarioCriacao = "' + frmLogin.idUsuario +
+                                                                              '", DataCriacao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) + '");');
+      ExecSQL;
+    end;
     EnabledFieldsBackup(True);
     ProgressBar1.Style:= pbstNormal;
     Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION);
@@ -373,6 +392,11 @@ begin
   frmLancamento.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
   frmConsulta.Close;
+end;
+
+procedure TfrmConsulta.Timer1Timer(Sender: TObject);
+begin
+  lblDuracao.Caption:= FormatDateTime('HH:MM:SS', + NOW - TimeOld);
 end;
 
 procedure TfrmConsulta.txtAvançadaChange(Sender: TObject);

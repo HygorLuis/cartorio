@@ -573,6 +573,13 @@ object frmLogin: TfrmLogin
     TabOrder = 3
     OnClick = btnFecharClick
   end
+  object Panel1: TPanel
+    Left = 14
+    Top = 5
+    Width = 130
+    Height = 138
+    TabOrder = 4
+  end
   object ADOConnection1: TADOConnection
     Connected = True
     ConnectionString = 
