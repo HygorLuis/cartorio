@@ -40,7 +40,7 @@ type
     btnIniciarBackup: TBitBtn;
     Label1: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
+    lblUltimoBackup: TLabel;
     ADOQuery1idlancamento: TAutoIncField;
     ADOQuery1idRamo: TStringField;
     ADOQuery1idSubRamo: TStringField;
@@ -60,7 +60,7 @@ type
     Label4: TLabel;
     lblDuracao: TLabel;
     Label6: TLabel;
-    Label7: TLabel;
+    lblUsuarioCri: TLabel;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -106,9 +106,27 @@ begin
   with frmConsulta.ADOQuery4 do
   begin
     SQL.Clear;
-    SQL.Add('SELECT * FROM backup WHERE (excluido IS NULL OR excluido != 1) ORDER BY DataCriacao DESC;');
+    SQL.Add('SELECT u.Nome as Usuario, b.Nome as Backup, b.DataCriacao ' +
+            'FROM backup b ' +
+            'INNER JOIN usuario u ON u.idusuario = b.UsuarioCriacao ' +
+            'WHERE (b.excluido IS NULL OR b.excluido != 1) ORDER BY b.DataCriacao DESC LIMIT 1;');
     open;
     Active:= true;
+  end;
+
+  if (frmConsulta.ADOQuery4.Eof) then
+  begin
+    frmConsulta.lblUltimoBackup.Font.Color:= clRed;
+    frmConsulta.lblUsuarioCri.Font.Color:= clRed;
+    frmConsulta.lblUltimoBackup.Caption:= 'NUNCA';
+    frmConsulta.lblUsuarioCri.Caption:= 'N/A';
+  end
+  else
+  begin
+    frmConsulta.lblUltimoBackup.Font.Color:= clWindowText;
+    frmConsulta.lblUsuarioCri.Font.Color:= clWindowText;
+    frmConsulta.lblUltimoBackup.Caption:= frmConsulta.ADOQuery4.FieldByName('DataCriacao').Value;
+    frmConsulta.lblUsuarioCri.Caption:= frmConsulta.ADOQuery4.FieldByName('Usuario').Value;
   end;
 end;
 
@@ -129,7 +147,7 @@ begin
   frmConsulta.btnSairBackup.Enabled:= bEnabled;
 end;
 
-function ExecutarEEsperar(sBackup: String): Boolean;
+function Backup(sBackup: String): Boolean;
 var Sh: TShellExecuteInfo;
     CodigoSaida: DWORD;
 begin
@@ -235,6 +253,7 @@ end;
 procedure TfrmConsulta.Backup1Click(Sender: TObject);
 begin
   pnlBackup.Visible:= True;
+  LoadBackup();
   EnabledFields(False);
 end;
 
@@ -358,20 +377,21 @@ begin
   sCaminho:= ExtractFilePath(Application.ExeName) + 'Backup.bat';
   Label1.Caption:= 'Aguarde enquanto o processo de backup é realizado...';
   //WinExec('C:\Projetos\cartorio\Win32\Debug\Backup.bat', SW_NORMAL);
-  if (ExecutarEEsperar(sCaminho)) then
+  if (Backup(sCaminho)) then
   begin
     Timer1.Enabled:= False;
     with ADOQuery4 do
     begin
       SQL.Clear;
-      SQL.Add('INSERT INTO backup (Nome, Duracao, UsuarioCriacao, DataCriacao) VALUES (Nome = "cartorio_' + FormatDateTime('yyyymmddHHMMSS', + NOW) +
-                                                                              '", Duracao = "' + lblDuracao.Caption +
-                                                                              '", UsuarioCriacao = "' + frmLogin.idUsuario +
-                                                                              '", DataCriacao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) + '");');
+      SQL.Add('INSERT INTO backup (Nome, Duracao, UsuarioCriacao, DataCriacao) VALUES ("cartorio_' + FormatDateTime('yyyymmddHHMMSS', + NOW) +
+                                                                                   '", "' + lblDuracao.Caption +
+                                                                                   '", "' + frmLogin.idUsuario +
+                                                                                   '", "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) + '");');
       ExecSQL;
     end;
     EnabledFieldsBackup(True);
     ProgressBar1.Style:= pbstNormal;
+    LoadBackup();
     Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION);
   end
   else

@@ -219,13 +219,26 @@
       Width = 73
       Height = 13
       Caption = #218'ltimo Backup: '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsItalic]
+      ParentFont = False
     end
-    object Label3: TLabel
-      Left = 103
+    object lblUltimoBackup: TLabel
+      Left = 98
       Top = 87
-      Width = 35
+      Width = 178
       Height = 13
+      AutoSize = False
       Caption = 'NUNCA'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsItalic]
+      ParentFont = False
     end
     object Image1: TImage
       Left = 368
@@ -1531,7 +1544,7 @@
       Caption = 'Tempo: '
     end
     object lblDuracao: TLabel
-      Left = 69
+      Left = 63
       Top = 30
       Width = 44
       Height = 13
@@ -1543,13 +1556,25 @@
       Width = 69
       Height = 13
       Caption = 'Realizado por:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsItalic]
+      ParentFont = False
     end
-    object Label7: TLabel
-      Left = 103
+    object lblUsuarioCri: TLabel
+      Left = 98
       Top = 106
       Width = 18
       Height = 13
       Caption = 'N/A'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsItalic]
+      ParentFont = False
     end
     object btnSairBackup: TBitBtn
       Left = 9
@@ -2380,8 +2405,12 @@
     Parameters = <>
     SQL.Strings = (
       
-        'SELECT * FROM backup WHERE (excluido IS NULL OR excluido != 1) O' +
-        'RDER BY DataCriacao DESC;')
+        'SELECT u.Nome as Usuario, b.Nome as Backup, b.DataCriacao FROM b' +
+        'ackup b'
+      'INNER JOIN usuario u ON u.idusuario = b.UsuarioCriacao'
+      
+        'WHERE (b.excluido IS NULL OR b.excluido != 1) ORDER BY b.DataCri' +
+        'acao DESC LIMIT 1;')
     Left = 656
     Top = 176
   end
