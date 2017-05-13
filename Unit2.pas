@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls, Data.DB, Data.Win.ADODB,
   Vcl.DBLookup, Vcl.Buttons, Vcl.Mask, frxClass, frxDBSet, frxPreview,
-  IBServices, Vcl.Imaging.pngimage;
+  IBServices, Vcl.Imaging.pngimage, Vcl.ButtonGroup;
 
 type
   TfrmConsulta = class(TForm)
@@ -64,7 +64,16 @@ type
     Gerar1: TMenuItem;
     Excluir1: TMenuItem;
     pnlExcluirBackup: TPanel;
-    btnExcluirBackup: TBitBtn;
+    ln1: TLabel;
+    ln2: TLabel;
+    ln3: TLabel;
+    ln4: TLabel;
+    ln5: TLabel;
+    ln6: TLabel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    ButtonGroup1: TButtonGroup;
+    GroupBox1: TGroupBox;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -89,7 +98,8 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure Gerar1Click(Sender: TObject);
     procedure Excluir1Click(Sender: TObject);
-    procedure btnExcluirBackupClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
@@ -106,6 +116,19 @@ implementation
 {$R *.dfm}
 
 uses Unit1, Unit3, Unit4, ShellApi;
+
+procedure VisibleFields(bVisible: Boolean);
+begin
+  frmConsulta.ln1.Visible:= bVisible;
+  frmConsulta.ln2.Visible:= bVisible;
+  frmConsulta.ln3.Visible:= bVisible;
+  frmConsulta.ln4.Visible:= bVisible;
+  frmConsulta.ln5.Visible:= bVisible;
+  frmConsulta.ln6.Visible:= bVisible;
+
+  frmConsulta.GroupBox1.Visible:= bVisible;
+  //frmConsulta.ButtonGroup1.Visible:= bVisible;
+end;
 
 procedure LoadBackup();
 begin
@@ -256,16 +279,21 @@ begin
   end;
 end;
 
-procedure TfrmConsulta.btnAvançadaClick(Sender: TObject);
+procedure TfrmConsulta.BitBtn1Click(Sender: TObject);
 begin
-  Panel1.Visible:= True;
+  VisibleFields(False);
 end;
 
-procedure TfrmConsulta.btnExcluirBackupClick(Sender: TObject);
+procedure TfrmConsulta.BitBtn2Click(Sender: TObject);
 begin
   EnabledFields(True);
   DBGrid1.SetFocus;
   pnlExcluirBackup.Visible:= False;
+end;
+
+procedure TfrmConsulta.btnAvançadaClick(Sender: TObject);
+begin
+  Panel1.Visible:= True;
 end;
 
 procedure TfrmConsulta.btnSairBackupClick(Sender: TObject);
@@ -350,7 +378,7 @@ end;
 procedure TfrmConsulta.DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
 begin
-  sleep(30);
+  sleep(50);
   sCaminho:= ExtractFilePath(Application.ExeName);
 
   frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
@@ -362,6 +390,7 @@ procedure TfrmConsulta.Excluir1Click(Sender: TObject);
 begin
   pnlExcluirBackup.Visible:= True;
   EnabledFields(False);
+  VisibleFields(True);
 end;
 
 procedure TfrmConsulta.Fechar1Click(Sender: TObject);
