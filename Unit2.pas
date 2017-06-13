@@ -74,6 +74,9 @@ type
     BitBtn2: TBitBtn;
     ButtonGroup1: TButtonGroup;
     GroupBox1: TGroupBox;
+    ProgressBar2: TProgressBar;
+    DataSource2: TDataSource;
+    ListView1: TListView;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -117,6 +120,33 @@ implementation
 
 uses Unit1, Unit3, Unit4, ShellApi;
 
+procedure LoadListView();
+var ListItem: TListItem;
+    Count: integer;
+begin
+  Count:= 1;
+  frmConsulta.ListView1.Clear;
+
+  with frmConsulta.ADOQuery4 do
+  begin
+    SQL.Clear;
+    SQL.Add('SELECT u.Nome as Usuario, b.Nome as Backup ' +
+            'FROM backup b ' +
+            'INNER JOIN usuario u ON u.idusuario = b.UsuarioCriacao ' +
+            'WHERE (b.excluido IS NULL OR b.excluido != 1) ORDER BY b.DataCriacao DESC;');
+    open;
+    Active:= true;
+  end;
+
+    while not frmConsulta.ADOQuery4.Eof do
+      begin
+        ListItem:= frmConsulta.ListView1.Items.Add;
+        ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
+        ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Backup').Value);
+        frmConsulta.ADOQuery4.Next;
+      end;
+end;
+
 function GetFileList(const Path: string): TStringList;
  var
    I: Integer;
@@ -144,8 +174,10 @@ begin
   frmConsulta.ln4.Visible:= bVisible;
   frmConsulta.ln5.Visible:= bVisible;
   frmConsulta.ln6.Visible:= bVisible;
-
   frmConsulta.GroupBox1.Visible:= bVisible;
+
+  frmConsulta.ListView1.Visible:= not bVisible;
+  frmConsulta.ProgressBar2.Visible:= not bVisible;
   //frmConsulta.ButtonGroup1.Visible:= bVisible;
 end;
 
@@ -301,6 +333,7 @@ end;
 procedure TfrmConsulta.BitBtn1Click(Sender: TObject);
 begin
   VisibleFields(False);
+  LoadListView();
 end;
 
 procedure TfrmConsulta.BitBtn2Click(Sender: TObject);

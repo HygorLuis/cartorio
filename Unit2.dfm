@@ -31,116 +31,6 @@
     Height = 13
     Caption = 'Sub Ramo: '
   end
-  object pnlExcluirBackup: TPanel
-    Left = 192
-    Top = 136
-    Width = 515
-    Height = 225
-    TabOrder = 7
-    Visible = False
-    object ln1: TLabel
-      Left = 23
-      Top = 49
-      Width = 476
-      Height = 13
-      AutoSize = False
-      Caption = 
-        'N'#227'o '#233' recomend'#225'vel que backups sejam exclu'#237'dos, pois essa '#233' a '#250'n' +
-        'ica maneira de manter todos os '
-    end
-    object ln2: TLabel
-      Left = 23
-      Top = 68
-      Width = 216
-      Height = 13
-      AutoSize = False
-      Caption = 'seus registros guardados com seguran'#231'a.'
-    end
-    object ln3: TLabel
-      Left = 23
-      Top = 87
-      Width = 490
-      Height = 13
-      AutoSize = False
-      Caption = 
-        'Caso futuramente ocorra alguma falha com a sua base atual,  o ba' +
-        'ckup ser'#225' o meio de recupera'#231#227'o'
-    end
-    object ln4: TLabel
-      Left = 23
-      Top = 106
-      Width = 482
-      Height = 13
-      AutoSize = False
-      Caption = 'dos seus dados. '
-    end
-    object ln5: TLabel
-      Left = 23
-      Top = 125
-      Width = 482
-      Height = 13
-      AutoSize = False
-      Caption = 
-        'APENAS CONTINUE SE CASO FOR REALMENTE NECESS'#193'RIO, POIS O PROCEDI' +
-        'MENTO SER'#193' POR  '
-    end
-    object ln6: TLabel
-      Left = 23
-      Top = 144
-      Width = 474
-      Height = 13
-      AutoSize = False
-      Caption = 'SUA TOTAL RESPONSABILIDADE!!!'
-    end
-    object ButtonGroup1: TButtonGroup
-      Left = 152
-      Top = 174
-      Width = 180
-      Height = 42
-      Items = <>
-      TabOrder = 2
-    end
-    object BitBtn1: TBitBtn
-      Left = 164
-      Top = 183
-      Width = 75
-      Height = 25
-      Cursor = crHandPoint
-      Caption = 'Continuar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGreen
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 0
-      OnClick = BitBtn1Click
-    end
-    object BitBtn2: TBitBtn
-      Left = 245
-      Top = 183
-      Width = 75
-      Height = 25
-      Cursor = crHandPoint
-      Caption = 'Cancelar'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clRed
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 1
-      OnClick = BitBtn2Click
-    end
-    object GroupBox1: TGroupBox
-      Left = 12
-      Top = 16
-      Width = 493
-      Height = 151
-      Caption = 'ATEN'#199#195'O!!!'
-      TabOrder = 3
-    end
-  end
   object DBGrid1: TDBGrid
     Left = 8
     Top = 88
@@ -305,7 +195,7 @@
     Top = 168
     Width = 489
     Height = 193
-    TabOrder = 6
+    TabOrder = 5
     Visible = False
     object Label1: TLabel
       Left = 1
@@ -1727,6 +1617,150 @@
       OnClick = btnIniciarBackupClick
     end
   end
+  object pnlExcluirBackup: TPanel
+    Left = 192
+    Top = 136
+    Width = 515
+    Height = 225
+    TabOrder = 7
+    Visible = False
+    object ln1: TLabel
+      Left = 23
+      Top = 49
+      Width = 476
+      Height = 13
+      AutoSize = False
+      Caption = 
+        'N'#227'o '#233' recomend'#225'vel que backups sejam exclu'#237'dos, pois essa '#233' a '#250'n' +
+        'ica maneira de manter todos os '
+    end
+    object ln2: TLabel
+      Left = 23
+      Top = 68
+      Width = 216
+      Height = 13
+      AutoSize = False
+      Caption = 'seus registros guardados com seguran'#231'a.'
+    end
+    object ln3: TLabel
+      Left = 23
+      Top = 87
+      Width = 490
+      Height = 13
+      AutoSize = False
+      Caption = 
+        'Caso futuramente ocorra alguma falha com a sua base atual,  o ba' +
+        'ckup ser'#225' o meio de recupera'#231#227'o'
+    end
+    object ln4: TLabel
+      Left = 23
+      Top = 106
+      Width = 482
+      Height = 13
+      AutoSize = False
+      Caption = 'dos seus dados. '
+    end
+    object ln5: TLabel
+      Left = 23
+      Top = 125
+      Width = 482
+      Height = 13
+      AutoSize = False
+      Caption = 
+        'APENAS CONTINUE SE CASO FOR REALMENTE NECESS'#193'RIO, POIS O PROCEDI' +
+        'MENTO SER'#193' POR  '
+    end
+    object ln6: TLabel
+      Left = 23
+      Top = 144
+      Width = 474
+      Height = 13
+      AutoSize = False
+      Caption = 'SUA TOTAL RESPONSABILIDADE!!!'
+    end
+    object ButtonGroup1: TButtonGroup
+      Left = 152
+      Top = 174
+      Width = 180
+      Height = 42
+      Items = <>
+      TabOrder = 2
+    end
+    object BitBtn1: TBitBtn
+      Left = 164
+      Top = 183
+      Width = 75
+      Height = 25
+      Cursor = crHandPoint
+      Caption = 'Continuar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGreen
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      OnClick = BitBtn1Click
+    end
+    object BitBtn2: TBitBtn
+      Left = 245
+      Top = 183
+      Width = 75
+      Height = 25
+      Cursor = crHandPoint
+      Caption = 'Cancelar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      OnClick = BitBtn2Click
+    end
+    object GroupBox1: TGroupBox
+      Left = 12
+      Top = 16
+      Width = 493
+      Height = 151
+      Caption = 'ATEN'#199#195'O!!!'
+      TabOrder = 3
+    end
+    object ProgressBar2: TProgressBar
+      Left = 11
+      Top = 9
+      Width = 494
+      Height = 17
+      TabOrder = 4
+      Visible = False
+    end
+    object ListView1: TListView
+      Left = 11
+      Top = 27
+      Width = 493
+      Height = 141
+      Checkboxes = True
+      Columns = <
+        item
+          Caption = ' X'
+          Width = 25
+        end
+        item
+          Caption = 'Nome'
+          Width = 150
+        end
+        item
+          Caption = 'Backup'
+          Width = 250
+        end>
+      ColumnClick = False
+      GridLines = True
+      RowSelect = True
+      TabOrder = 5
+      ViewStyle = vsReport
+      Visible = False
+    end
+  end
   object MainMenu1: TMainMenu
     Left = 88
     Top = 8
@@ -2727,13 +2761,18 @@
       
         'WHERE (b.excluido IS NULL OR b.excluido != 1) ORDER BY b.DataCri' +
         'acao DESC LIMIT 1;')
-    Left = 424
-    Top = 152
+    Left = 640
+    Top = 304
   end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    Left = 392
-    Top = 152
+    Left = 608
+    Top = 304
+  end
+  object DataSource2: TDataSource
+    DataSet = ADOQuery4
+    Left = 672
+    Top = 304
   end
 end
