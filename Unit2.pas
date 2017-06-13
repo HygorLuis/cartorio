@@ -117,6 +117,25 @@ implementation
 
 uses Unit1, Unit3, Unit4, ShellApi;
 
+function GetFileList(const Path: string): TStringList;
+ var
+   I: Integer;
+   SearchRec: TSearchRec;
+ begin
+   Result := TStringList.Create;
+   try
+     I := FindFirst(Path, 0, SearchRec);
+     while I = 0 do
+     begin
+       Result.Add(SearchRec.Name);
+       I := FindNext(SearchRec);
+     end;
+   except
+     Result.Free;
+     raise;
+   end;
+end;
+
 procedure VisibleFields(bVisible: Boolean);
 begin
   frmConsulta.ln1.Visible:= bVisible;
@@ -417,6 +436,7 @@ begin
 end;
 
 procedure TfrmConsulta.btnIniciarBackupClick(Sender: TObject);
+var slFiles: TStringList;
 begin
   TimeOld:= Now;
   Timer1.Enabled:= True;
@@ -428,10 +448,12 @@ begin
   if (Backup(sCaminho)) then
   begin
     Timer1.Enabled:= False;
+    slFiles:= GetFileList('C:\DB_Backups\*.sql');
+    slFiles.Sort();
     with ADOQuery4 do
     begin
       SQL.Clear;
-      SQL.Add('INSERT INTO backup (Nome, Duracao, UsuarioCriacao, DataCriacao) VALUES ("cartorio_' + FormatDateTime('yyyymmddHHMMSS', + NOW) +
+      SQL.Add('INSERT INTO backup (Nome, Duracao, UsuarioCriacao, DataCriacao) VALUES ("' + slFiles[slFiles.Count-1] +
                                                                                    '", "' + lblDuracao.Caption +
                                                                                    '", "' + frmLogin.idUsuario +
                                                                                    '", "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) + '");');
