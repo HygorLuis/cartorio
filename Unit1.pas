@@ -40,7 +40,7 @@ uses Unit2, Unit3, Unit4;
 function SearchUser(Usuario:String; Senha:String): Boolean;
 begin
     frmLogin.ADOQuery1.SQL.Clear;
-    frmLogin.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE Login = "'+Usuario+'" AND (excluido IS NULL OR excluido != 1);');
+    frmLogin.ADOQuery1.SQL.Add('SELECT idUsuario, Login, Senha, Adm  FROM usuario WHERE Login = "'+Usuario+'" AND (excluido IS NULL OR excluido != 1);');
     frmLogin.ADOQuery1.open;
     frmLogin.ADOQuery1.Active := true;
 
