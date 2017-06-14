@@ -1678,6 +1678,23 @@
       AutoSize = False
       Caption = 'SUA TOTAL RESPONSABILIDADE!!!'
     end
+    object lblProgress: TLabel
+      Left = 11
+      Top = 0
+      Width = 493
+      Height = 26
+      Alignment = taCenter
+      AutoSize = False
+      Caption = '0%'
+    end
+    object GroupBox1: TGroupBox
+      Left = 12
+      Top = 16
+      Width = 493
+      Height = 151
+      Caption = 'ATEN'#199#195'O!!!'
+      TabOrder = 3
+    end
     object ButtonGroup1: TButtonGroup
       Left = 152
       Top = 174
@@ -1686,7 +1703,7 @@
       Items = <>
       TabOrder = 2
     end
-    object BitBtn1: TBitBtn
+    object btnConfirmar: TBitBtn
       Left = 164
       Top = 183
       Width = 75
@@ -1700,9 +1717,9 @@
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      OnClick = BitBtn1Click
+      OnClick = btnConfirmarClick
     end
-    object BitBtn2: TBitBtn
+    object btnCancelar: TBitBtn
       Left = 245
       Top = 183
       Width = 75
@@ -1716,29 +1733,13 @@
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
-      OnClick = BitBtn2Click
-    end
-    object GroupBox1: TGroupBox
-      Left = 12
-      Top = 16
-      Width = 493
-      Height = 151
-      Caption = 'ATEN'#199#195'O!!!'
-      TabOrder = 3
-    end
-    object ProgressBar2: TProgressBar
-      Left = 11
-      Top = 9
-      Width = 494
-      Height = 17
-      TabOrder = 4
-      Visible = False
+      OnClick = btnCancelarClick
     end
     object ListView1: TListView
       Left = 11
-      Top = 27
+      Top = 32
       Width = 493
-      Height = 141
+      Height = 136
       Checkboxes = True
       Columns = <
         item
@@ -1747,18 +1748,110 @@
         end
         item
           Caption = 'Nome'
-          Width = 150
+          Width = 164
         end
         item
           Caption = 'Backup'
-          Width = 250
+          Width = 300
         end>
       ColumnClick = False
       GridLines = True
       RowSelect = True
-      TabOrder = 5
+      TabOrder = 4
       ViewStyle = vsReport
       Visible = False
+    end
+    object btnExcluir: TBitBtn
+      Left = 164
+      Top = 183
+      Width = 75
+      Height = 25
+      Cursor = crHandPoint
+      Caption = 'Excluir'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+      Visible = False
+    end
+    object ProgressBar2: TProgressBar
+      Left = 11
+      Top = 14
+      Width = 493
+      Height = 17
+      TabOrder = 6
+    end
+  end
+  object pnlSenha: TPanel
+    Left = 281
+    Top = 185
+    Width = 287
+    Height = 108
+    TabOrder = 8
+    Visible = False
+    object Label3: TLabel
+      Left = 0
+      Top = 5
+      Width = 289
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'Confirma'#231#227'o de Senha Administrador'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 45
+      Top = 40
+      Width = 45
+      Height = 16
+      AutoSize = False
+      Caption = 'Senha: '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object txtSenha: TEdit
+      Left = 96
+      Top = 38
+      Width = 121
+      Height = 21
+      Cursor = crIBeam
+      PasswordChar = '*'
+      TabOrder = 0
+      OnKeyPress = txtSenhaKeyPress
+    end
+    object btnOk: TBitBtn
+      Left = 72
+      Top = 76
+      Width = 75
+      Height = 25
+      Cursor = crHandPoint
+      Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnOkClick
+    end
+    object btnCancel: TBitBtn
+      Left = 153
+      Top = 76
+      Width = 75
+      Height = 25
+      Cursor = crHandPoint
+      Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 2
+      OnClick = btnCancelClick
     end
   end
   object MainMenu1: TMainMenu

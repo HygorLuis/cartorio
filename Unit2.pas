@@ -70,13 +70,21 @@ type
     ln4: TLabel;
     ln5: TLabel;
     ln6: TLabel;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
+    btnConfirmar: TBitBtn;
+    btnCancelar: TBitBtn;
     ButtonGroup1: TButtonGroup;
     GroupBox1: TGroupBox;
-    ProgressBar2: TProgressBar;
     DataSource2: TDataSource;
     ListView1: TListView;
+    btnExcluir: TBitBtn;
+    ProgressBar2: TProgressBar;
+    lblProgress: TLabel;
+    pnlSenha: TPanel;
+    txtSenha: TEdit;
+    Label3: TLabel;
+    Label5: TLabel;
+    btnOk: TBitBtn;
+    btnCancel: TBitBtn;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -101,8 +109,11 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure Gerar1Click(Sender: TObject);
     procedure Excluir1Click(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnOkClick(Sender: TObject);
+    procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
+    procedure btnCancelClick(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
@@ -119,6 +130,19 @@ implementation
 {$R *.dfm}
 
 uses Unit1, Unit3, Unit4, ShellApi;
+
+function VerifySenha(idUsuario:String; Senha:String): Boolean;
+begin
+    frmLogin.ADOQuery1.SQL.Clear;
+    frmLogin.ADOQuery1.SQL.Add('SELECT Senha FROM usuario WHERE idusuario = "' + idUsuario + '" AND Adm = "1" AND (excluido IS NULL OR excluido != 1);');
+    frmLogin.ADOQuery1.open;
+    frmLogin.ADOQuery1.Active := true;
+
+    if (Senha = frmLogin.ADOQuery1.FieldByName('Senha').Value) then
+    begin
+      result:= true;
+    end;
+end;
 
 procedure LoadListView();
 var ListItem: TListItem;
@@ -140,9 +164,13 @@ begin
 
     while not frmConsulta.ADOQuery4.Eof do
       begin
-        ListItem:= frmConsulta.ListView1.Items.Add;
-        ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
-        ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Backup').Value);
+        if Count > 5 then
+        begin
+          ListItem:= frmConsulta.ListView1.Items.Add;
+          ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
+          ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Backup').Value);
+        end;
+        Count:= Count + 1;
         frmConsulta.ADOQuery4.Next;
       end;
 end;
@@ -176,9 +204,11 @@ begin
   frmConsulta.ln6.Visible:= bVisible;
   frmConsulta.GroupBox1.Visible:= bVisible;
 
+  frmConsulta.btnConfirmar.Visible:= bVisible;
+  frmConsulta.btnExcluir.Visible:= not bVisible;
   frmConsulta.ListView1.Visible:= not bVisible;
+  frmConsulta.lblProgress.Visible:= not bVisible;
   frmConsulta.ProgressBar2.Visible:= not bVisible;
-  //frmConsulta.ButtonGroup1.Visible:= bVisible;
 end;
 
 procedure LoadBackup();
@@ -330,16 +360,27 @@ begin
   end;
 end;
 
-procedure TfrmConsulta.BitBtn1Click(Sender: TObject);
+procedure TfrmConsulta.btnConfirmarClick(Sender: TObject);
 begin
-  VisibleFields(False);
-  LoadListView();
+  pnlExcluirBackup.Enabled:= False;
+  pnlSenha.Visible:= True;
+  txtSenha.SetFocus;
 end;
 
-procedure TfrmConsulta.BitBtn2Click(Sender: TObject);
+procedure TfrmConsulta.btnCancelarClick(Sender: TObject);
 begin
   EnabledFields(True);
   DBGrid1.SetFocus;
+  pnlExcluirBackup.Visible:= False;
+end;
+
+procedure TfrmConsulta.btnCancelClick(Sender: TObject);
+begin
+  EnabledFields(True);
+  DBGrid1.SetFocus;
+  txtSenha.Clear;
+  pnlSenha.Visible:= False;
+  pnlExcluirBackup.Enabled:= True;
   pnlExcluirBackup.Visible:= False;
 end;
 
@@ -505,6 +546,23 @@ begin
   end;
 end;
 
+procedure TfrmConsulta.btnOkClick(Sender: TObject);
+begin
+  if (VerifySenha(frmLogin.idUsuario, txtSenha.Text)) then
+  begin
+    pnlSenha.Visible:= False;
+    txtSenha.Clear;
+    pnlExcluirBackup.Enabled:= True;
+    VisibleFields(False);
+    LoadListView();
+  end
+  else
+  begin
+    Application.MessageBox('Senha Incorreta!', 'Error!', + MB_OK + MB_ICONERROR);
+    txtSenha.Clear;
+  end;
+end;
+
 procedure TfrmConsulta.Lanamentos1Click(Sender: TObject);
 begin
   OldCursor:= Screen.Cursor;
@@ -546,6 +604,14 @@ begin
       begin
         Search(sFilter);
       end;
+  end;
+end;
+
+procedure TfrmConsulta.txtSenhaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (Key = #13) then
+  begin
+    btnOk.OnClick(btnOk);
   end;
 end;
 
