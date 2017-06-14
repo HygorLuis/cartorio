@@ -191,7 +191,7 @@
     UseReportHints = True
   end
   object pnlBackup: TPanel
-    Left = 203
+    Left = 189
     Top = 168
     Width = 489
     Height = 193
@@ -1618,7 +1618,7 @@
     end
   end
   object pnlExcluirBackup: TPanel
-    Left = 192
+    Left = 176
     Top = 136
     Width = 515
     Height = 225
@@ -1696,7 +1696,7 @@
       TabOrder = 3
     end
     object ButtonGroup1: TButtonGroup
-      Left = 152
+      Left = 166
       Top = 174
       Width = 180
       Height = 42
@@ -1704,7 +1704,7 @@
       TabOrder = 2
     end
     object btnConfirmar: TBitBtn
-      Left = 164
+      Left = 177
       Top = 183
       Width = 75
       Height = 25
@@ -1720,7 +1720,7 @@
       OnClick = btnConfirmarClick
     end
     object btnCancelar: TBitBtn
-      Left = 245
+      Left = 258
       Top = 183
       Width = 75
       Height = 25
@@ -1762,7 +1762,7 @@
       Visible = False
     end
     object btnExcluir: TBitBtn
-      Left = 164
+      Left = 177
       Top = 183
       Width = 75
       Height = 25
@@ -2854,18 +2854,18 @@
       
         'WHERE (b.excluido IS NULL OR b.excluido != 1) ORDER BY b.DataCri' +
         'acao DESC LIMIT 1;')
-    Left = 640
+    Left = 632
     Top = 304
   end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
-    Left = 608
+    Left = 600
     Top = 304
   end
   object DataSource2: TDataSource
     DataSet = ADOQuery4
-    Left = 672
+    Left = 656
     Top = 304
   end
 end

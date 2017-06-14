@@ -550,6 +550,7 @@ procedure TfrmConsulta.btnOkClick(Sender: TObject);
 begin
   if (VerifySenha(frmLogin.idUsuario, txtSenha.Text)) then
   begin
+    Application.MessageBox('Por questões de segurança, não serão exibidos os ultimos 30 backup`s!', 'Atenção!', + MB_OK + MB_ICONINFORMATION);
     pnlSenha.Visible:= False;
     txtSenha.Clear;
     pnlExcluirBackup.Enabled:= True;
