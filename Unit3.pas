@@ -169,10 +169,10 @@ end;
 procedure TfrmUsuario.ADOQuery1AdmGetText(Sender: TField; var Text: string;
   DisplayText: Boolean);
 begin
-if (Sender.value = '1') then
-Text:= 'Sim'
-else
-Text := 'Não';
+  if (Sender.value = '1') then
+    Text:= 'Sim'
+  else
+    Text := 'Não';
 end;
 
 procedure TfrmUsuario.btnAlterarClick(Sender: TObject);
