@@ -75,7 +75,7 @@ type
     ButtonGroup1: TButtonGroup;
     GroupBox1: TGroupBox;
     DataSource2: TDataSource;
-    ListView1: TListView;
+    lvBackup: TListView;
     btnExcluir: TBitBtn;
     ProgressBar2: TProgressBar;
     lblProgress: TLabel;
@@ -114,10 +114,13 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure lvBackupItemChecked(Sender: TObject; Item: TListItem);
   private
     OldCursor: TCursor;
     sCaminho: string;
     TimeOld: TDateTime;
+    iCount: integer;
   public
     sFilter, sFilterAdvanced: String;
   end;
@@ -144,12 +147,12 @@ begin
     end;
 end;
 
-procedure LoadListView();
+procedure LoadLvBackup();
 var ListItem: TListItem;
     Count: integer;
 begin
   Count:= 1;
-  frmConsulta.ListView1.Clear;
+  frmConsulta.lvBackup.Clear;
 
   with frmConsulta.ADOQuery4 do
   begin
@@ -166,7 +169,7 @@ begin
       begin
         if Count > 5 then
         begin
-          ListItem:= frmConsulta.ListView1.Items.Add;
+          ListItem:= frmConsulta.lvBackup.Items.Add;
           ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
           ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Backup').Value);
         end;
@@ -206,7 +209,7 @@ begin
 
   frmConsulta.btnConfirmar.Visible:= bVisible;
   frmConsulta.btnExcluir.Visible:= not bVisible;
-  frmConsulta.ListView1.Visible:= not bVisible;
+  frmConsulta.lvBackup.Visible:= not bVisible;
   frmConsulta.lblProgress.Visible:= not bVisible;
   frmConsulta.ProgressBar2.Visible:= not bVisible;
 end;
@@ -365,6 +368,44 @@ begin
   pnlExcluirBackup.Enabled:= False;
   pnlSenha.Visible:= True;
   txtSenha.SetFocus;
+end;
+
+procedure TfrmConsulta.btnExcluirClick(Sender: TObject);
+var i: integer;
+    dProgress: double;
+begin
+  if (Application.MessageBox('Deseja excluir os backup(s) selecionado(s)?', 'Confirmção!', + MB_YESNO + MB_ICONQUESTION) = IDYES) then
+  begin
+    dProgress:= 0;
+    dProgress:= ProgressBar2.Max / iCount;
+
+    for i:= 0 to lvBackup.Items.Count-1 do
+      if (lvBackup.Items[i].Checked) then
+      begin
+        with ADOQuery4 do
+        begin
+          SQL.Clear;
+          SQL.Add('UPDATE backup SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                               '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
+                '" WHERE Nome = "' + lvBackup.Items[i].SubItems[1] + '";');
+          ExecSQL;
+        end;
+
+        if not (DeleteFile('C:\DB_Backups\' + lvBackup.Items[i].SubItems[1])) then
+          Application.MessageBox(PChar('Erro ao excluir o backup ' + lvBackup.Items[i].SubItems[1]), 'Erro!', + MB_OK + MB_ICONERROR);
+
+        ProgressBar2.Position:= ProgressBar2.Position + Round(dProgress);
+        lblProgress.Caption:= IntToStr(ProgressBar2.Position) + '%';
+      end;
+
+      if ProgressBar2.Position <> ProgressBar2.Max then
+      begin
+        ProgressBar2.Position:= ProgressBar2.Position + (ProgressBar2.Max - ProgressBar2.Position);
+        lblProgress.Caption:= IntToStr(ProgressBar2.Position) + '%';
+      end;
+
+      LoadLvBackup();
+  end;
 end;
 
 procedure TfrmConsulta.btnCancelarClick(Sender: TObject);
@@ -550,12 +591,12 @@ procedure TfrmConsulta.btnOkClick(Sender: TObject);
 begin
   if (VerifySenha(frmLogin.idUsuario, txtSenha.Text)) then
   begin
-    Application.MessageBox('Por questões de segurança, não serão exibidos os ultimos 30 backup`s!', 'Atenção!', + MB_OK + MB_ICONINFORMATION);
+    Application.MessageBox('Por questões de segurança, não serão exibidos os ultimos 30 backup`s.', 'Atenção!', + MB_OK + MB_ICONINFORMATION);
     pnlSenha.Visible:= False;
     txtSenha.Clear;
     pnlExcluirBackup.Enabled:= True;
     VisibleFields(False);
-    LoadListView();
+    LoadLvBackup();
   end
   else
   begin
@@ -574,6 +615,17 @@ begin
   frmLancamento.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
   frmConsulta.Close;
+end;
+
+procedure TfrmConsulta.lvBackupItemChecked(Sender: TObject; Item: TListItem);
+begin
+  if (Item.Checked) then
+  begin
+    iCount:= iCount + 1;
+  end
+  else
+    if iCount > 0 then
+      iCount:= iCount -1;
 end;
 
 procedure TfrmConsulta.Timer1Timer(Sender: TObject);

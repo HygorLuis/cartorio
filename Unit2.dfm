@@ -1735,7 +1735,7 @@
       TabOrder = 1
       OnClick = btnCancelarClick
     end
-    object ListView1: TListView
+    object lvBackup: TListView
       Left = 11
       Top = 32
       Width = 493
@@ -1744,22 +1744,25 @@
       Columns = <
         item
           Caption = ' X'
+          MaxWidth = 25
           Width = 25
         end
         item
           Caption = 'Nome'
+          MaxWidth = 164
           Width = 164
         end
         item
           Caption = 'Backup'
-          Width = 300
+          Width = 283
         end>
       ColumnClick = False
+      DoubleBuffered = False
       GridLines = True
-      RowSelect = True
+      ParentDoubleBuffered = False
       TabOrder = 4
       ViewStyle = vsReport
-      Visible = False
+      OnItemChecked = lvBackupItemChecked
     end
     object btnExcluir: TBitBtn
       Left = 177
@@ -1776,6 +1779,7 @@
       ParentFont = False
       TabOrder = 5
       Visible = False
+      OnClick = btnExcluirClick
     end
     object ProgressBar2: TProgressBar
       Left = 11
