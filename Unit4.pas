@@ -227,7 +227,7 @@ begin
       sComarca:= txtComarca.Text;
       sFonte:= txtFonte.Text;
       sNumero:= txtNumero.Text;
-      sEmenta:= reEmenta.Text;
+      sEmenta:= StringReplace(reEmenta.Text, '"', Chr(39)+Chr(39), [rfReplaceAll]);
 
       ADOQuery1.SQL.Clear;
       ADOQuery1.SQL.Add('UPDATE lancamento SET idRamo = "' + sIndexRamo +
