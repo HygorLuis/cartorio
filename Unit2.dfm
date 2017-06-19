@@ -3,7 +3,7 @@
   Top = 0
   BorderIcons = []
   Caption = 'Sub - Ramos'
-  ClientHeight = 563
+  ClientHeight = 547
   ClientWidth = 858
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -31,6 +31,25 @@
     Height = 13
     Caption = 'Sub Ramo: '
   end
+  object reEmenta: TDBRichEdit
+    Left = 8
+    Top = 250
+    Width = 842
+    Height = 272
+    DataField = 'Ementa'
+    DataSource = DataSource1
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = []
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 8
+    Touch.InteractiveGestures = [igPan, igRotate, igPressAndTap]
+    Touch.ParentTabletOptions = False
+    Touch.TabletOptions = [toPressAndHold, toPenBarrelFeedback]
+  end
   object DBGrid1: TDBGrid
     Left = 8
     Top = 88
@@ -44,8 +63,6 @@
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    OnCellClick = DBGrid1CellClick
-    OnMouseWheel = DBGrid1MouseWheel
     Columns = <
       item
         Expanded = False
@@ -179,16 +196,6 @@
       Text = ''
       OnChange = txtAvançadaChange
     end
-  end
-  object frxPreview1: TfrxPreview
-    Left = 8
-    Top = 264
-    Width = 841
-    Height = 289
-    OutlineVisible = True
-    OutlineWidth = 121
-    ThumbnailVisible = False
-    UseReportHints = True
   end
   object pnlBackup: TPanel
     Left = 189
@@ -1622,7 +1629,7 @@
     Top = 136
     Width = 515
     Height = 225
-    TabOrder = 7
+    TabOrder = 6
     Visible = False
     object ln1: TLabel
       Left = 23
@@ -1800,7 +1807,7 @@
     Top = 185
     Width = 287
     Height = 108
-    TabOrder = 8
+    TabOrder = 7
     Visible = False
     object Label3: TLabel
       Left = 0
@@ -1863,6 +1870,26 @@
       TabOrder = 2
       OnClick = btnCancelClick
     end
+  end
+  object btnImprimir: TBitBtn
+    Left = 0
+    Top = 522
+    Width = 858
+    Height = 25
+    Cursor = crHandPoint
+    Align = alBottom
+    Caption = 'Imprimir'
+    DragCursor = crDefault
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGreen
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 9
+    OnClick = btnImprimirClick
+    ExplicitLeft = 8
+    ExplicitTop = 544
   end
   object MainMenu1: TMainMenu
     Left = 88
@@ -2777,8 +2804,8 @@
         end
         object EmentaFonte: TfrxMemoView
           Align = baRight
-          Left = 582.047619999999900000
-          Top = 34.015770000000000000
+          Left = 582.047620000000000000
+          Top = 34.015770000000010000
           Width = 136.063080000000000000
           Height = 18.897650000000000000
           ShowHint = False

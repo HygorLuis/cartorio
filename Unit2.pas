@@ -32,7 +32,6 @@ type
     txtAvançada: TMaskEdit;
     frxReport1: TfrxReport;
     frxDBDataset1: TfrxDBDataset;
-    frxPreview1: TfrxPreview;
     Backup1: TMenuItem;
     pnlBackup: TPanel;
     btnSairBackup: TBitBtn;
@@ -85,6 +84,8 @@ type
     Label5: TLabel;
     btnOk: TBitBtn;
     btnCancel: TBitBtn;
+    reEmenta: TDBRichEdit;
+    btnImprimir: TBitBtn;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -101,9 +102,6 @@ type
       DisplayText: Boolean);
     procedure cboFiltroChange(Sender: TObject);
     procedure txtAvançadaChange(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
-    procedure DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
-      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure btnIniciarBackupClick(Sender: TObject);
     procedure btnSairBackupClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -116,6 +114,7 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure lvBackupItemChecked(Sender: TObject; Item: TListItem);
+    procedure btnImprimirClick(Sender: TObject);
   private
     OldCursor: TCursor;
     sCaminho: string;
@@ -277,7 +276,8 @@ begin
   frmConsulta.cboRamo.Enabled:= bEnabled;
   frmConsulta.cboSubRamo.Enabled:= bEnabled;
   frmConsulta.btnAvançada.Enabled:= bEnabled;
-  frmConsulta.frxPreview1.Enabled:= bEnabled;
+  frmConsulta.reEmenta.Enabled:= bEnabled;
+  frmConsulta.btnImprimir.Enabled:= bEnabled;
 end;
 
 procedure EnabledFieldsBackup(bEnabled: Boolean);
@@ -330,7 +330,7 @@ begin
   frmConsulta.ADOQuery1.SQL.Add('SELECT * FROM lancamento WHERE (excluido IS NULL OR excluido != 1)' + Filter + ' ORDER BY DataCriacao DESC;');
   frmConsulta.ADOQuery1.open;
   frmConsulta.ADOQuery1.Active:= true;
-  frmConsulta.DBGrid1.OnCellClick(frmConsulta.DBGrid1.Columns[0]);
+  frmConsulta.DBGrid1.Columns[0];
 end;
 
 procedure LoadRamo();
@@ -484,6 +484,7 @@ begin
   txtAvançada.Clear;
   cboFiltro.ItemIndex:= -1;
   Panel1.Visible:= False;
+  sFilterAdvanced:= '';
   cboRamo.OnChange(frmConsulta.cboRamo);
   cboRamo.OnChange(frmConsulta.cboSubRamo);
 end;
@@ -522,7 +523,7 @@ begin
   cboSubRamo.Items.Add('TODOS');
   LoadSubRamo();
   LoadcboSubRamo();
-  Search(sFilter);
+  Search(sFilter + sFilterAdvanced);
   DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
 end;
@@ -537,29 +538,9 @@ begin
     2: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
     3: sFilter:= ' AND idRamo = ' + IntToStr(cboRamo.ItemIndex+1) + ' AND idSubRamo = ' + IntToStr(cboSubRamo.ItemIndex);
   end;
-  Search(sFilter);
+  Search(sFilter + sFilterAdvanced);
   DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
-end;
-
-procedure TfrmConsulta.DBGrid1CellClick(Column: TColumn);
-begin
-  sCaminho:= ExtractFilePath(Application.ExeName);
-
-  frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
-  frxReport1.Preview:= frxPreview1;
-  frxReport1.ShowReport();
-end;
-
-procedure TfrmConsulta.DBGrid1MouseWheel(Sender: TObject; Shift: TShiftState;
-  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-begin
-  sleep(50);
-  sCaminho:= ExtractFilePath(Application.ExeName);
-
-  frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
-  frxReport1.Preview:= frxPreview1;
-  frxReport1.ShowReport();
 end;
 
 procedure TfrmConsulta.Excluir1Click(Sender: TObject);
@@ -590,6 +571,13 @@ begin
   pnlBackup.Visible:= True;
   LoadBackup();
   EnabledFields(False);
+end;
+
+procedure TfrmConsulta.btnImprimirClick(Sender: TObject);
+begin
+  sCaminho:= ExtractFilePath(Application.ExeName);
+  frxReport1.LoadFromFile(sCaminho + 'relEmenta.fr3');
+  frxReport1.ShowReport();
 end;
 
 procedure TfrmConsulta.btnIniciarBackupClick(Sender: TObject);
