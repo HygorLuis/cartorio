@@ -2804,8 +2804,8 @@
         end
         object EmentaFonte: TfrxMemoView
           Align = baRight
-          Left = 582.047620000000000000
-          Top = 34.015770000000010000
+          Left = 582.047619999999900000
+          Top = 34.015770000000000000
           Width = 136.063080000000000000
           Height = 18.897650000000000000
           ShowHint = False

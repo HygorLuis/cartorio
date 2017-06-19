@@ -192,7 +192,7 @@ begin
 
     while not frmConsulta.ADOQuery4.Eof do
       begin
-        if Count > 5 then
+        if Count > 30 then
         begin
           ListItem:= frmConsulta.lvBackup.Items.Add;
           ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
@@ -590,6 +590,10 @@ begin
   sCaminho:= ExtractFilePath(Application.ExeName) + 'Backup.bat';
   Label1.Caption:= 'Aguarde enquanto o processo de backup é realizado...';
   //WinExec('C:\Projetos\cartorio\Win32\Debug\Backup.bat', SW_NORMAL);
+
+  if (not DirectoryExists('C:\DB_Backups')) then
+    forceDirectories('C:\DB_Backups');
+
   if (Backup(sCaminho)) then
   begin
     Timer1.Enabled:= False;
