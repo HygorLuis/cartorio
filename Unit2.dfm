@@ -1686,6 +1686,12 @@
       Alignment = taCenter
       AutoSize = False
       Caption = '0%'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object GroupBox1: TGroupBox
       Left = 12

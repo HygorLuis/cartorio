@@ -134,6 +134,32 @@ implementation
 
 uses Unit1, Unit3, Unit4, ShellApi;
 
+function Verify(): Boolean;
+var i: integer;
+begin
+  if (frmConsulta.lvBackup.Items.Count < 1) then
+  begin
+    Application.MessageBox('Não possui nenhum backup para exclusão.', 'Error!', + MB_OK + MB_ICONERROR);
+    result:= False;
+    Exit;
+  end;
+
+  if (frmConsulta.iCount < 1) then
+  begin
+    Application.MessageBox('Nenhum backup marcado.', 'Error!', + MB_OK + MB_ICONERROR);
+    result:= False;
+  end
+  else
+    result:= True;
+end;
+
+procedure EnabledFieldsExcluirBackup(bEnabled: Boolean);
+begin
+  frmConsulta.lvBackup.Enabled:= bEnabled;
+  frmConsulta.btnExcluir.Enabled:= bEnabled;
+  frmConsulta.btnCancelar.Enabled:= bEnabled;
+end;
+
 function VerifySenha(idUsuario:String; Senha:String): Boolean;
 begin
     frmLogin.ADOQuery1.SQL.Clear;
@@ -373,38 +399,54 @@ end;
 procedure TfrmConsulta.btnExcluirClick(Sender: TObject);
 var i: integer;
     dProgress: double;
+    bDelete: Boolean;
 begin
-  if (Application.MessageBox('Deseja excluir os backup(s) selecionado(s)?', 'Confirmção!', + MB_YESNO + MB_ICONQUESTION) = IDYES) then
+  if (Verify()) then
   begin
-    dProgress:= 0;
-    dProgress:= ProgressBar2.Max / iCount;
+    if (Application.MessageBox('Deseja excluir os backup(s) selecionado(s)?', 'Confirmção!', + MB_YESNO + MB_ICONQUESTION) = IDYES) then
+    begin
+      EnabledFieldsExcluirBackup(False);
+      bDelete:= True;
+      dProgress:= 0;
+      dProgress:= ProgressBar2.Max / iCount;
 
-    for i:= 0 to lvBackup.Items.Count-1 do
-      if (lvBackup.Items[i].Checked) then
-      begin
-        with ADOQuery4 do
+      for i:= 0 to lvBackup.Items.Count-1 do
+        if (lvBackup.Items[i].Checked) then
         begin
-          SQL.Clear;
-          SQL.Add('UPDATE backup SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
-                                               '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
-                '" WHERE Nome = "' + lvBackup.Items[i].SubItems[1] + '";');
-          ExecSQL;
+          if not (DeleteFile('C:\DB_Backups\' + lvBackup.Items[i].SubItems[1])) then
+          begin
+            Application.MessageBox(PChar('Erro ao excluir o backup ' + lvBackup.Items[i].SubItems[1]), 'Erro!', + MB_OK + MB_ICONERROR);
+            bDelete:= False;
+            Break;
+          end;
+          with ADOQuery4 do
+          begin
+            SQL.Clear;
+            SQL.Add('UPDATE backup SET excluido = 1, UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                                 '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
+                  '" WHERE Nome = "' + lvBackup.Items[i].SubItems[1] + '";');
+            ExecSQL;
+          end;
+
+          ProgressBar2.Position:= ProgressBar2.Position + Round(dProgress);
+          lblProgress.Caption:= IntToStr(ProgressBar2.Position) + '%';
         end;
 
-        if not (DeleteFile('C:\DB_Backups\' + lvBackup.Items[i].SubItems[1])) then
-          Application.MessageBox(PChar('Erro ao excluir o backup ' + lvBackup.Items[i].SubItems[1]), 'Erro!', + MB_OK + MB_ICONERROR);
+        if ProgressBar2.Position <> ProgressBar2.Max then
+        begin
+          ProgressBar2.Position:= ProgressBar2.Position + (ProgressBar2.Max - ProgressBar2.Position);
+          lblProgress.Caption:= IntToStr(ProgressBar2.Position) + '%';
+        end;
 
-        ProgressBar2.Position:= ProgressBar2.Position + Round(dProgress);
-        lblProgress.Caption:= IntToStr(ProgressBar2.Position) + '%';
-      end;
+        if (bDelete) then
+          Application.MessageBox('Backup(s) excluido(s) com sucesso!', 'Sucesso', + MB_OK + MB_ICONINFORMATION);
 
-      if ProgressBar2.Position <> ProgressBar2.Max then
-      begin
-        ProgressBar2.Position:= ProgressBar2.Position + (ProgressBar2.Max - ProgressBar2.Position);
-        lblProgress.Caption:= IntToStr(ProgressBar2.Position) + '%';
-      end;
-
-      LoadLvBackup();
+        ProgressBar2.Position:= 0;
+        lblProgress.Caption:= '0%';
+        iCount:= 0;
+        EnabledFieldsExcluirBackup(True);
+        LoadLvBackup();
+    end;
   end;
 end;
 
