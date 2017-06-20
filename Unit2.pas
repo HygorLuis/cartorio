@@ -71,7 +71,6 @@ type
     ln6: TLabel;
     btnConfirmar: TBitBtn;
     btnCancelar: TBitBtn;
-    ButtonGroup1: TButtonGroup;
     GroupBox1: TGroupBox;
     DataSource2: TDataSource;
     lvBackup: TListView;
@@ -86,6 +85,7 @@ type
     btnCancel: TBitBtn;
     reEmenta: TDBRichEdit;
     btnImprimir: TBitBtn;
+    lblOrdem: TLabel;
     procedure CadUsurio2Click(Sender: TObject);
     procedure Fechar1Click(Sender: TObject);
     procedure Lanamentos1Click(Sender: TObject);
@@ -115,11 +115,14 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure lvBackupItemChecked(Sender: TObject; Item: TListItem);
     procedure btnImprimirClick(Sender: TObject);
+    procedure lvBackupColumnClick(Sender: TObject; Column: TListColumn);
+    procedure lvBackupCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
   private
     OldCursor: TCursor;
     sCaminho: string;
     TimeOld: TDateTime;
-    iCount: integer;
+    iCount, iColIndex: integer;
   public
     sFilter, sFilterAdvanced: String;
   end;
@@ -192,7 +195,7 @@ begin
 
     while not frmConsulta.ADOQuery4.Eof do
       begin
-        if Count > 30 then
+        if Count > 5 then
         begin
           ListItem:= frmConsulta.lvBackup.Items.Add;
           ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
@@ -201,6 +204,9 @@ begin
         Count:= Count + 1;
         frmConsulta.ADOQuery4.Next;
       end;
+
+    frmConsulta.iColIndex:= 2;
+    frmConsulta.lvBackup.AlphaSort;
 end;
 
 function GetFileList(const Path: string): TStringList;
@@ -235,6 +241,7 @@ begin
   frmConsulta.btnConfirmar.Visible:= bVisible;
   frmConsulta.btnExcluir.Visible:= not bVisible;
   frmConsulta.lvBackup.Visible:= not bVisible;
+  frmConsulta.lblOrdem.Visible:= not bVisible;
   frmConsulta.lblProgress.Visible:= not bVisible;
   frmConsulta.ProgressBar2.Visible:= not bVisible;
 end;
@@ -443,6 +450,7 @@ begin
 
         ProgressBar2.Position:= 0;
         lblProgress.Caption:= '0%';
+        lblOrdem.Caption:= '';
         iCount:= 0;
         EnabledFieldsExcluirBackup(True);
         LoadLvBackup();
@@ -453,6 +461,7 @@ end;
 procedure TfrmConsulta.btnCancelarClick(Sender: TObject);
 begin
   EnabledFields(True);
+  btnCancelar.Top:= 183;
   DBGrid1.SetFocus;
   pnlExcluirBackup.Visible:= False;
 end;
@@ -630,6 +639,7 @@ begin
     txtSenha.Clear;
     pnlExcluirBackup.Enabled:= True;
     VisibleFields(False);
+    btnCancelar.Top:= 190;
     LoadLvBackup();
   end
   else
@@ -649,6 +659,41 @@ begin
   frmLancamento.DBGrid1.SetFocus;
   Screen.Cursor:= OldCursor;
   frmConsulta.Close;
+end;
+
+procedure TfrmConsulta.lvBackupColumnClick(Sender: TObject;
+  Column: TListColumn);
+  var i: integer;
+begin
+  if (lvBackup.Items.Count > 0) then
+    case Column.Index of
+    0: for i:= 0 to lvBackup.Items.Count-1 do
+        if (lvBackup.Items[i].Checked) then
+          lvBackup.Items[i].Checked:= False
+        else
+          lvBackup.Items[i].Checked:= True;
+    1,
+    2: Begin
+        iColIndex:= Column.Index;
+        lvBackup.AlphaSort;
+       End;
+  end;
+end;
+
+procedure TfrmConsulta.lvBackupCompare(Sender: TObject; Item1, Item2: TListItem;
+  Data: Integer; var Compare: Integer);
+begin
+  if (lvBackup.Items.Count > 0) and (iColIndex > 0) then
+  begin
+    case iColIndex of
+      1: lblOrdem.Caption:= 'Ordem: Nome';
+      2: lblOrdem.Caption:= 'Ordem: Backup (Data Criação)';
+    end;
+
+    Compare:= CompareText(Item1.SubItems[iColIndex-1],
+                          Item2.SubItems[iColIndex-1]);
+  end;
+
 end;
 
 procedure TfrmConsulta.lvBackupItemChecked(Sender: TObject; Item: TListItem);

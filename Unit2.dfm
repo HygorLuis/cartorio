@@ -1700,20 +1700,27 @@
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object GroupBox1: TGroupBox
-      Left = 12
-      Top = 16
-      Width = 493
-      Height = 151
-      Caption = 'ATEN'#199#195'O!!!'
-      TabOrder = 3
-    end
-    object ButtonGroup1: TButtonGroup
-      Left = 166
+    object lblOrdem: TLabel
+      Left = 11
       Top = 174
-      Width = 180
-      Height = 42
-      Items = <>
+      Width = 494
+      Height = 13
+      Alignment = taCenter
+      AutoSize = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Visible = False
+    end
+    object GroupBox1: TGroupBox
+      Left = 11
+      Top = 14
+      Width = 494
+      Height = 153
+      Caption = 'ATEN'#199#195'O!!!'
       TabOrder = 2
     end
     object btnConfirmar: TBitBtn
@@ -1769,17 +1776,18 @@
           Caption = 'Backup'
           Width = 283
         end>
-      ColumnClick = False
       DoubleBuffered = False
       GridLines = True
       ParentDoubleBuffered = False
-      TabOrder = 4
+      TabOrder = 3
       ViewStyle = vsReport
+      OnColumnClick = lvBackupColumnClick
+      OnCompare = lvBackupCompare
       OnItemChecked = lvBackupItemChecked
     end
     object btnExcluir: TBitBtn
       Left = 177
-      Top = 183
+      Top = 190
       Width = 75
       Height = 25
       Cursor = crHandPoint
@@ -1790,7 +1798,7 @@
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 4
       Visible = False
       OnClick = btnExcluirClick
     end
@@ -1799,7 +1807,7 @@
       Top = 14
       Width = 493
       Height = 17
-      TabOrder = 6
+      TabOrder = 5
     end
   end
   object pnlSenha: TPanel
@@ -1888,8 +1896,6 @@
     ParentFont = False
     TabOrder = 9
     OnClick = btnImprimirClick
-    ExplicitLeft = 8
-    ExplicitTop = 544
   end
   object MainMenu1: TMainMenu
     Left = 88
