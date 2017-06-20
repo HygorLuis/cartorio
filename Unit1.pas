@@ -22,6 +22,7 @@ type
     procedure btnFecharClick(Sender: TObject);
     procedure btnEntrarClick(Sender: TObject);
     procedure txtSenhaKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
   private
 
   public
@@ -54,27 +55,55 @@ end;
 
 procedure TfrmLogin.btnEntrarClick(Sender: TObject);
 begin
-  if (SearchUser(txtUsuario.Text, txtSenha.Text)) then
+  if (btnEntrar.Caption = 'Entrar') then
   begin
-    if (bPermissao) then
-      frmConsulta.MainMenu1.Items[0].Enabled:= True;
+    if (SearchUser(txtUsuario.Text, txtSenha.Text)) then
+    begin
+      if (bPermissao) then
+        frmConsulta.MainMenu1.Items[0].Enabled:= True;
 
-    frmConsulta.Show;
-    frmConsulta.cboRamo.ItemIndex:= 0;
-    frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
-    frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
-    frmConsulta.DBGrid1.Columns[0];
-    frmLogin.Visible:= False;
+      frmConsulta.Show;
+      frmConsulta.cboRamo.ItemIndex:= 0;
+      frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
+      frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
+      frmConsulta.DBGrid1.Columns[0];
+      frmLogin.Visible:= False;
+    end
+    else
+    begin
+      Application.MessageBox('Usuário ou Senha Inválidos!', 'Error!', + MB_OK + MB_ICONERROR);
+    end;
   end
   else
   begin
-    Application.MessageBox('Usuário ou Senha Inválidos!', 'Error!', + MB_OK + MB_ICONERROR);
+    frmUsuario.MainMenu1.Items[0].Visible:= False;
+    frmUsuario.Visible:= True;
+    frmLogin.Visible:= False;
   end;
 end;
 
 procedure TfrmLogin.btnFecharClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmLogin.FormCreate(Sender: TObject);
+begin
+  with ADOQuery1 do
+  begin
+    SQL.Clear;
+    SQL.Add('SELECT idUsuario  FROM usuario WHERE (excluido IS NULL OR excluido != 1);');
+    open;
+    Active:= true;
+  end;
+
+  if ADOQuery1.Eof then
+  begin
+    btnEntrar.Font.Color:= clBlue;
+    btnEntrar.Caption:= 'Criar';
+    Application.MessageBox(Pchar('Sua base não possui nenhum usuário cadastrado.' + chr(13) +
+                                 'Click no botão "Criar", para cadastrar.'), 'Atenção!', + MB_OK + MB_ICONQUESTION);
+  end;
 end;
 
 procedure TfrmLogin.txtSenhaKeyPress(Sender: TObject; var Key: Char);

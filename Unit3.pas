@@ -288,6 +288,18 @@ begin
         ADOQuery1.Post;
         EnabledFields(false);
         DBGrid1.SetFocus;
+
+        if (MainMenu1.Items[0].Visible = False) then
+        begin
+          Application.MessageBox('Agora você será redirecionado para a tela de login!', 'Atenção!', + MB_OK + MB_ICONINFORMATION);
+          MainMenu1.Items[0].Visible:= True;
+          cboPermissao.Enabled:= False;
+          frmLogin.btnEntrar.Font.Color:= clGreen;
+          frmLogin.btnEntrar.Caption:= 'Entrar';
+          frmLogin.Show;
+          frmLogin.txtUsuario.SetFocus;
+          frmUsuario.Visible:= False;
+        end;
       end
       else
       begin
@@ -304,6 +316,13 @@ procedure TfrmUsuario.btnIncluirClick(Sender: TObject);
 begin
   bUpdate:= false;
   EnabledFields(true);
+
+  if (MainMenu1.Items[0].Visible = False) then
+  begin
+    cboPermissao.ItemIndex:= 1;
+    cboPermissao.Enabled:= False;
+  end;
+
   ADOQuery1.Insert;
 end;
 
