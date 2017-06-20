@@ -2720,7 +2720,7 @@
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 42860.689307488400000000
-    ReportOptions.LastChange = 42865.063990324070000000
+    ReportOptions.LastChange = 42906.720648645800000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -2758,6 +2758,7 @@
           Width = 385.512060000000000000
           Height = 18.897650000000000000
           ShowHint = False
+          AutoWidth = True
           DataSet = frxDBDataset1
           DataSetName = 'Ementa'
           Font.Charset = DEFAULT_CHARSET
@@ -2776,6 +2777,7 @@
           Width = 226.771800000000000000
           Height = 18.897650000000000000
           ShowHint = False
+          AutoWidth = True
           DataField = 'Especie'
           DataSet = frxDBDataset1
           DataSetName = 'Ementa'
@@ -2795,6 +2797,7 @@
           Width = 222.992270000000000000
           Height = 18.897650000000000000
           ShowHint = False
+          AutoWidth = True
           DataField = 'Comarca'
           DataSet = frxDBDataset1
           DataSetName = 'Ementa'
@@ -2808,30 +2811,29 @@
             '[Ementa."Comarca"]')
           ParentFont = False
         end
-        object EmentaFonte: TfrxMemoView
+        object SysMemo1: TfrxSysMemoView
           Align = baRight
-          Left = 582.047619999999900000
-          Top = 34.015770000000000000
-          Width = 136.063080000000000000
+          Left = 623.622450000000000000
+          Top = 49.133889999999990000
+          Width = 94.488250000000000000
           Height = 18.897650000000000000
           ShowHint = False
-          DataField = 'Fonte'
-          DataSet = frxDBDataset1
-          DataSetName = 'Ementa'
+          AutoWidth = True
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = [fsBold]
-          HAlign = haRight
           Memo.UTF8W = (
-            '[Ementa."Fonte"]')
+            
+              '[(Copy(<Ementa."Fonte">,Length(<Ementa."Fonte">)-10,Length(<Emen' +
+              'ta."Fonte">)))]')
           ParentFont = False
         end
       end
       object PageFooter1: TfrxPageFooter
         Height = 22.677180000000000000
-        Top = 1024.252630000000000000
+        Top = 196.535560000000000000
         Width = 718.110700000000000000
         object Page: TfrxMemoView
           Align = baRight
@@ -2839,6 +2841,7 @@
           Width = 30.236240000000000000
           Height = 18.897650000000000000
           ShowHint = False
+          AutoWidth = True
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -16
@@ -2850,16 +2853,17 @@
           ParentFont = False
         end
       end
-      object PageHeader1: TfrxPageHeader
-        Height = 850.394250000000000000
+      object ColumnHeader1: TfrxColumnHeader
+        Height = 22.677180000000000000
         Top = 113.385900000000000000
         Width = 718.110700000000000000
-        object EmentaEmenta: TfrxMemoView
-          Align = baLeft
-          Top = 11.338590000000000000
-          Width = 714.331170000000000000
-          Height = 835.276130000000000000
+        Stretched = True
+        object Memo1: TfrxMemoView
+          Align = baClient
+          Width = 718.110700000000000000
+          Height = 22.677180000000000000
           ShowHint = False
+          StretchMode = smActualHeight
           DataField = 'Ementa'
           DataSet = frxDBDataset1
           DataSetName = 'Ementa'
