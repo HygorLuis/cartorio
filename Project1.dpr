@@ -12,6 +12,7 @@ uses
 begin
   //Application.Initialize;
   //Application.MainFormOnTaskbar := True;
+  Application.Title := 'Cartório';
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TfrmConsulta, frmConsulta);
   Application.CreateForm(TfrmUsuario, frmUsuario);
