@@ -483,9 +483,17 @@ end;
 
 procedure TfrmConsulta.btnSairBackupClick(Sender: TObject);
 begin
-  EnabledFields(True);
-  DBGrid1.SetFocus;
-  pnlBackup.Visible:= False;
+  if (frmLogin.bBackup) then
+  begin
+    Application.MessageBox('Gere um backup antes de sair!', 'Error!', + MB_OK + MB_ICONERROR);
+    btnIniciarBackup.SetFocus;
+  end
+  else
+  begin
+    EnabledFields(True);
+    DBGrid1.SetFocus;
+    pnlBackup.Visible:= False;
+  end;
 end;
 
 procedure TfrmConsulta.btnSairClick(Sender: TObject);
@@ -621,6 +629,8 @@ begin
     ProgressBar1.Style:= pbstNormal;
     LoadBackup();
     Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION);
+    frmLogin.bBackup:= False;
+    btnSairBackup.SetFocus;
   end
   else
   begin

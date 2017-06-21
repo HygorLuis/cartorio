@@ -28,6 +28,7 @@ type
   public
     idUsuario: String;
     bPermissao: Boolean;
+    bBackup: Boolean;
   end;
 
 var
@@ -55,7 +56,6 @@ end;
 
 procedure TfrmLogin.btnEntrarClick(Sender: TObject);
 var iDiferenca: Integer;
-    bBackup: Boolean;
 begin
   if (btnEntrar.Caption = 'Entrar') then
   begin
@@ -83,7 +83,7 @@ begin
         else
         begin
           iDiferenca:= StrToInt(FormatDateTime('DD', Now())) - StrToInt(FormatDateTime('DD', frmConsulta.ADOQuery4.FieldByName('DataCriacao').Value));
-          if (iDiferenca > 7) then
+          if (Abs(iDiferenca) > 7) then
           begin
             Application.MessageBox(Pchar('Faz 7 dias que não é realizado uma cópia de segurança!' + chr(13) +
                                          'Você será direcionado para a tela de backup!'),

@@ -1596,7 +1596,7 @@
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = btnSairBackupClick
     end
     object ProgressBar1: TProgressBar
@@ -1605,7 +1605,7 @@
       Width = 441
       Height = 17
       Smooth = True
-      TabOrder = 1
+      TabOrder = 2
     end
     object btnIniciarBackup: TBitBtn
       Left = 201
@@ -1620,7 +1620,7 @@
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnIniciarBackupClick
     end
   end
