@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
   Vcl.DBCtrls, Data.DB, Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls,
-  Vcl.Menus;
+  Vcl.Menus, Vcl.Imaging.pngimage;
 
 type
   TfrmUsuario = class(TForm)
@@ -26,30 +26,8 @@ type
     ADOQuery1Estado: TStringField;
     Label1: TLabel;
     txtID: TDBEdit;
-    lblNome: TLabel;
-    txtNome: TDBEdit;
-    lblSenha: TLabel;
-    txtSenha: TDBEdit;
-    lblUsuario: TLabel;
-    txtUsuario: TDBEdit;
-    lblPermissao: TLabel;
-    txtPermissao: TDBEdit;
-    lblRua: TLabel;
-    txtRua: TDBEdit;
-    Label7: TLabel;
-    txtComp: TDBEdit;
-    lblNumero: TLabel;
-    txtNumero: TDBEdit;
-    lblCEP: TLabel;
-    txtCEP: TDBEdit;
-    lblCidade: TLabel;
-    txtCidade: TDBEdit;
-    lblUf: TLabel;
-    txtUF: TDBEdit;
     GroupBox1: TGroupBox;
     ADOQuery1Bairro: TStringField;
-    Label6: TLabel;
-    txtBairro: TDBEdit;
     GroupBox2: TGroupBox;
     btnIncluir: TBitBtn;
     btnAlterar: TBitBtn;
@@ -59,24 +37,13 @@ type
     ADOQuery1Telefone1: TStringField;
     ADOQuery1DD2: TStringField;
     ADOQuery1Telefone2: TStringField;
-    lblDD1: TLabel;
-    txtDD1: TDBEdit;
-    lblTelefone1: TLabel;
-    txtTel1: TDBEdit;
-    lblDD2: TLabel;
-    txtDD2: TDBEdit;
-    lblTel2: TLabel;
-    txtTel2: TDBEdit;
     GroupBox3: TGroupBox;
-    cboPermissao: TComboBox;
     btnExcluir: TBitBtn;
     chkSenha: TCheckBox;
     MainMenu1: TMainMenu;
     Voltar1: TMenuItem;
     ADOQuery1excluido: TStringField;
     ADOQuery1Cpf: TStringField;
-    lblCPF: TLabel;
-    txtCPF: TDBEdit;
     GroupBox4: TGroupBox;
     ADOQuery1UsuarioCriacao: TStringField;
     Label2: TLabel;
@@ -86,6 +53,41 @@ type
     ADOQuery1DataAlteracao: TDateTimeField;
     Label3: TLabel;
     txtDataCriacao: TDBEdit;
+    lblNome: TLabel;
+    lblCPF: TLabel;
+    txtNome: TDBEdit;
+    txtCPF: TDBEdit;
+    lblSenha: TLabel;
+    lblUsuario: TLabel;
+    lblPermissao: TLabel;
+    txtSenha: TDBEdit;
+    txtUsuario: TDBEdit;
+    txtPermissao: TDBEdit;
+    cboPermissao: TComboBox;
+    lblRua: TLabel;
+    Label7: TLabel;
+    lblNumero: TLabel;
+    txtRua: TDBEdit;
+    txtComp: TDBEdit;
+    txtNumero: TDBEdit;
+    lblCidade: TLabel;
+    lblUf: TLabel;
+    txtCidade: TDBEdit;
+    txtUF: TDBEdit;
+    lblCEP: TLabel;
+    Label6: TLabel;
+    txtCEP: TDBEdit;
+    txtBairro: TDBEdit;
+    Panel1: TPanel;
+    Image1: TImage;
+    lblDD1: TLabel;
+    lblTelefone1: TLabel;
+    lblDD2: TLabel;
+    lblTel2: TLabel;
+    txtDD1: TDBEdit;
+    txtTel1: TDBEdit;
+    txtDD2: TDBEdit;
+    txtTel2: TDBEdit;
     procedure ADOQuery1AdmGetText(Sender: TField; var Text: string;
     DisplayText: Boolean);
     procedure txtPermissaoChange(Sender: TObject);
