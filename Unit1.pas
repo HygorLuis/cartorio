@@ -26,7 +26,7 @@ type
   private
 
   public
-    idUsuario:String;
+    idUsuario: String;
     bPermissao: Boolean;
   end;
 
@@ -54,19 +54,54 @@ begin
 end;
 
 procedure TfrmLogin.btnEntrarClick(Sender: TObject);
+var iDiferenca: Integer;
+    bBackup: Boolean;
 begin
   if (btnEntrar.Caption = 'Entrar') then
   begin
     if (SearchUser(txtUsuario.Text, txtSenha.Text)) then
     begin
       if (bPermissao) then
+      begin
         frmConsulta.MainMenu1.Items[0].Enabled:= True;
+
+        with frmConsulta.ADOQuery4 do
+        begin
+          SQL.Clear;
+          SQL.Add('SELECT DataCriacao FROM backup WHERE (Excluido IS NULL OR Excluido != 1) ORDER BY DataCriacao DESC LIMIT 1;');
+          open;
+          Active:= true;
+        end;
+
+        if (frmConsulta.ADOQuery4.Eof) then
+        begin
+          Application.MessageBox(Pchar('Sua base não possui nenhuma cópia de segurança!' + chr(13) +
+                                       'Você será direcionado para a tela de backup!'),
+                                       'Atenção!', + MB_OK + MB_ICONINFORMATION);
+          bBackup:= True;
+        end
+        else
+        begin
+          iDiferenca:= StrToInt(FormatDateTime('DD', Now())) - StrToInt(FormatDateTime('DD', frmConsulta.ADOQuery4.FieldByName('DataCriacao').Value));
+          if (iDiferenca > 7) then
+          begin
+            Application.MessageBox(Pchar('Faz 7 dias que não é realizado uma cópia de segurança!' + chr(13) +
+                                         'Você será direcionado para a tela de backup!'),
+                                         'Atenção!', + MB_OK + MB_ICONINFORMATION);
+            bBackup:= True;
+          end;
+        end;
+      end;
 
       frmConsulta.Show;
       frmConsulta.cboRamo.ItemIndex:= 0;
       frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
       frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
       frmConsulta.DBGrid1.Columns[0];
+
+      if (bBackup) then
+        frmConsulta.Gerar1Click(frmConsulta.Gerar1);
+
       frmLogin.Visible:= False;
     end
     else
