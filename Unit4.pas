@@ -133,7 +133,7 @@ begin
   frmLancamento.txtComarca.Enabled:= bEnabled;
   frmLancamento.txtFonte.Enabled:= bEnabled;
   frmLancamento.txtNumero.Enabled:= bEnabled;
-  frmLancamento.reEmenta.Enabled:= bEnabled;
+  frmLancamento.reEmenta.ReadOnly:= not bEnabled;
 
   frmLancamento.btnIncluir.Enabled:= not bEnabled;
   frmLancamento.btnAlterar.Enabled:= not bEnabled;

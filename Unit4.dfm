@@ -17,50 +17,86 @@ object frmLancamento: TfrmLancamento
   PixelsPerInch = 96
   TextHeight = 13
   object lblEspecie: TLabel
-    Left = 514
+    Left = 508
     Top = 243
-    Width = 43
+    Width = 48
     Height = 13
     Caption = 'Esp'#233'cie: '
     FocusControl = txtEspecie
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblComarca: TLabel
-    Left = 37
+    Left = 29
     Top = 288
-    Width = 49
+    Width = 56
     Height = 13
     Caption = 'Comarca: '
     FocusControl = txtComarca
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblFonte: TLabel
-    Left = 277
+    Left = 259
     Top = 288
-    Width = 35
+    Width = 38
     Height = 13
     Caption = 'Fonte: '
     FocusControl = txtFonte
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblNumero: TLabel
-    Left = 474
+    Left = 467
     Top = 288
-    Width = 44
+    Width = 50
     Height = 13
     Caption = 'N'#250'mero: '
     FocusControl = txtNumero
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblRamo: TLabel
-    Left = 51
+    Left = 46
     Top = 243
-    Width = 34
+    Width = 39
     Height = 13
     Caption = 'Ramo: '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblSubRamo: TLabel
-    Left = 235
+    Left = 230
     Top = 243
-    Width = 55
+    Width = 63
     Height = 13
     Caption = 'Sub Ramo: '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object Label1: TLabel
     Left = 693
@@ -88,12 +124,12 @@ object frmLancamento: TfrmLancamento
     Cursor = crHandPoint
     Caption = 'Incluir'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clSkyBlue
+    Font.Color = clHighlight
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 7
     OnClick = btnIncluirClick
   end
   object btnAlterar: TBitBtn
@@ -104,12 +140,12 @@ object frmLancamento: TfrmLancamento
     Cursor = crHandPoint
     Caption = 'Alterar'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clSkyBlue
+    Font.Color = clHighlight
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 8
     OnClick = btnAlterarClick
   end
   object btnGravar: TBitBtn
@@ -126,7 +162,7 @@ object frmLancamento: TfrmLancamento
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 9
     OnClick = btnGravarClick
   end
   object btnCancelar: TBitBtn
@@ -143,7 +179,7 @@ object frmLancamento: TfrmLancamento
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 10
     OnClick = btnCancelarClick
   end
   object btnExcluir: TBitBtn
@@ -159,7 +195,7 @@ object frmLancamento: TfrmLancamento
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 11
     OnClick = btnExcluirClick
   end
   object DBGrid1: TDBGrid
@@ -169,7 +205,7 @@ object frmLancamento: TfrmLancamento
     Height = 133
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
-    TabOrder = 5
+    TabOrder = 12
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -179,6 +215,11 @@ object frmLancamento: TfrmLancamento
       item
         Expanded = False
         FieldName = 'idlancamento'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Visible = False
       end
       item
@@ -186,6 +227,11 @@ object frmLancamento: TfrmLancamento
         FieldName = 'idRamo'
         Title.Alignment = taCenter
         Title.Caption = 'Ramo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -194,6 +240,11 @@ object frmLancamento: TfrmLancamento
         FieldName = 'idSubRamo'
         Title.Alignment = taCenter
         Title.Caption = 'Sub - Ramo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 200
         Visible = True
       end
@@ -202,6 +253,11 @@ object frmLancamento: TfrmLancamento
         FieldName = 'Especie'
         Title.Alignment = taCenter
         Title.Caption = 'Esp'#233'cie'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -209,6 +265,11 @@ object frmLancamento: TfrmLancamento
         Expanded = False
         FieldName = 'Comarca'
         Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -216,6 +277,11 @@ object frmLancamento: TfrmLancamento
         Expanded = False
         FieldName = 'Fonte'
         Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 110
         Visible = True
       end
@@ -224,6 +290,11 @@ object frmLancamento: TfrmLancamento
         FieldName = 'Numero'
         Title.Alignment = taCenter
         Title.Caption = 'N'#250'mero'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 112
         Visible = True
       end>
@@ -236,7 +307,7 @@ object frmLancamento: TfrmLancamento
     DataField = 'Especie'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 6
+    TabOrder = 2
   end
   object txtComarca: TDBEdit
     Left = 89
@@ -246,17 +317,17 @@ object frmLancamento: TfrmLancamento
     DataField = 'Comarca'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 7
+    TabOrder = 3
   end
   object txtFonte: TDBEdit
-    Left = 318
+    Left = 302
     Top = 285
     Width = 129
     Height = 21
     DataField = 'Fonte'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 8
+    TabOrder = 4
   end
   object txtNumero: TDBEdit
     Left = 520
@@ -266,7 +337,7 @@ object frmLancamento: TfrmLancamento
     DataField = 'Numero'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 9
+    TabOrder = 5
   end
   object reEmenta: TDBRichEdit
     Left = 8
@@ -275,14 +346,14 @@ object frmLancamento: TfrmLancamento
     Height = 194
     DataField = 'Ementa'
     DataSource = DataSource1
-    Enabled = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = []
+    ReadOnly = True
     ScrollBars = ssVertical
-    TabOrder = 10
+    TabOrder = 6
     Touch.InteractiveGestures = [igPan, igRotate, igPressAndTap]
     Touch.ParentTabletOptions = False
     Touch.TabletOptions = [toPressAndHold, toPenBarrelFeedback]
@@ -292,13 +363,14 @@ object frmLancamento: TfrmLancamento
     Top = 240
     Width = 130
     Height = 21
+    Cursor = crHandPoint
     DataField = 'idRamo'
     DataSource = DataSource1
     Enabled = False
     KeyField = 'idramo'
     ListField = 'Nome'
     ListSource = DataSource2
-    TabOrder = 11
+    TabOrder = 0
     OnClick = cboRamoClick
   end
   object cboSubRamo: TDBLookupComboBox
@@ -306,13 +378,14 @@ object frmLancamento: TfrmLancamento
     Top = 240
     Width = 204
     Height = 21
+    Cursor = crHandPoint
     DataField = 'idSubRamo'
     DataSource = DataSource1
     Enabled = False
     KeyField = 'idSubRamo'
     ListField = 'Nome'
     ListSource = DataSource3
-    TabOrder = 12
+    TabOrder = 1
   end
   object txtUsuarioCriacao: TDBEdit
     Left = 693
