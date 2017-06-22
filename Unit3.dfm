@@ -59,6 +59,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Nome'
       FocusControl = txtNome
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblCPF: TLabel
       Left = 149
@@ -69,6 +75,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'CPF'
       FocusControl = txtCPF
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object txtNome: TDBEdit
       Left = 9
@@ -107,6 +119,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'DDD'
       FocusControl = txtDD1
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblTelefone1: TLabel
       Left = 84
@@ -117,6 +135,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Telefone 1'
       FocusControl = txtTel1
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblDD2: TLabel
       Left = 37
@@ -127,6 +151,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'DDD'
       FocusControl = txtDD2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblTel2: TLabel
       Left = 76
@@ -137,6 +167,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Telefone 2'
       FocusControl = txtTel2
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object txtDD1: TDBEdit
       Left = 37
@@ -187,6 +223,12 @@ object frmUsuario: TfrmUsuario
     Width = 418
     Height = 147
     Caption = 'Endere'#231'o'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 8
     object lblRua: TLabel
       Left = 27
@@ -197,6 +239,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Rua'
       FocusControl = txtRua
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object Label7: TLabel
       Left = 182
@@ -207,6 +255,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Complemento'
       FocusControl = txtComp
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblNumero: TLabel
       Left = 338
@@ -217,6 +271,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Numero'
       FocusControl = txtNumero
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblCidade: TLabel
       Left = 236
@@ -227,6 +287,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Cidade'
       FocusControl = txtCidade
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblUf: TLabel
       Left = 376
@@ -237,6 +303,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'UF'
       FocusControl = txtUF
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblCEP: TLabel
       Left = 141
@@ -247,6 +319,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'CEP'
       FocusControl = txtCEP
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object Label6: TLabel
       Left = 9
@@ -257,6 +335,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Bairro'
       FocusControl = txtBairro
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object txtRua: TDBEdit
       Left = 27
@@ -347,6 +431,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Senha'
       FocusControl = txtSenha
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblUsuario: TLabel
       Left = 21
@@ -357,6 +447,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Usu'#225'rio'
       FocusControl = txtUsuario
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object lblPermissao: TLabel
       Left = 242
@@ -367,6 +463,12 @@ object frmUsuario: TfrmUsuario
       AutoSize = False
       Caption = 'Permiss'#227'o'
       FocusControl = txtPermissao
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object chkSenha: TCheckBox
       Left = 143
@@ -441,8 +543,18 @@ object frmUsuario: TfrmUsuario
       item
         Expanded = False
         FieldName = 'idusuario'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
         Title.Alignment = taCenter
         Title.Caption = 'ID'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 40
         Visible = True
       end
@@ -450,6 +562,11 @@ object frmUsuario: TfrmUsuario
         Expanded = False
         FieldName = 'Nome'
         Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 121
         Visible = True
       end
@@ -458,6 +575,11 @@ object frmUsuario: TfrmUsuario
         FieldName = 'Login'
         Title.Alignment = taCenter
         Title.Caption = 'Usu'#225'rio'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -465,6 +587,11 @@ object frmUsuario: TfrmUsuario
         Expanded = False
         FieldName = 'Adm'
         Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Visible = True
       end>
   end
@@ -487,7 +614,7 @@ object frmUsuario: TfrmUsuario
     Cursor = crHandPoint
     Caption = 'Incluir'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clSkyBlue
+    Font.Color = clHighlight
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
@@ -503,7 +630,7 @@ object frmUsuario: TfrmUsuario
     Cursor = crHandPoint
     Caption = 'Alterar'
     Font.Charset = DEFAULT_CHARSET
-    Font.Color = clSkyBlue
+    Font.Color = clHighlight
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
