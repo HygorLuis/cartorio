@@ -24,6 +24,12 @@ object frmLogin: TfrmLogin
     Alignment = taCenter
     AutoSize = False
     Caption = 'Usu'#225'rio'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object Label2: TLabel
     Left = 179
@@ -33,6 +39,12 @@ object frmLogin: TfrmLogin
     Alignment = taCenter
     AutoSize = False
     Caption = 'Senha'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object Image1: TImage
     Left = 8
