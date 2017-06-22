@@ -2,7 +2,7 @@
   Left = 0
   Top = 0
   BorderIcons = []
-  Caption = 'Sub - Ramos'
+  Caption = 'Consulta'
   ClientHeight = 547
   ClientWidth = 858
   Color = clBtnFace
@@ -19,17 +19,29 @@
   TextHeight = 13
   object lblRamo: TLabel
     Left = 281
-    Top = 15
-    Width = 34
-    Height = 13
+    Top = 20
+    Width = 43
+    Height = 14
     Caption = 'Ramo: '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object lblSubRamo: TLabel
-    Left = 212
-    Top = 45
-    Width = 55
-    Height = 13
+    Left = 201
+    Top = 47
+    Width = 71
+    Height = 14
     Caption = 'Sub Ramo: '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object reEmenta: TDBRichEdit
     Left = 8
@@ -69,6 +81,11 @@
         FieldName = 'idRamo'
         Title.Alignment = taCenter
         Title.Caption = 'Ramo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -77,6 +94,11 @@
         FieldName = 'idSubRamo'
         Title.Alignment = taCenter
         Title.Caption = 'Sub - Ramo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 200
         Visible = True
       end
@@ -85,6 +107,11 @@
         FieldName = 'Especie'
         Title.Alignment = taCenter
         Title.Caption = 'Esp'#233'cie'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -92,6 +119,11 @@
         Expanded = False
         FieldName = 'Comarca'
         Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 100
         Visible = True
       end
@@ -99,6 +131,11 @@
         Expanded = False
         FieldName = 'Fonte'
         Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 110
         Visible = True
       end
@@ -107,6 +144,11 @@
         FieldName = 'Numero'
         Title.Alignment = taCenter
         Title.Caption = 'N'#250'mero'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 120
         Visible = True
       end
@@ -115,6 +157,11 @@
         FieldName = 'DataCriacao'
         Title.Alignment = taCenter
         Title.Caption = 'Dt. Cria'#231#227'o'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold]
         Width = 70
         Visible = True
       end>
@@ -1777,8 +1824,15 @@
           Width = 283
         end>
       DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
       GridLines = True
+      ReadOnly = True
       ParentDoubleBuffered = False
+      ParentFont = False
       TabOrder = 3
       ViewStyle = vsReport
       OnColumnClick = lvBackupColumnClick
@@ -1843,7 +1897,7 @@
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
-      Font.Style = []
+      Font.Style = [fsBold]
       ParentFont = False
     end
     object txtSenha: TEdit
@@ -1862,8 +1916,14 @@
       Width = 75
       Height = 25
       Cursor = crHandPoint
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
       Kind = bkOK
       NumGlyphs = 2
+      ParentFont = False
       TabOrder = 1
       OnClick = btnOkClick
     end
@@ -1873,8 +1933,14 @@
       Width = 75
       Height = 25
       Cursor = crHandPoint
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
       Kind = bkCancel
       NumGlyphs = 2
+      ParentFont = False
       TabOrder = 2
       OnClick = btnCancelClick
     end

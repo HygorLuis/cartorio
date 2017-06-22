@@ -195,7 +195,7 @@ begin
 
     while not frmConsulta.ADOQuery4.Eof do
       begin
-        if Count > 5 then
+        if Count > 30 then
         begin
           ListItem:= frmConsulta.lvBackup.Items.Add;
           ListItem.SubItems.Add(frmConsulta.ADOQuery4.FieldByName('Usuario').Value);
@@ -462,6 +462,7 @@ procedure TfrmConsulta.btnCancelarClick(Sender: TObject);
 begin
   EnabledFields(True);
   btnCancelar.Top:= 183;
+  Search(sFilter + sFilterAdvanced);
   DBGrid1.SetFocus;
   pnlExcluirBackup.Visible:= False;
 end;
@@ -490,7 +491,9 @@ begin
   end
   else
   begin
+    Label1.Caption:= 'Processo de Backup';
     EnabledFields(True);
+    Search(sFilter + sFilterAdvanced);
     DBGrid1.SetFocus;
     pnlBackup.Visible:= False;
   end;
@@ -628,6 +631,7 @@ begin
     EnabledFieldsBackup(True);
     ProgressBar1.Style:= pbstNormal;
     LoadBackup();
+    Label1.Caption:= 'Backup realizado com sucesso!';
     Application.MessageBox('Backup realizado com sucesso!', 'Sucesso!', + MB_OK + MB_ICONINFORMATION);
     frmLogin.bBackup:= False;
     btnSairBackup.SetFocus;
