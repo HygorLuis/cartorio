@@ -49,7 +49,7 @@ object frmUsuario: TfrmUsuario
     Width = 292
     Height = 86
     Caption = 'Usu'#225'rio'
-    TabOrder = 10
+    TabOrder = 5
     object lblNome: TLabel
       Left = 9
       Top = 19
@@ -109,7 +109,7 @@ object frmUsuario: TfrmUsuario
     Width = 200
     Height = 147
     Caption = 'Fone(s)'
-    TabOrder = 9
+    TabOrder = 4
     object lblDD1: TLabel
       Left = 37
       Top = 23
@@ -229,7 +229,7 @@ object frmUsuario: TfrmUsuario
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 8
+    TabOrder = 3
     object lblRua: TLabel
       Left = 27
       Top = 23
@@ -421,7 +421,7 @@ object frmUsuario: TfrmUsuario
     Width = 326
     Height = 86
     Caption = 'Login'
-    TabOrder = 7
+    TabOrder = 2
     object lblSenha: TLabel
       Left = 126
       Top = 17
@@ -533,7 +533,7 @@ object frmUsuario: TfrmUsuario
     Height = 159
     DataSource = DataSource1
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgCancelOnExit, dgTitleHotTrack]
-    TabOrder = 5
+    TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -543,11 +543,6 @@ object frmUsuario: TfrmUsuario
       item
         Expanded = False
         FieldName = 'idusuario'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
         Title.Alignment = taCenter
         Title.Caption = 'ID'
         Title.Font.Charset = DEFAULT_CHARSET
@@ -603,7 +598,7 @@ object frmUsuario: TfrmUsuario
     DataField = 'idusuario'
     DataSource = DataSource1
     Enabled = False
-    TabOrder = 6
+    TabOrder = 1
     Visible = False
   end
   object btnIncluir: TBitBtn
@@ -619,7 +614,7 @@ object frmUsuario: TfrmUsuario
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 9
     OnClick = btnIncluirClick
   end
   object btnAlterar: TBitBtn
@@ -635,7 +630,7 @@ object frmUsuario: TfrmUsuario
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 10
     OnClick = btnAlterarClick
   end
   object btnGravar: TBitBtn
@@ -652,7 +647,7 @@ object frmUsuario: TfrmUsuario
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 11
     OnClick = btnGravarClick
   end
   object btnCancelar: TBitBtn
@@ -669,7 +664,7 @@ object frmUsuario: TfrmUsuario
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 12
     OnClick = btnCancelarClick
   end
   object btnExcluir: TBitBtn
@@ -685,7 +680,7 @@ object frmUsuario: TfrmUsuario
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 13
     OnClick = btnExcluirClick
   end
   object txtUsuarioCriacao: TDBEdit
@@ -695,7 +690,7 @@ object frmUsuario: TfrmUsuario
     Height = 21
     DataField = 'UsuarioCriacao'
     DataSource = DataSource1
-    TabOrder = 11
+    TabOrder = 6
     Visible = False
   end
   object txtDataCriacao: TDBEdit
@@ -705,7 +700,7 @@ object frmUsuario: TfrmUsuario
     Height = 21
     DataField = 'DataCriacao'
     DataSource = DataSource1
-    TabOrder = 12
+    TabOrder = 7
     Visible = False
   end
   object Panel1: TPanel
@@ -713,7 +708,7 @@ object frmUsuario: TfrmUsuario
     Top = 8
     Width = 266
     Height = 159
-    TabOrder = 13
+    TabOrder = 8
     object Image1: TImage
       Left = 8
       Top = 0

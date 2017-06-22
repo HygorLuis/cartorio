@@ -223,61 +223,62 @@ begin
     txtUsuario.SetFocus;
   end
   else
-  begin
-    OldCursor:= Screen.Cursor;
-    Screen.Cursor:= crHourglass;
-
-    if (bUpdate) then
+    if (VerifyUser(txtUsuario.Text)) then
     begin
-      icboIndex:= cboPermissao.ItemIndex;
-      iID:= DBGrid1.SelectedField.Value;
-      sNome:= txtNome.Text;
-      sCPF:= txtCPF.Text;
-      sLogin:= txtUsuario.Text;
-      sSenha:= txtSenha.Text;
-      sEndereco:= txtRua.Text;
-      sComplemento:= txtComp.Text;
-      sNumero:= txtNumero.Text;
-      sCEP:= txtCEP.Text;
-      sCidade:= txtCidade.Text;
-      sUF:= txtUF.Text;
-      sBairro:= txtBairro.Text;
-      sDD1:= txtDD1.Text;
-      sTel1:= txtTel1.Text;
-      sDD2:= txtDD2.Text;
-      sTel2:= txtTel2.Text;
+      OldCursor:= Screen.Cursor;
+      Screen.Cursor:= crHourglass;
 
-      //ADOQuery1.Close;
-      //ADOQuery1.Open;
-      ADOQuery1.SQL.Clear;
-      ADOQuery1.SQL.Add('UPDATE usuario SET Nome = "' + sNome +
-                                        '", Cpf = "' + sCPF +
-                                        '", Login = "' + sLogin +
-                                        '", Senha = "' + sSenha +
-                                        '", Adm = "' + IntToStr(icboIndex) +
-                                        '", Endereco = "' + sEndereco +
-                                        '", Complemento = "' + sComplemento +
-                                        '", Numero = "' + sNumero +
-                                        '", CEP = "' + sCEP +
-                                        '", Cidade = "' + sCidade +
-                                        '", Estado = "' + sUF +
-                                        '", Bairro = "' + sBairro +
-                                        '", DD1 = "' + sDD1 +
-                                        '", Telefone1 = "' + sTel1 +
-                                        '", DD2 = "' + sDD2 +
-                                        '", Telefone2 = "' + sTel2 +
-                                        '", UsuarioAlteracao = "' + frmLogin.idUsuario +
-                                        '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
-                        '" WHERE idusuario = "' + IntToStr(iID) + '";');
-      ADOQuery1.ExecSQL;
-      LoadUser();
-      EnabledFields(false);
-      DBGrid1.DataSource.DataSet.MoveBy(iIndex-1);
-      DBGrid1.SetFocus;
-    end
-    else
-    begin
-      if (VerifyUser(txtUsuario.Text)) then
+      if (bUpdate) then
+      begin
+        icboIndex:= cboPermissao.ItemIndex;
+        iID:= DBGrid1.SelectedField.Value;
+        sNome:= txtNome.Text;
+        sCPF:= txtCPF.Text;
+        sLogin:= txtUsuario.Text;
+        sSenha:= txtSenha.Text;
+        sEndereco:= txtRua.Text;
+        sComplemento:= txtComp.Text;
+        sNumero:= txtNumero.Text;
+        sCEP:= txtCEP.Text;
+        sCidade:= txtCidade.Text;
+        sUF:= txtUF.Text;
+        sBairro:= txtBairro.Text;
+        sDD1:= txtDD1.Text;
+        sTel1:= txtTel1.Text;
+        sDD2:= txtDD2.Text;
+        sTel2:= txtTel2.Text;
+
+        with ADOQuery1 do
+        begin
+          SQL.Clear;
+          SQL.Add('UPDATE usuario SET Nome = "' + sNome +
+                                  '", Cpf = "' + sCPF +
+                                  '", Login = "' + sLogin +
+                                  '", Senha = "' + sSenha +
+                                  '", Adm = "' + IntToStr(icboIndex) +
+                                  '", Endereco = "' + sEndereco +
+                                  '", Complemento = "' + sComplemento +
+                                  '", Numero = "' + sNumero +
+                                  '", CEP = "' + sCEP +
+                                  '", Cidade = "' + sCidade +
+                                  '", Estado = "' + sUF +
+                                  '", Bairro = "' + sBairro +
+                                  '", DD1 = "' + sDD1 +
+                                  '", Telefone1 = "' + sTel1 +
+                                  '", DD2 = "' + sDD2 +
+                                  '", Telefone2 = "' + sTel2 +
+                                  '", UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                  '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
+                   '" WHERE idusuario = "' + IntToStr(iID) + '";');
+          ExecSQL;
+        end;
+
+        LoadUser();
+        EnabledFields(false);
+        DBGrid1.DataSource.DataSet.MoveBy(iIndex-1);
+        DBGrid1.SetFocus;
+      end
+      else
       begin
         if (cboPermissao.ItemIndex = 1) then
           txtPermissao.Text:= '1'
@@ -302,14 +303,13 @@ begin
           frmLogin.txtUsuario.SetFocus;
           frmUsuario.Visible:= False;
         end;
-      end
-      else
-      begin
-        Screen.Cursor:= OldCursor;
-        Application.MessageBox('Login já casdatrado!' + chr(13) + 'Favor inserir um novo nome de usuário.', 'Erro!', + MB_OK + MB_ICONERROR);
-        txtUsuario.SetFocus;
       end;
-    end;
+  end
+  else
+  begin
+    Screen.Cursor:= OldCursor;
+    Application.MessageBox('Login já casdatrado!' + chr(13) + 'Favor inserir um novo nome de usuário.', 'Erro!', + MB_OK + MB_ICONERROR);
+    txtUsuario.SetFocus;
   end;
   Screen.Cursor:= OldCursor;
 end;
