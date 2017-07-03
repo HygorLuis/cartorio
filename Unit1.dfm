@@ -3,7 +3,7 @@ object frmLogin: TfrmLogin
   Top = 295
   BorderIcons = [biMinimize, biMaximize]
   Caption = 'Login'
-  ClientHeight = 147
+  ClientHeight = 185
   ClientWidth = 338
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object frmLogin: TfrmLogin
   TextHeight = 13
   object Label1: TLabel
     Left = 179
-    Top = 15
+    Top = 50
     Width = 121
     Height = 13
     Alignment = taCenter
@@ -33,7 +33,7 @@ object frmLogin: TfrmLogin
   end
   object Label2: TLabel
     Left = 179
-    Top = 61
+    Top = 96
     Width = 121
     Height = 13
     Alignment = taCenter
@@ -48,7 +48,7 @@ object frmLogin: TfrmLogin
   end
   object Image1: TImage
     Left = 8
-    Top = 8
+    Top = 43
     Width = 144
     Height = 131
     Picture.Data = {
@@ -538,16 +538,31 @@ object frmLogin: TfrmLogin
       49454E44AE426082}
     Proportional = True
   end
+  object lblConexao: TLabel
+    Left = 64
+    Top = 11
+    Width = 72
+    Height = 13
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Conex'#227'o:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object txtUsuario: TEdit
     Left = 179
-    Top = 34
+    Top = 69
     Width = 121
     Height = 21
     TabOrder = 0
   end
   object txtSenha: TEdit
     Left = 179
-    Top = 77
+    Top = 112
     Width = 121
     Height = 21
     PasswordChar = '*'
@@ -556,7 +571,7 @@ object frmLogin: TfrmLogin
   end
   object btnEntrar: TBitBtn
     Left = 255
-    Top = 114
+    Top = 149
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -572,7 +587,7 @@ object frmLogin: TfrmLogin
   end
   object btnFechar: TBitBtn
     Left = 152
-    Top = 114
+    Top = 149
     Width = 75
     Height = 25
     Cursor = crHandPoint
@@ -588,28 +603,40 @@ object frmLogin: TfrmLogin
   end
   object Panel1: TPanel
     Left = 14
-    Top = 5
+    Top = 40
     Width = 130
     Height = 138
     TabOrder = 4
   end
+  object cboConexao: TComboBox
+    Left = 138
+    Top = 8
+    Width = 103
+    Height = 21
+    Cursor = crHandPoint
+    ItemIndex = 0
+    TabOrder = 5
+    Text = '54.233.185.211'
+    OnChange = cboConexaoChange
+    Items.Strings = (
+      '54.233.185.211'
+      'localhost')
+  end
   object ADOConnection1: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=MSDASQL.1;Persist Security Info=False;Data Source=carto' +
-      'rio'
+      'rio;'
     LoginPrompt = False
+    Provider = 'MSDASQL.1'
     Left = 16
-    Top = 144
+    Top = 179
   end
   object ADOQuery1: TADOQuery
-    Active = True
-    Connection = ADOConnection1
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'SELECT * FROM usuario WHERE (excluido IS NULL OR excluido != 1);')
     Left = 48
-    Top = 144
+    Top = 179
   end
 end

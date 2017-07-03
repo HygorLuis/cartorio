@@ -158,7 +158,10 @@ end;
 function VerifyUser(Usuario:String): Boolean;
 begin
     frmLogin.ADOQuery1.SQL.Clear;
-    frmLogin.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE Login = "' + Usuario + '" AND (excluido IS NULL OR excluido != 1);');
+    if (frmUsuario.bUpdate) then
+      frmLogin.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE Login = "' + Usuario + '" AND idUsuario != ' + IntToStr(frmUsuario.DBGrid1.SelectedField.Value) + ' AND (excluido IS NULL OR excluido != 1);')
+    else
+      frmLogin.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE Login = "' + Usuario + '" AND (excluido IS NULL OR excluido != 1);');
     frmLogin.ADOQuery1.open;
     frmLogin.ADOQuery1.Active:= true;
 
@@ -364,7 +367,6 @@ begin
   frmConsulta.Show;
   frmConsulta.cboRamo.ItemIndex:= 0;
   frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
-  frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
   frmConsulta.DBGrid1.Columns[0];
   frmUsuario.Close;
 end;

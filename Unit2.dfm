@@ -2688,7 +2688,6 @@
     end
   end
   object ADOQuery1: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -2758,7 +2757,6 @@
     Top = 8
   end
   object ADOQuery2: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -2768,7 +2766,6 @@
     Top = 56
   end
   object ADOQuery3: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -2955,7 +2952,6 @@
     Top = 272
   end
   object ADOQuery4: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>

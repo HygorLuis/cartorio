@@ -1920,7 +1920,6 @@ object frmUsuario: TfrmUsuario
     Top = 137
   end
   object ADOQuery1: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>

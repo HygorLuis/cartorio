@@ -420,7 +420,7 @@ begin
       for i:= 0 to lvBackup.Items.Count-1 do
         if (lvBackup.Items[i].Checked) then
         begin
-          if not (DeleteFile('C:\DB_Backups\' + lvBackup.Items[i].SubItems[1])) then
+          if not (DeleteFile('F:\DB_Backups\' + lvBackup.Items[i].SubItems[1])) then
           begin
             Application.MessageBox(PChar('Erro ao excluir o backup ' + lvBackup.Items[i].SubItems[1]), 'Erro!', + MB_OK + MB_ICONERROR);
             bDelete:= False;
@@ -506,7 +506,6 @@ begin
   Panel1.Visible:= False;
   sFilterAdvanced:= '';
   cboRamo.OnChange(frmConsulta.cboRamo);
-  cboRamo.OnChange(frmConsulta.cboSubRamo);
 end;
 
 procedure TfrmConsulta.CadUsurio2Click(Sender: TObject);
@@ -611,13 +610,13 @@ begin
   Label1.Caption:= 'Aguarde enquanto o processo de backup é realizado...';
   //WinExec('C:\Projetos\cartorio\Win32\Debug\Backup.bat', SW_NORMAL);
 
-  if (not DirectoryExists('C:\DB_Backups')) then
-    forceDirectories('C:\DB_Backups');
+  if (not DirectoryExists('F:\DB_Backups')) then
+    forceDirectories('F:\DB_Backups');
 
   if (Backup(sCaminho)) then
   begin
     Timer1.Enabled:= False;
-    slFiles:= GetFileList('C:\DB_Backups\*.sql');
+    slFiles:= GetFileList('F:\DB_Backups\*.sql');
     slFiles.Sort();
     with ADOQuery4 do
     begin

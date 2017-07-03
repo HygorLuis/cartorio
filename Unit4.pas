@@ -280,7 +280,6 @@ begin
   frmConsulta.Show;
   frmConsulta.cboRamo.ItemIndex:= 0;
   frmConsulta.cboRamo.OnChange(frmConsulta.cboRamo);
-  frmConsulta.cboRamo.OnChange(frmConsulta.cboSubRamo);
   frmConsulta.DBGrid1.Columns[0];
   frmLancamento.Close;
 end;

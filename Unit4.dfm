@@ -408,7 +408,6 @@ object frmLancamento: TfrmLancamento
     Visible = False
   end
   object ADOQuery1: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -707,7 +706,6 @@ object frmLancamento: TfrmLancamento
     end
   end
   object ADOQuery2: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
@@ -722,7 +720,6 @@ object frmLancamento: TfrmLancamento
     Top = 200
   end
   object ADOQuery3: TADOQuery
-    Active = True
     Connection = frmLogin.ADOConnection1
     CursorType = ctStatic
     Parameters = <>
