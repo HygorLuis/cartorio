@@ -616,10 +616,10 @@ object frmLogin: TfrmLogin
     Cursor = crHandPoint
     ItemIndex = 0
     TabOrder = 5
-    Text = '54.233.185.211'
+    Text = '52.67.43.206'
     OnChange = cboConexaoChange
     Items.Strings = (
-      '54.233.185.211'
+      '52.67.43.206'
       'localhost')
   end
   object ADOConnection1: TADOConnection

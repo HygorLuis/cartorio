@@ -81,7 +81,6 @@ implementation
 {$R *.dfm}
 
 uses Unit1, Unit2, Unit3;
-
 procedure LoadRamo();
 begin
   frmLancamento.ADOQuery2.SQL.Clear;
@@ -218,29 +217,32 @@ begin
     OldCursor:= Screen.Cursor;
     Screen.Cursor:= crHourglass;
 
+    sIndexRamo:= IntToStr(cboRamo.KeyValue);
+    sIndexSubRamo:= IntToStr(cboSubRamo.KeyValue);
+    sEspecie:= txtEspecie.Text;
+    sComarca:= txtComarca.Text;
+    sFonte:= txtFonte.Text;
+    sNumero:= txtNumero.Text;
+    sEmenta:= StringReplace(reEmenta.Text, '"', Chr(39)+Chr(39), [rfReplaceAll]);
+
     if (bUpdate) then
     begin
       iID:= DBGrid1.SelectedField.Value;
-      sIndexRamo:= IntToStr(cboRamo.KeyValue);
-      sIndexSubRamo:= IntToStr(cboSubRamo.KeyValue);
-      sEspecie:= txtEspecie.Text;
-      sComarca:= txtComarca.Text;
-      sFonte:= txtFonte.Text;
-      sNumero:= txtNumero.Text;
-      sEmenta:= StringReplace(reEmenta.Text, '"', Chr(39)+Chr(39), [rfReplaceAll]);
-
-      ADOQuery1.SQL.Clear;
-      ADOQuery1.SQL.Add('UPDATE lancamento SET idRamo = "' + sIndexRamo +
-                                           '", idSubRamo = "' + sIndexSubRamo +
-                                           '", Especie = "' + sEspecie +
-                                           '", Comarca = "' + sComarca +
-                                           '", Fonte = "' + sFonte +
-                                           '", Numero = "' + sNumero +
-                                           '", Ementa = "' + sEmenta +
-                                           '", UsuarioAlteracao = "' + frmLogin.idUsuario +
-                                           '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
-                        '" WHERE idlancamento = "' + IntToStr(iID) + '";');
-      ADOQuery1.ExecSQL;
+      with ADOQuery1 do
+      begin
+        SQL.Clear;
+        SQL.Add('UPDATE lancamento SET idRamo = "' + sIndexRamo +
+                                   '", idSubRamo = "' + sIndexSubRamo +
+                                   '", Especie = "' + sEspecie +
+                                   '", Comarca = "' + sComarca +
+                                   '", Fonte = "' + sFonte +
+                                   '", Numero = "' + sNumero +
+                                   '", Ementa = "' + sEmenta +
+                                   '", UsuarioAlteracao = "' + frmLogin.idUsuario +
+                                   '", DataAlteracao = "' + FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) +
+                  '" WHERE idlancamento = "' + IntToStr(iID) + '";');
+        ExecSQL;
+      end;
       LoadLancamento();
       EnabledFields(false);
       DBGrid1.DataSource.DataSet.MoveBy(iIndex-1);
@@ -248,11 +250,25 @@ begin
     end
     else
     begin
-      txtUsuarioCriacao.Text:= frmLogin.idUsuario;
-      txtDataCriacao.Text:= DateTimeToStr(Now);
-      sEmenta:= reEmenta.Text;
-      ADOQuery1.Post;
+      with ADOQuery1 do
+      begin
+        Cancel;
+        SQL.Clear;
+        SQL.Add('INSERT INTO lancamento (idRamo, idSubRamo, Especie, Comarca, Fonte, Numero, Ementa, UsuarioCriacao, DataCriacao) VALUES (' +
+                 sIndexRamo + ', ' +
+                 sIndexSubRamo + ', "' +
+                 sEspecie + '", "' +
+                 sComarca + '", "' +
+                 sFonte + '", "' +
+                 sNumero + '", "' +
+                 sEmenta + '", "' +
+                 frmLogin.idUsuario + '", "' +
+                 FormatDateTime('yyyy/mm/dd HH:MM:SS', Now) + '")');
+        ExecSQL;
+      end;
+      LoadLancamento();
       EnabledFields(false);
+      DBGrid1.DataSource.DataSet.MoveBy(DBGrid1.DataSource.DataSet.RecordCount -1);
       DBGrid1.SetFocus;
     end;
     Screen.Cursor:= OldCursor;

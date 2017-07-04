@@ -55,6 +55,7 @@
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = []
+    HideScrollBars = False
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 8

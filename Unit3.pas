@@ -120,7 +120,7 @@ uses Unit1, Unit2, Unit4;
 procedure TfrmUsuario.LoadUser();
 begin
   frmUsuario.ADOQuery1.SQL.Clear;
-  frmUsuario.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE (excluido IS NULL OR excluido != 1);');
+  frmUsuario.ADOQuery1.SQL.Add('SELECT * FROM usuario WHERE (excluido IS NULL OR excluido != 1) ORDER BY Nome;');
   frmUsuario.ADOQuery1.open;
   frmUsuario.ADOQuery1.Active:= true;
 end;
