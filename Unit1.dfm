@@ -614,12 +614,11 @@ object frmLogin: TfrmLogin
     Width = 103
     Height = 21
     Cursor = crHandPoint
-    ItemIndex = 0
     TabOrder = 5
     Text = '52.67.43.206'
     OnChange = cboConexaoChange
     Items.Strings = (
-      '52.67.43.206'
+      '192.168.0.204'
       'localhost')
   end
   object ADOConnection1: TADOConnection
