@@ -612,10 +612,12 @@ object frmLogin: TfrmLogin
     Left = 138
     Top = 8
     Width = 103
-    Height = 21
+    Height = 22
     Cursor = crHandPoint
+    Style = csOwnerDrawFixed
+    ItemIndex = 0
     TabOrder = 5
-    Text = '52.67.43.206'
+    Text = '192.168.0.204'
     OnChange = cboConexaoChange
     Items.Strings = (
       '192.168.0.204'

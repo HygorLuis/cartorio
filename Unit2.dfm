@@ -171,7 +171,8 @@
     Left = 321
     Top = 18
     Width = 110
-    Height = 21
+    Height = 22
+    Style = csOwnerDrawFixed
     TabOrder = 1
     OnChange = cboRamoChange
   end
@@ -179,7 +180,8 @@
     Left = 273
     Top = 45
     Width = 206
-    Height = 21
+    Height = 22
+    Style = csOwnerDrawFixed
     TabOrder = 2
     OnChange = cboSubRamoChange
   end
@@ -209,7 +211,8 @@
       Left = 17
       Top = 8
       Width = 145
-      Height = 21
+      Height = 22
+      Style = csOwnerDrawFixed
       TabOrder = 0
       OnChange = cboFiltroChange
       Items.Strings = (
