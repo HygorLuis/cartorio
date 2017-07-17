@@ -518,6 +518,7 @@ object frmUsuario: TfrmUsuario
       Top = 36
       Width = 48
       Height = 21
+      Cursor = crHandPoint
       Style = csDropDownList
       Enabled = False
       TabOrder = 2

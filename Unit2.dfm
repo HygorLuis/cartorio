@@ -172,6 +172,7 @@
     Top = 18
     Width = 110
     Height = 22
+    Cursor = crHandPoint
     Style = csOwnerDrawFixed
     TabOrder = 1
     OnChange = cboRamoChange
@@ -181,6 +182,7 @@
     Top = 45
     Width = 206
     Height = 22
+    Cursor = crHandPoint
     Style = csOwnerDrawFixed
     TabOrder = 2
     OnChange = cboSubRamoChange
@@ -190,6 +192,7 @@
     Top = 18
     Width = 137
     Height = 40
+    Cursor = crHandPoint
     Caption = 'Avan'#231'ada'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clMaroon
@@ -212,6 +215,7 @@
       Top = 8
       Width = 145
       Height = 22
+      Cursor = crHandPoint
       Style = csOwnerDrawFixed
       TabOrder = 0
       OnChange = cboFiltroChange
